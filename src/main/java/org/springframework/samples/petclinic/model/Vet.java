@@ -51,7 +51,7 @@ public class Vet extends Person {
 	private Set<Specialty> specialties;
 	
 	@Column(name = "experiencia")
-	private String experiencia;
+	private Integer experiencia;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
@@ -79,11 +79,11 @@ public class Vet extends Person {
 		getSpecialtiesInternal().add(specialty);
 	}
 
-	public String getExperiencia() {
+	public Integer getExperiencia() {
 		return experiencia;
 	}
 
-	public void setExperiencia(String experiencia) {
+	public void setExperiencia(Integer experiencia) {
 		this.experiencia = experiencia;
 	}
 
