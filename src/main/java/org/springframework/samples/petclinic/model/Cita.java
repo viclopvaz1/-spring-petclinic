@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.model;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import javax.persistence.Column;
@@ -30,12 +32,11 @@ public class Cita extends BaseEntity {
 	private PetType type;
 	
 	@Column(name = "fecha")        
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate fecha;
+	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
+	private LocalDateTime fechaInicio;
 	
 	@Column(name = "duracion")        
-	@DateTimeFormat(pattern = "HH:mm")
-	private LocalTime duracion;
+	private Integer fechaFin;
 	
 	@Column(name = "precio")
 	@Min(1)

@@ -62,3 +62,37 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+
+
+
+INSERT INTO tipos_Operaciones VALUES (1, 'Cirugia basica');
+INSERT INTO tipos_Operaciones VALUES (2, 'Cirugia dental');
+INSERT INTO tipos_Operaciones VALUES (3, 'Cirugia de emergencia');
+INSERT INTO tipos_Operaciones VALUES (4, 'Cirugia visual');
+
+INSERT INTO tipos_Adiestramiento VALUES (1, 'Adiestramiento deportivo');
+INSERT INTO tipos_Adiestramiento VALUES (2, 'Adiestramiento en obediencia basica');
+INSERT INTO tipos_Adiestramiento VALUES (3, 'Adiestramiento asistencia y terapia');
+INSERT INTO tipos_Adiestramiento VALUES (4, 'Adiestramiento para funciones especiales');
+
+INSERT INTO citas_Operaciones VALUES (1,30,'2020-12-29 17:00',50.0,3,3,3, 2,2);
+INSERT INTO citas_Operaciones VALUES (2,30,'2020-12-9 17:00',50.0,3,3,3, 2,2);
+INSERT INTO citas_Operaciones VALUES (3,30,'2020-12-11 17:00',50.0,3,3,3, 2,2);
+INSERT INTO citas_Operaciones VALUES (4,30,'2020-12-12 17:00',50.0,3,3,3, 2,2);
+
+
+
+
+
+INSERT INTO citas_Adiestramiento VALUES (1,30,'2020-12-12 17:00',50.0,3,3,3, 2);
+INSERT INTO citas_Adiestramiento VALUES (2,30,'2020-12-12 17:00',50.0,3,3,3, 2);
+INSERT INTO citas_Adiestramiento VALUES (3,30,'2020-12-12 17:00',50.0,3,3,3, 2);
+INSERT INTO citas_Adiestramiento VALUES (4,30,'2020-12-12 17:00',50.0,3,3,3, 2);
+
+
+
+
+
+
+
+

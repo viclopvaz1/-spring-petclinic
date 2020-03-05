@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "citasoperaciones")
+@Table(name = "citas_Operaciones")
 @Data
 public class CitaOperacion extends Cita {
 	
