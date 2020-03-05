@@ -14,7 +14,7 @@ public class Donacion extends BaseEntity {
 	
 	private Integer cantidad;
 	
-	@OneToOne
+	@ManyToOne
 	private User persona;
 	
 	@ManyToOne
