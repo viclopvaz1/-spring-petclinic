@@ -36,7 +36,7 @@ public class Cita extends BaseEntity {
 	private LocalDateTime fechaInicio;
 	
 	@Column(name = "duracion")        
-	private Integer fechaFin;
+	private Integer duracion;
 	
 	@Column(name = "precio")
 	@Min(1)

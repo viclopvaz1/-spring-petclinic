@@ -50,8 +50,8 @@ public class Vet extends Person {
 			inverseJoinColumns = @JoinColumn(name = "specialty_id"))
 	private Set<Specialty> specialties;
 	
-	@Column(name = "experiencia")
-	private Integer experiencia;
+	@Column(name = "estrellas")
+	private Integer estrellas;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
@@ -79,12 +79,12 @@ public class Vet extends Person {
 		getSpecialtiesInternal().add(specialty);
 	}
 
-	public Integer getExperiencia() {
-		return experiencia;
+	public Integer getEstrellas() {
+		return estrellas;
 	}
 
-	public void setExperiencia(Integer experiencia) {
-		this.experiencia = experiencia;
+	public void setEstrellas(Integer estrellas) {
+		this.estrellas = estrellas;
 	}
 
 }
