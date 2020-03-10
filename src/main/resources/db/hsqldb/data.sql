@@ -66,5 +66,6 @@ INSERT INTO adiestrador VALUES (1, 'Alberto', 'Carter', 695857412, 1, 5);
 INSERT INTO adiestrador VALUES (2, 'Manuel', 'Carter', 954663625, 2, 2);
 
 INSERT INTO causa VALUES (1, 120, '2020-05-03', '2020-01-01', 1200, 'Mi mascota');
+INSERT INTO causa VALUES (3, 150, '2020-05-11', '2020-01-11', 1200, 'Mi super mascota');
 INSERT INTO donacion VALUES (1, 120, 1, 'vet1');
 

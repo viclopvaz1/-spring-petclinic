@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Causa;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
@@ -9,9 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CausaService {
 
-	//	private CausaRepository causaRepo;
 	private SpringDataCausaRepository causaRepo;
 
+
+	@Autowired
+	public CausaService(final SpringDataCausaRepository stringCausaRepo) {
+		this.causaRepo = stringCausaRepo;
+	}
 
 	@Transactional
 	public int causaCount() {
@@ -24,8 +29,7 @@ public class CausaService {
 	}
 
 	@Transactional
-	public Iterable<Causa> causesWhereIDonated(final String username) {
-		System.out.println("result find by id: " + this.causaRepo.findById(1));
-		return this.causaRepo.causesWhereIDonated(username);
+	public Iterable<Causa> findCausaByOng(final String username) {
+		return this.causaRepo.findCausaByOng(username);
 	}
 }
