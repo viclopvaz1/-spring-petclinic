@@ -1,27 +1,31 @@
+
 package org.springframework.samples.petclinic.service;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.Causa;
-import org.springframework.samples.petclinic.repository.springdatajpa.CausaRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CausaService {
-	
-	@Autowired
-	private CausaRepository causaRepo;
-	
+
+	//	private CausaRepository causaRepo;
+	private SpringDataCausaRepository causaRepo;
+
+
 	@Transactional
 	public int causaCount() {
-		return (int) causaRepo.count();
-	}
-	
-	@Transactional
-	public Iterable<Causa> findAll(){
-		return causaRepo.findAll();
+		return (int) this.causaRepo.count();
 	}
 
+	@Transactional
+	public Iterable<Causa> findAll() {
+		return this.causaRepo.findAll();
+	}
+
+	@Transactional
+	public Iterable<Causa> causesWhereIDonated(final String username) {
+		System.out.println("result find by id: " + this.causaRepo.findById(1));
+		return this.causaRepo.causesWhereIDonated(username);
+	}
 }

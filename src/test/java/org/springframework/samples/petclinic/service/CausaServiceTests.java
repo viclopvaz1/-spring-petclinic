@@ -1,7 +1,7 @@
+
 package org.springframework.samples.petclinic.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,10 +13,11 @@ public class CausaServiceTests {
 
 	@Autowired
 	private CausaService causaService;
-	
+
+
 	@Test
 	public void testCountWithInitialData() {
-		int count = causaService.causaCount();
-		assertEquals(count,1);
+		int count = this.causaService.causaCount();
+		Assertions.assertEquals(count, 1);
 	}
 }
