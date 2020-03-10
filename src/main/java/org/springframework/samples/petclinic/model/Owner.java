@@ -69,6 +69,9 @@ public class Owner extends Person {
 	private User user;
 	//
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+	private Set<CitaAdiestramiento> citasAdiestramiento;
+	
 	public String getAddress() {
 		return this.address;
 	}
@@ -165,6 +168,17 @@ public class Owner extends Person {
 			}
 		}
 		return null;
+	}
+	
+	protected Set<CitaAdiestramiento> getCitasAdiestramientosInternal() {
+		if (this.citasAdiestramiento == null) {
+			this.citasAdiestramiento = new HashSet<>();
+		}
+		return this.citasAdiestramiento;
+	}
+
+	protected void setCitasAdiestramientosInternal(Set<CitaAdiestramiento> citasAdiestramiento) {
+		this.citasAdiestramiento = citasAdiestramiento;
 	}
 
 	@Override
