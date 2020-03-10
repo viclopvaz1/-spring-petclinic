@@ -48,7 +48,20 @@
 					<span >Adiestradores</span>
 				</petclinic:menuItem>
 				
-
+				<petclinic:menuItem active="${name eq 'adiestradores'}" url="/causa"
+					title="causas1">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Causas</span>
+				</petclinic:menuItem>
+				
+				<sec:authorize access="isAuthenticated()">
+				<petclinic:menuItem active="${name eq 'causas'}" url="/causa/"
+					title="causas2">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Causas en las que he donado</span>
+				</petclinic:menuItem>
+				</sec:authorize>
+				
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
