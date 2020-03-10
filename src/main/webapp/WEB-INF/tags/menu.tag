@@ -33,17 +33,45 @@
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>Find owners</span>
 				</petclinic:menuItem>
-
+				
+				
+				
 				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
 					title="veterinarians">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Veterinarians</span>
 				</petclinic:menuItem>
-
+				
+				<petclinic:menuItem active="${name eq 'adiestradores'}" url="/adiestradores"
+					title="adiestradores">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Adiestradores</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'adiestradores'}" url="/causa"
+					title="causas1">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Causas</span>
+				</petclinic:menuItem>
+				
+				<sec:authorize access="isAuthenticated()">
+				<petclinic:menuItem active="${name eq 'causas'}" url="/causa/"
+					title="causas2">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Causas en las que he donado</span>
+				</petclinic:menuItem>
+				</sec:authorize>
+				
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'citasOperaciones'}" url="/citasOperaciones"
+					title="citasOperaciones">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Citas Operaciones</span>
 				</petclinic:menuItem>
 
 			</ul>

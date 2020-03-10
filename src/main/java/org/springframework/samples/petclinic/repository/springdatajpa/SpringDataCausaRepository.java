@@ -21,7 +21,7 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Causa;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 
 /**
@@ -30,14 +30,13 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
  * @author Michael Isvy
  * @since 15.1.2013
  */
-public interface SpringDataOwnerRepository extends OwnerRepository, Repository<Owner, Integer> {
 
-	@Override
-	@Query("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName%")
-	Collection<Owner> findByLastName(@Param("lastName") String lastName);
+public interface SpringDataCausaRepository extends CausaRepository, Repository<Causa, Integer> {
 
+	//SELECT * FROM Causa c WHERE c.id IN(SELECT causa_id FROM Donacion a WHERE a.persona_username=:username)
+	//	SELECT * FROM Causa causa WHERE causa.id IN(SELECT donacion.causa_id FROM Donacion donacion WHERE donacion.persona_username LIKE :username%)
 	@Override
-	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
-	Owner findById(@Param("id") int id);
+	@Query("SELECT causa FROM Causa causa WHERE causa.id IN(SELECT donacion.causa.id FROM Donacion donacion WHERE donacion.persona.username LIKE :ong%)")
+	Collection<Causa> findCausaByOng(@Param("ong") String ong);
 
 }
