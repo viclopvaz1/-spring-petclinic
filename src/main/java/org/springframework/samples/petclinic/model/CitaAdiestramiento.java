@@ -21,8 +21,8 @@ public class CitaAdiestramiento extends Cita {
 	@JoinColumn(name = "tipoAdiestramiento_id")
 	private TipoAdiestramiento tipoAdiestramiento;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "adiestrador_id")
-//	private Adiestrador adiestrador;
+	@ManyToOne
+	@JoinColumn(name = "adiestrador_id")
+	private Adiestrador adiestrador;
 
 }

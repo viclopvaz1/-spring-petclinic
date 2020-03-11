@@ -36,7 +36,7 @@ public interface SpringDataCausaRepository extends CausaRepository, Repository<C
 	//SELECT * FROM Causa c WHERE c.id IN(SELECT causa_id FROM Donacion a WHERE a.persona_username=:username)
 	//	SELECT * FROM Causa causa WHERE causa.id IN(SELECT donacion.causa_id FROM Donacion donacion WHERE donacion.persona_username LIKE :username%)
 	@Override
-	@Query("SELECT causa FROM Causa causa WHERE causa.id IN(SELECT donacion.causa.id FROM Donacion donacion WHERE donacion.persona.username LIKE :ong%)")
+	@Query("SELECT causa FROM Causa causa WHERE causa.id IN(SELECT donacion.causa.id FROM Donacion donacion WHERE donacion.user.username LIKE :ong%)")
 	Collection<Causa> findCausaByOng(@Param("ong") String ong);
 
 }

@@ -21,12 +21,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -52,6 +54,12 @@ public class Vet extends Person {
 	
 	@Column(name = "estrellas")
 	private Integer estrellas;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
+	private Set<CitaOperacion> citasOperacion;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
+	private Set<Causa> causas;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
@@ -85,6 +93,22 @@ public class Vet extends Person {
 
 	public void setEstrellas(Integer estrellas) {
 		this.estrellas = estrellas;
+	}
+
+	public Set<CitaOperacion> getCitasOperacion() {
+		return citasOperacion;
+	}
+
+	public void setCitasOperacion(Set<CitaOperacion> citasOperacion) {
+		this.citasOperacion = citasOperacion;
+	}
+
+	public Set<Causa> getCausas() {
+		return causas;
+	}
+
+	public void setCausas(Set<Causa> causas) {
+		this.causas = causas;
 	}
 
 }
