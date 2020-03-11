@@ -73,6 +73,12 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span >Citas Operaciones</span>
 				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'citasOperaciones'}" url="/adiestradores/5"
+					title="listaAdiestradores">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Lista Mejores Adiestradores</span>
+				</petclinic:menuItem>
 
 			</ul>
 
