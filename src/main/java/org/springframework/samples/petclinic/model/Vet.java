@@ -95,6 +95,32 @@ public class Vet extends Person {
 		this.estrellas = estrellas;
 	}
 
+//	public Set<CitaOperacion> getCitasOperacionInternal() {
+//		if(this.citasOperacion == null) {
+//			this.citasOperacion = new HashSet<>();
+//		}
+//		return this.citasOperacion;
+//	}
+//
+//	public void setCitasOperacionInternal(Set<CitaOperacion> citasOperacion) {
+//		this.citasOperacion = citasOperacion;
+//	}
+//
+//	public List<CitaOperacion> getCitasOperacion() {
+//		List<CitaOperacion> sortedcitasOperacion = new ArrayList<>(getCitasOperacionInternal());
+//		PropertyComparator.sort(sortedcitasOperacion, new MutableSortDefinition("date", false, false));
+//		return Collections.unmodifiableList(sortedcitasOperacion);
+//	}
+
+	public Set<Causa> getCausas() {
+		return causas;
+	}
+	
+	public void setCausas(Set<Causa> causas) {
+		this.causas = causas;
+	}
+	
+
 	public Set<CitaOperacion> getCitasOperacion() {
 		return citasOperacion;
 	}
@@ -103,12 +129,10 @@ public class Vet extends Person {
 		this.citasOperacion = citasOperacion;
 	}
 
-	public Set<Causa> getCausas() {
-		return causas;
-	}
 
-	public void setCausas(Set<Causa> causas) {
-		this.causas = causas;
-	}
+//	public void addCitasOperaciones(CitaOperacion citaOperacion) {
+//		getCitasOperacion().add(citaOperacion);
+//		citaOperacion.setVet(this);
+//	}
 
 }

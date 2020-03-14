@@ -28,6 +28,7 @@ import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +67,7 @@ public class OwnerController {
 	@PostMapping(value = "/owners/new")
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
 		if (result.hasErrors()) {
+//			modelMap.addAttribute("owner", owner);	, ModelMap modelMap
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		}
 		else {

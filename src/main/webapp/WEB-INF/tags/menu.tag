@@ -67,12 +67,6 @@
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>
 				</petclinic:menuItem>
-				
-				<petclinic:menuItem active="${name eq 'citasOperaciones'}" url="/citasOperaciones"
-					title="citasOperaciones">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span >Citas Operaciones</span>
-				</petclinic:menuItem>
 
 			</ul>
 

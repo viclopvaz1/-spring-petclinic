@@ -23,10 +23,6 @@ public class CitaOperacion extends Cita {
 	
 	@Column(name = "cantidadPersonal")
 	private Double cantidadPersonal;
-	
-	@ManyToOne
-	@Column(name = "pet_id")
-	private Pet pet;
 
 //	public TipoOperacion getTipoOperacion() {
 //		return tipoOperacion;
