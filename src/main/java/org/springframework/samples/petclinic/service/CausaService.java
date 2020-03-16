@@ -4,8 +4,6 @@ package org.springframework.samples.petclinic.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Causa;
-import org.springframework.samples.petclinic.model.Donacion;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.springdatajpa.CausaRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
@@ -45,7 +43,7 @@ public class CausaService {
 	@Transactional
 	public Causa findCausaById(final int id) {
 		Causa causa;
-		causa = this.causaRepo.findById(id).orElse(null);
+		causa = this.causaRepo.findById(id);
 		return causa;
 	}
 
@@ -53,20 +51,10 @@ public class CausaService {
 	public Iterable<Causa> findCausaByOng(final String username) {
 		return this.causaRepo.findCausaByOng(username);
 	}
-	
-	@Transactional(readOnly = true)
-	public Causa findCausaById(int id) throws DataAccessException {
-		return causaRepo.findById(id);
-	}
-	
+
 	@Transactional(readOnly = true)
 	public Iterable<Causa> findCausaByValido() throws DataAccessException {
-		return causaRepo.findCausaByValidoFalse();
+		return this.causaRepo.findCausaByValidoFalse();
 	}
-	
-	@Transactional
-	public void saveCausa(Causa causa) throws DataAccessException {
-		causaRepo.save(causa);		
 
-	}	
 }

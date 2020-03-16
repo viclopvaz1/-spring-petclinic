@@ -47,11 +47,17 @@
     </spring:url>
     <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete </a>
 
-        <spring:url value="/donacion/{causaId}/new" var="causaUrl">
+		<c:choose>
+              <c:when test="${causa.valido}">
+              <spring:url value="/donacion/{causaId}/new" var="causaUrl">
         	<spring:param name="causaId" value="${causa.id}"/>
    		</spring:url>
    		<a href="${fn:escapeXml(causaUrl)}" class="btn btn-default">Hacer Donacion</a>
-
+              </c:when>
+         <c:otherwise>
+         </c:otherwise>
+        </c:choose>
+        
 
     <br/>
     <br/>

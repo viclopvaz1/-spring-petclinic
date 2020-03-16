@@ -39,10 +39,7 @@
                     <c:out value="${causa.objetivo}"/>
                 </td>
                 <td>
-                    <spring:url value="/causa/show/{causaId}" var="causaUrl">
-                        <spring:param name="causaId" value="${causa.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(causaUrl)}"><c:out value="${causa.dineroRecaudado}"/></a>
+                    <c:out value="${causa.dineroRecaudado}"/>
                 </td>
             </tr>
         </c:forEach>

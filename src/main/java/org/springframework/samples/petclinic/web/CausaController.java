@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +54,6 @@ public class CausaController {
 		modelMap.addAttribute("causas", causas);
 		return vista;
 	}
-
 
 	@GetMapping(value = "/new")
 	public String initCreationForm(final Map<String, Object> model) {
@@ -120,16 +118,13 @@ public class CausaController {
 		this.causaService.deleteCausa(causa);
 		return "redirect:/causa";
 	}
-	
-	
+
 	@GetMapping(value = "/noValidas")
 	public String listadoCausasNoValidas(final ModelMap modelMap) {
-		String vista = "causas/listadoCausasNoValidas";
+		String vista = "causas/listadoCausas";
 		Iterable<Causa> causas = this.causaService.findCausaByValido();
 		modelMap.addAttribute("causas", causas);
 		return vista;
 	}
-
-	
 
 }
