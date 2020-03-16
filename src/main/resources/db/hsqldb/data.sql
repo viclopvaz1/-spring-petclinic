@@ -65,8 +65,10 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO adiestrador VALUES (1, 'Alberto', 'Carter',120, 5,695857412,1);
 INSERT INTO adiestrador VALUES (2, 'Manuel', 'Carter',120, 2,954663625,2);
 
-INSERT INTO causa VALUES (1, 120, '2020-05-03', '2020-01-01', 1200, 'Mi mascota', false, 2);
-INSERT INTO causa VALUES (3, 150, '2020-05-11', '2020-01-11', 1200, 'Mi super mascota', true, 5);
+
+INSERT INTO causa VALUES (1, 120, '2020-05-03', '2020-01-01', 1200, 'Mi mascota', true);
+INSERT INTO causa VALUES (3, 150, '2020-05-11', '2020-01-11', 1200, 'Mi super mascota', true);
+
 INSERT INTO donacion VALUES (1, 120, 1, 'vet1');
 
 INSERT INTO tipos_Operaciones VALUES (1, 'Cirugia basica');

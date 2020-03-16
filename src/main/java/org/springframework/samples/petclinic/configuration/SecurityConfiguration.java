@@ -32,6 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
 	@Override
+
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
@@ -43,8 +44,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/**").permitAll()
 				.antMatchers("/donacion/**").hasAnyAuthority("owner","admin")
 				.antMatchers("/users/addmoney").permitAll()
-				.antMatchers("/causa").permitAll()
-				.antMatchers("/causa/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
+        .antMatchers("/causa").permitAll()
+        .antMatchers("/causa/propias").hasAnyAuthority("veterinarian", "owner", "admin")
+        .antMatchers("/causa/{causaId}/edit").hasAnyAuthority("veterinarian")
+			  .antMatchers("/causa/{causaId}/delete").hasAnyAuthority("veterinarian")
+        .antMatchers("/causa/{id}").permitAll()
+        .antMatchers(HttpMethod.POST, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/causa/noValidas").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				

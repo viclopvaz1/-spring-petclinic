@@ -28,8 +28,25 @@ public class CausaService {
 	}
 
 	@Transactional
+	public void saveCausa(final Causa causa) {
+		this.causaRepo.save(causa);
+	}
+
+	@Transactional
+	public void deleteCausa(final Causa causa) {
+		this.causaRepo.delete(causa);
+	}
+
+	@Transactional
 	public Iterable<Causa> findAll() {
-		return this.causaRepo.findAll();
+		return this.causaRepo.findCausaByValidoTrue();
+	}
+
+	@Transactional
+	public Causa findCausaById(final int id) {
+		Causa causa;
+		causa = this.causaRepo.findById(id).orElse(null);
+		return causa;
 	}
 
 	@Transactional

@@ -11,11 +11,12 @@
 
     <table class="table table-striped">
         <tr>
-            <th>Fecha Inicio</th>
+
+            <th>Fecha de inicio</th>
             <td><b><c:out value="${causa.fechaInicio}"/></b></td>
         </tr>
         <tr>
-            <th>Fecha Fin</th>
+            <th>Fecha final</th>
             <td><c:out value="${causa.fechaFin}"/></td>
         </tr>
         <tr>
@@ -23,19 +24,39 @@
             <td><c:out value="${causa.ong}"/></td>
         </tr>
         <tr>
-            <th>Objetivo</th>
+            <th>Cantidad a alcanzar</th>
             <td><c:out value="${causa.objetivo}"/></td>
         </tr>
         <tr>
-            <th>Dinero Recaudado</th>
+            <th>Cantidad recaudada</th>
             <td><c:out value="${causa.dineroRecaudado}"/></td>
         </tr>
-
+         <tr>
+            <th>Validez</th>
+            <td><c:out value="${causa.valido}"/></td>
+        </tr>
     </table>
-    
+
+    <spring:url value="{causaId}/edit" var="editUrl">
+        <spring:param name="causaId" value="${causa.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit </a>
+
+ 	<spring:url value="{causaId}/delete" var="deleteUrl">
+        <spring:param name="causaId" value="${causa.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete </a>
+
         <spring:url value="/donacion/{causaId}/new" var="causaUrl">
         	<spring:param name="causaId" value="${causa.id}"/>
    		</spring:url>
    		<a href="${fn:escapeXml(causaUrl)}" class="btn btn-default">Hacer Donacion</a>
-    	
+
+
+    <br/>
+    <br/>
+    <br/>
+   
+
 </petclinic:layout>
+

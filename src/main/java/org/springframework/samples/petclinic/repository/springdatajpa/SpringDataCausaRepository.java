@@ -49,4 +49,8 @@ public interface SpringDataCausaRepository extends CausaRepository, Repository<C
 	@Query("SELECT causa FROM Causa causa WHERE causa.valido = false")
 	Collection<Causa> findCausaByValidoFalse();
 
+	@Override
+	@Query("SELECT causa FROM Causa causa WHERE causa.valido = true")
+	Collection<Causa> findCausaByValidoTrue();
+
 }

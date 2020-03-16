@@ -15,4 +15,6 @@ public interface CausaRepository extends CrudRepository<Causa, Integer> {
 	
 	Collection<Causa> findCausaByValidoFalse() throws DataAccessException;
 
+	Collection<Causa> findCausaByValidoTrue() throws DataAccessException;
+
 }
