@@ -50,8 +50,6 @@
                 <td>
                     <c:out value="${citaOperacion.cantidadPersonal}"/>
                 </td>
-
-
             </tr>
         </c:forEach>
         </tbody>
