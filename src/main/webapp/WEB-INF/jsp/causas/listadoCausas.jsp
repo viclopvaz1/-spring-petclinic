@@ -13,9 +13,9 @@
     <table id="causasTable" class="table table-striped">
         <thead>
         <tr>
+        	<th>ONG</th>
          	<th>Fecha de comienzo</th>
-        	<th>Fecha de finalización</th> 
-            <th>ONG</th>
+        	<th>Fecha de finalización</th>  
             <th>Objetivo</th>
             <th>Dinero recaudado</th>
         </tr>
@@ -23,15 +23,18 @@
         <tbody>
         <c:forEach items="${causas}" var="causa">
             <tr>
+            <td>
+            <spring:url value="/causa/{id}" var="causaUrl">
+                        <spring:param name="id" value="${causa.id}"/>
+                    </spring:url>
+                 <a href="${fn:escapeXml(causaUrl)}"><c:out value="${causa.ong}"/></a>
+              </td>
               	<td>
                     <c:out value="${causa.fechaInicio}"/>
                 </td>
                 <td>
                     <c:out value="${causa.fechaFin}"/>
                 </td> 
-                <td>
-                    <c:out value="${causa.ong}"/>
-                </td>
                 <td>
                     <c:out value="${causa.objetivo}"/>
                 </td>

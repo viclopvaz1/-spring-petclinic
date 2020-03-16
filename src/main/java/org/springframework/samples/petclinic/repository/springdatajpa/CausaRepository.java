@@ -11,4 +11,6 @@ public interface CausaRepository extends CrudRepository<Causa, Integer> {
 
 	Collection<Causa> findCausaByOng(String ong) throws DataAccessException;
 
+	Collection<Causa> findCausaByValidoTrue() throws DataAccessException;
+
 }
