@@ -10,6 +10,10 @@ import org.springframework.samples.petclinic.model.Causa;
 public interface CausaRepository extends CrudRepository<Causa, Integer> {
 
 	Collection<Causa> findCausaByOng(String ong) throws DataAccessException;
+	
+	Causa findById(int id) throws DataAccessException;
+	
+	Collection<Causa> findCausaByValidoFalse() throws DataAccessException;
 
 	Collection<Causa> findCausaByValidoTrue() throws DataAccessException;
 

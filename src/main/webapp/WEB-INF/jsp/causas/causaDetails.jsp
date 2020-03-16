@@ -11,6 +11,7 @@
 
     <table class="table table-striped">
         <tr>
+
             <th>Fecha de inicio</th>
             <td><b><c:out value="${causa.fechaInicio}"/></b></td>
         </tr>
@@ -46,6 +47,11 @@
     </spring:url>
     <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete </a>
 
+        <spring:url value="/donacion/{causaId}/new" var="causaUrl">
+        	<spring:param name="causaId" value="${causa.id}"/>
+   		</spring:url>
+   		<a href="${fn:escapeXml(causaUrl)}" class="btn btn-default">Hacer Donacion</a>
+
 
     <br/>
     <br/>
@@ -53,3 +59,4 @@
    
 
 </petclinic:layout>
+

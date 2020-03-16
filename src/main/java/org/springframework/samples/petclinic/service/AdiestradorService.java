@@ -2,15 +2,21 @@ package org.springframework.samples.petclinic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adiestrador;
-import org.springframework.samples.petclinic.repository.springdatajpa.AdiestradorRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataAdiestradorRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AdiestradorService {
 	
+
+	private SpringDataAdiestradorRepository adiestradorRepo;
+	
 	@Autowired
-	private AdiestradorRepository adiestradorRepo;
+	public AdiestradorService(final SpringDataAdiestradorRepository stringAdiestradorRepo) {
+		this.adiestradorRepo = stringAdiestradorRepo;
+	}
 	
 	@Transactional
 	public int adiestradorCount() {
@@ -22,5 +28,9 @@ public class AdiestradorService {
 		return adiestradorRepo.findAll();
 	}
 	
+	@Transactional
+	public Iterable<Adiestrador> findAdiestradorByEstrellas(final Integer estrellas){
+		return adiestradorRepo.findAdiestradorByEstrellas(estrellas);
+	}
 
 }
