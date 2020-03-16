@@ -24,6 +24,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -31,9 +32,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
+
+import lombok.Data;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -69,9 +74,9 @@ public class Owner extends Person {
 	private User user;
 	//
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-	private Set<CitaAdiestramiento> citasAdiestramiento;
-	
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+//	private List<CitaAdiestramiento> citasAdiestramiento;
+//	
 	public String getAddress() {
 		return this.address;
 	}
@@ -169,18 +174,18 @@ public class Owner extends Person {
 		}
 		return null;
 	}
+//	
+//	protected List<CitaAdiestramiento> getCitasAdiestramientosInternal() {
+//		if (this.citasAdiestramiento == null) {
+//			this.citasAdiestramiento = new ArrayList<CitaAdiestramiento>();
+//		}
+//		return this.citasAdiestramiento;
+//	}
+//
+//	protected void setCitasAdiestramientosInternal(List<CitaAdiestramiento> citasAdiestramiento) {
+//		this.citasAdiestramiento = citasAdiestramiento;
+//	}
 	
-	protected Set<CitaAdiestramiento> getCitasAdiestramientosInternal() {
-		if (this.citasAdiestramiento == null) {
-			this.citasAdiestramiento = new HashSet<>();
-		}
-		return this.citasAdiestramiento;
-	}
-
-	protected void setCitasAdiestramientosInternal(Set<CitaAdiestramiento> citasAdiestramiento) {
-		this.citasAdiestramiento = citasAdiestramiento;
-	}
-
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)
