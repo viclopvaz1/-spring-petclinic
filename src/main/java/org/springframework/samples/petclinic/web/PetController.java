@@ -26,6 +26,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -121,6 +122,16 @@ public class PetController {
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
+	
+	
+    @GetMapping("/pets/{petId}")
+ 	public ModelAndView showCitasAdiestramientoPet(@PathVariable("petId") int petId) {
+ 		ModelAndView mav = new ModelAndView("citasAdiestramiento/listadoCitasAdiestramientoPets");
+ 		mav.addObject(this.petService.findPetById(petId));
+ 		return mav;
+ 	}
+	
+	
 
     /**
      *

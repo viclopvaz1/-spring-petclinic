@@ -30,7 +30,7 @@
                     <c:out value="${citaOperacion.pet}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.type}"/>
+                    <c:out value="${citaOperacion.pet.type}"/>
                 </td>
                 <td>
                     <c:out value="${citaOperacion.fechaInicio}"/>
