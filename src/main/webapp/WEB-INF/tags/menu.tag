@@ -34,6 +34,12 @@
 					<span>Find owners</span>
 				</petclinic:menuItem>
 				
+				<petclinic:menuItem active="${name eq 'citasAdiestramiento'}" url="/citasAdiestramiento/find"
+					title="find TYPES">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Find types</span>
+				</petclinic:menuItem>
+				
 				
 				
 				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
@@ -73,6 +79,13 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span >Citas Operaciones</span>
 				</petclinic:menuItem>
+				
+					<petclinic:menuItem active="${name eq 'citasAdiestramiento'}" url="/citasAdiestramiento/all"
+					title="citasAdiestramiento">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Citas Adiestramiento</span>
+				</petclinic:menuItem>
+				
 
 			</ul>
 

@@ -27,9 +27,7 @@ public class Cita extends BaseEntity {
 //	@JoinColumn(name = "person_id")
 //	private Person person;
 	
-	@ManyToOne
-	@JoinColumn(name = "type_id")
-	private PetType type;
+	
 	
 	@Column(name = "fecha")        
 	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")

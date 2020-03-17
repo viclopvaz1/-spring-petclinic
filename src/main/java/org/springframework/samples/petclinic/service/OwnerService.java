@@ -42,7 +42,7 @@ import org.springframework.util.StringUtils;
  */
 @Service
 public class OwnerService {
-
+	
 	private OwnerRepository ownerRepository;	
 	
 	@Autowired
@@ -58,12 +58,12 @@ public class OwnerService {
 
 	@Transactional(readOnly = true)
 	public Owner findOwnerById(int id) throws DataAccessException {
-		return ownerRepository.findById(id);
+		return this.ownerRepository.findById(id);
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException {
-		return ownerRepository.findByLastName(lastName);
+		return this.ownerRepository.findByLastName(lastName);
 	}
 
 	@Transactional
