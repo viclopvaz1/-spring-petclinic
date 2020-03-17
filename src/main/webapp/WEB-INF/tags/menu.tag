@@ -85,11 +85,7 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span >Citas Adiestramiento</span>
 				</petclinic:menuItem>
-						<petclinic:menuItem active="${name eq 'citasAdiestramiento'}" url="/citasAdiestramiento/new"
-					title="citasAdiestramiento">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span >Citas Adiestramiento crear</span>
-				</petclinic:menuItem>
+				
 
 			</ul>
 

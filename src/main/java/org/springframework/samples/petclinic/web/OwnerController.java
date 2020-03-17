@@ -139,12 +139,8 @@ public class OwnerController {
 		return mav;
 	}
 
-	@GetMapping("/owners/{ownerId}/cita")
-	public ModelAndView showCitasAdiestramientoOwner(@PathVariable("ownerId") int ownerId) {
-		ModelAndView mav = new ModelAndView("citasAdiestramiento/listadoCitasAdiestramientoPets");
-		mav.addObject(this.ownerService.findOwnerById(ownerId));
-		return mav;
 
-	}
+
+	
 
 }

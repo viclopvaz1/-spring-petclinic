@@ -88,12 +88,7 @@
                                 </spring:url>
                                 <a href="${fn:escapeXml(visitUrl)}">Add Visit</a>
                             </td>
-                            <td>
-                                <spring:url value="/owners/{ownerId}/cita" var="ownerUrl">
-                                    <spring:param name="ownerId" value="${owner.id}"/>
-                                </spring:url>
-                                <a href="${fn:escapeXml(ownerUrl)}">Citas Adiestramiento</a>
-                            </td>
+                         
                         </tr>
                     </table>
                 </td>

@@ -13,9 +13,17 @@
     <form:form modelAttribute="citaAdiestramiento" class="form-horizontal" id="add-citaAdiestramiento-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Pet" name="pet.id"/>
-            <petclinic:inputField label="Fecha inicio" name="cita.fechaInicio"/>
-            <petclinic:inputField label="Adiestrador" name="adiestrador"/>
-            <petclinic:inputField label="Tipo Adiestramiento" name="tipoAdiestramiento"/>
+            <petclinic:selectField label="Adiestrador" name="adiestrador"/>
+           
+           <select name="adiestrador">
+        <div class="control-group">
+                    <petclinic:selectField name="Persona" label="adiestradir" names="${adiestrador}" size="2"/>
+                </div>
+        </select>
+        
+        
+           
+            <petclinic:selectField label="Tipo Adiestramiento" name="tipoAdiestramiento"/>
 
         </div>
         <div class="form-group">

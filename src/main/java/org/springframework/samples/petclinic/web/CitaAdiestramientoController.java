@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/citasAdiestramiento")
 public class CitaAdiestramientoController {
 
-	private static final String VIEWS_CITAADIESTRAMIENTO_CREATE_FORM = "users/createCitaAdiestramientoForm";
 
 	@Autowired
 	private CitaAdiestramientoService ciService;
@@ -41,23 +40,6 @@ public class CitaAdiestramientoController {
 		Iterable<CitaAdiestramiento> citasAdiestramiento = ciService.findAll();
 		modelMap.addAttribute("citasAdiestramiento", citasAdiestramiento);
 		return vista;
-	}
-
-	@GetMapping(value = "/new")
-	public String initCreationForm(Map<String, Object> model) {
-		CitaAdiestramiento citaAdiestramiento = new CitaAdiestramiento();
-		model.put("citaAdiestramiento", citaAdiestramiento);
-		return VIEWS_CITAADIESTRAMIENTO_CREATE_FORM;
-	}
-
-	@PostMapping(value = "/new")
-	public String processCreationForm(@Valid CitaAdiestramiento citaAdiestramiento, BindingResult result) {
-		if (result.hasErrors()) {
-			return VIEWS_CITAADIESTRAMIENTO_CREATE_FORM;
-		} else {
-			this.ciService.saveCitaAdiestramiento(citaAdiestramiento);
-			return "redirect:/citasAdiestramiento/";
-		}
 	}
 
 	@GetMapping(value = "/find")
