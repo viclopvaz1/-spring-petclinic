@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,9 +25,11 @@ public class Cita extends BaseEntity {
 //	@ManyToOne
 //	@JoinColumn(name = "person_id")
 //	private Person person;
-	
-	
-	
+
+//	@ManyToOne
+//	@JoinColumn(name = "type_id")
+//	private PetType type;
+//	
 	@Column(name = "fecha")        
 	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
 	private LocalDateTime fechaInicio;

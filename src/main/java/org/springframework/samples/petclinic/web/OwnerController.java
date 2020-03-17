@@ -67,6 +67,7 @@ public class OwnerController {
 	@PostMapping(value = "/owners/new")
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
 		if (result.hasErrors()) {
+//			modelMap.addAttribute("owner", owner);	, ModelMap modelMap
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		} else {
 			// creating owner, user and authorities

@@ -70,7 +70,7 @@ INSERT INTO causa VALUES (3, 150, '2020-05-11', '2020-01-11', 1200, 'Mi super ma
 INSERT INTO donacion VALUES (1, 120, 1, 'vet1');
 
 INSERT INTO tipos_Operaciones VALUES (1, 'Cirugia basica');
-INSERT INTO tipos_Operaciones VALUES (2, 'Cirugia dental');
+INSERT INTO tipos_Operaciones VALUES (2, 'hola');
 INSERT INTO tipos_Operaciones VALUES (3, 'Cirugia de emergencia');
 INSERT INTO tipos_Operaciones VALUES (4, 'Cirugia visual');
 
@@ -79,10 +79,10 @@ INSERT INTO tipos_Adiestramiento VALUES (2, 'Adiestramiento en obediencia basica
 INSERT INTO tipos_Adiestramiento VALUES (3, 'Adiestramiento asistencia y terapia');
 INSERT INTO tipos_Adiestramiento VALUES (4, 'Adiestramiento para funciones especiales');
 
-INSERT INTO citas_Operaciones VALUES (1,30,'2020-12-29 17:00',50.0,3,3,3,2);
-INSERT INTO citas_Operaciones VALUES (2,30,'2020-12-9 17:00', 50.0,3,2,1,1);
-INSERT INTO citas_Operaciones VALUES (3,30,'2020-12-11 17:00',50.0,3,1,2,3);
-INSERT INTO citas_Operaciones VALUES (4,30,'2020-12-12 17:00',50.0,3,4,4,4);
+INSERT INTO citas_Operaciones VALUES (1,30,'2020-12-29 17:00',50.0, 3, 3, 2, 2);
+INSERT INTO citas_Operaciones VALUES (2,30,'2020-12-9 17:00',50.0, 3, 2, 4, 1);
+INSERT INTO citas_Operaciones VALUES (3,30,'2020-12-11 17:00',50.0, 3, 1, 2, 3);
+INSERT INTO citas_Operaciones VALUES (4,30,'2020-12-12 17:00',50.0, 3, 4, 1, 2);
 
 INSERT INTO citas_Adiestramiento VALUES (1,30,'2018-12-12 17:00',50.0,3,1,1,2);
 INSERT INTO citas_Adiestramiento VALUES (2,30,'2019-12-12 17:00',50.0,2,1,2,1);

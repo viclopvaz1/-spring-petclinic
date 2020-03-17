@@ -42,13 +42,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/citasAdiestramiento/new").permitAll()
 				.antMatchers("/citasAdiestramiento/find").permitAll()
 				.antMatchers("/citasAdiestramiento/all").permitAll()
-
-
-
 				.antMatchers("/adiestradores").permitAll()
-        .antMatchers("/causa").permitAll()
-        .antMatchers("/causa/**").permitAll()
-
+        		.antMatchers("/causa").permitAll()
+        		.antMatchers("/causa/**").permitAll()
+				.antMatchers("/citasOperaciones/**").hasAnyAuthority("vet","admin")
+				.antMatchers("/adiestradores").permitAll()
+				.antMatchers("/causa").permitAll()
+				.antMatchers("/causa/**").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
