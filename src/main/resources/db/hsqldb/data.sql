@@ -70,7 +70,7 @@ INSERT INTO causa VALUES (3, 150, '2020-05-11', '2020-01-11', 1200, 'Mi super ma
 INSERT INTO donacion VALUES (1, 120, 1, 'vet1');
 
 INSERT INTO tipos_Operaciones VALUES (1, 'Cirugia basica');
-INSERT INTO tipos_Operaciones VALUES (2, 'hola');
+INSERT INTO tipos_Operaciones VALUES (2, 'Cirugia dental');
 INSERT INTO tipos_Operaciones VALUES (3, 'Cirugia de emergencia');
 INSERT INTO tipos_Operaciones VALUES (4, 'Cirugia visual');
 
