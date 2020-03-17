@@ -84,8 +84,8 @@ INSERT INTO citas_Operaciones VALUES (2,30,'2020-12-9 17:00', 50.0,3,2,1,1);
 INSERT INTO citas_Operaciones VALUES (3,30,'2020-12-11 17:00',50.0,3,1,2,3);
 INSERT INTO citas_Operaciones VALUES (4,30,'2020-12-12 17:00',50.0,3,4,4,4);
 
-INSERT INTO citas_Adiestramiento VALUES (1,30,'2020-12-12 17:00',50.0,'dog',3,1,1,2);
-INSERT INTO citas_Adiestramiento VALUES (2,30,'2020-12-12 17:00',50.0,'dog',2,1,2,1);
-INSERT INTO citas_Adiestramiento VALUES (3,30,'2020-12-12 17:00',50.0,'cat',1,2,1,2);
-INSERT INTO citas_Adiestramiento VALUES (4,30,'2020-12-12 17:00',50.0,'cat',4,2,2,2);
+INSERT INTO citas_Adiestramiento VALUES (1,30,'2018-12-12 17:00',50.0,3,1,1,2);
+INSERT INTO citas_Adiestramiento VALUES (2,30,'2019-12-12 17:00',50.0,2,1,2,1);
+INSERT INTO citas_Adiestramiento VALUES (3,30,'2020-12-12 17:00',50.0,1,2,1,2);
+INSERT INTO citas_Adiestramiento VALUES (4,30,'2020-12-12 17:00',50.0,4,2,2,2);
 

@@ -26,7 +26,7 @@ public interface SpringDataCitaAdiestramientoRepository  extends CitaAdiestramie
 
 	@Override
 	@Query("SELECT citaAdiestramiento FROM CitaAdiestramiento citaAdiestramiento WHERE citaAdiestramiento.pet.type.name LIKE :tipoPet%")
-	Collection<CitaAdiestramiento> findCitaAdiestramientoByAntonio(@Param("tipoPet") String tipoPet);
+	Collection<CitaAdiestramiento> findCitaAdiestramientoByPet(@Param("tipoPet") String tipoPet);
 	//"SELECT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.tipoOperacion.name LIKE :tipoOperacion%
 }
 //@Override

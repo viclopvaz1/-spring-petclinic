@@ -78,7 +78,7 @@ public class CitaAdiestramientoController {
 		// find owners by last name
 		String tipo = citaAdiestramiento.getPet().getType().getName();
 		
-		Collection<CitaAdiestramiento> results = this.ciService.findCitaAdiestramientoByAntonio(tipo);
+		Collection<CitaAdiestramiento> results = this.ciService.findCitaAdiestramientoByPet(tipo);
 		if (results.isEmpty()) {
 			// no owners found
 			result.rejectValue("pet.type.name", "notFound", "not found");

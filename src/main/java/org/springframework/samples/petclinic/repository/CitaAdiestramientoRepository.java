@@ -11,6 +11,6 @@ public interface CitaAdiestramientoRepository extends CrudRepository<CitaAdiestr
 	
 	//void save(CitaAdiestramiento citaAdiestramiento) throws DataAccessException;
 
-	Collection<CitaAdiestramiento> findCitaAdiestramientoByAntonio(String tipo) throws DataAccessException;
+	Collection<CitaAdiestramiento> findCitaAdiestramientoByPet(String tipo) throws DataAccessException;
 
 }

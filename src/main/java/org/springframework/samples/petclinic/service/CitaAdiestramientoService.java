@@ -43,8 +43,8 @@ public class CitaAdiestramientoService {
 
 	}
 	@Transactional
-	public Collection<CitaAdiestramiento> findCitaAdiestramientoByAntonio(final String tipo) throws DataAccessException {
-		return this.citaAdiestramientoRepository.findCitaAdiestramientoByAntonio(tipo);
+	public Collection<CitaAdiestramiento> findCitaAdiestramientoByPet(final String tipo) throws DataAccessException {
+		return this.citaAdiestramientoRepository.findCitaAdiestramientoByPet(tipo);
 	}
 
 	

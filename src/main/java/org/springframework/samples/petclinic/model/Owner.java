@@ -151,6 +151,14 @@ public class Owner extends Person {
 		return null;
 	}
 
+	public Set<CitaAdiestramiento> getCitasAdiestramiento() {
+		return citasAdiestramiento;
+	}
+
+	public void setCitasAdiestramiento(Set<CitaAdiestramiento> citasAdiestramiento) {
+		this.citasAdiestramiento = citasAdiestramiento;
+	}
+
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
 	 * @param name to test

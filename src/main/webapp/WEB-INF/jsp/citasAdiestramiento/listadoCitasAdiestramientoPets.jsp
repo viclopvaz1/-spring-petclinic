@@ -13,27 +13,22 @@
 	<table id="citasAdiestramientoPetsTable" class="table table-striped">
 		<thead>
 			<tr>
-				<th>Nombre Animal</th>
-				<th>Tipo Animal</th>
+		
 				<th style="width: 150px;">Fecha de Inicio</th>
 				<th>Duracion</th>
 				<th>Precio</th>
-				<th>Propietario</th>
 				<th>Tipo Adiestramiento</th>
 				<th>Adiestrador</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${citasAdiestramiento}" var="citaAdiestramiento">
+			<c:forEach items="${owner.citasAdiestramiento}" var="citaAdiestramientoPet">
 				<tr>
-					<td><c:out value="${citaAdiestramiento.pet}" /></td>
-					<td><c:out value="${citaAdiestramiento.pet.type}" /></td>  
-					<td><c:out value="${citaAdiestramiento.fechaInicio}" /></td>
-					<td><c:out value="${citaAdiestramiento.duracion}" /></td>
-					<td><c:out value="${citaAdiestramiento.precio}" /></td>
-					<td><c:out value="${citaAdiestramiento.owner.firstName}" /></td>
-					<td><c:out value="${citaAdiestramiento.tipoAdiestramiento}" /></td>
-					<td><c:out value="${citaAdiestramiento.adiestrador.firstName}" /></td>
+					<td><c:out value="${citaAdiestramientoPet.fechaInicio}" /></td>
+					<td><c:out value="${citaAdiestramientoPet.duracion}" /></td>
+					<td><c:out value="${citaAdiestramientoPet.precio}" /></td>
+					<td><c:out value="${citaAdiestramientoPet.tipoAdiestramiento}" /></td>
+					<td><c:out value="${citaAdiestramientoPet.adiestrador.firstName}" /></td>
 
 
 				</tr>

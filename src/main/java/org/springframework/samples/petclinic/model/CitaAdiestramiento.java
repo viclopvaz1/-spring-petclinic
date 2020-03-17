@@ -25,7 +25,5 @@ public class CitaAdiestramiento extends Cita {
 	@JoinColumn(name = "adiestrador_id")
 	private Adiestrador adiestrador;
 
-	@Column(name = "antonio")
-	private String antonio;
 
 }
