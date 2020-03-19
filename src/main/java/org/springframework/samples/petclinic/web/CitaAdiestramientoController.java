@@ -3,19 +3,14 @@ package org.springframework.samples.petclinic.web;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.CitaAdiestramiento;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CitaAdiestramientoService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -32,7 +27,7 @@ public class CitaAdiestramientoController {
 		this.citaAdiestramientoService = citaAdiestramientoService;
 	}
 	
-	@GetMapping(value = "/citasAdiestramiento/{ownerId}")
+	@GetMapping(value = "/{ownerId}")
 	public String listadoCitasAdiestramientoPorOwnerId(final ModelMap modelMap, @PathVariable("ownerId") final int ownerId) {
 		Collection<CitaAdiestramiento> citasAdiestramiento = this.citaAdiestramientoService.findCitaAdiestramientoByOwnerId(ownerId);
 		String vista = "citasAdiestramiento/listadoCitasAdiestramientoOwnersId";
@@ -45,7 +40,7 @@ public class CitaAdiestramientoController {
 	public String listadoCitasAdiestramiento(ModelMap modelMap) {
 
 		String vista = "citasAdiestramiento/listadoCitasAdiestramiento";
-		Iterable<CitaAdiestramiento> citasAdiestramiento = ciService.findAll();
+		Iterable<CitaAdiestramiento> citasAdiestramiento = citaAdiestramientoService.findAll();
 		modelMap.addAttribute("citasAdiestramiento", citasAdiestramiento);
 		return vista;
 	}
@@ -68,7 +63,7 @@ public class CitaAdiestramientoController {
 		// find owners by last name
 		String tipo = citaAdiestramiento.getPet().getType().getName();
 		
-		Collection<CitaAdiestramiento> results = this.ciService.findCitaAdiestramientoByPet(tipo);
+		Collection<CitaAdiestramiento> results = this.citaAdiestramientoService.findCitaAdiestramientoByPet(tipo);
 		if (results.isEmpty()) {
 			// no owners found
 			result.rejectValue("pet.type.name", "notFound", "not found");
