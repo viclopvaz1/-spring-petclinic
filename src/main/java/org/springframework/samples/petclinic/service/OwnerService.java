@@ -58,22 +58,22 @@ public class OwnerService {
 
 	@Transactional(readOnly = true)
 	public Owner findOwnerById(int id) throws DataAccessException {
-		return ownerRepository.findById(id);
+		return this.ownerRepository.findById(id);
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException {
-		return ownerRepository.findByLastName(lastName);
+		return this.ownerRepository.findByLastName(lastName);
 	}
 
 	@Transactional
 	public void saveOwner(Owner owner) throws DataAccessException {
 		//creating owner
-		ownerRepository.save(owner);		
+		this.ownerRepository.save(owner);		
 		//creating user
-		userService.saveUser(owner.getUser());
+		this.userService.saveUser(owner.getUser());
 		//creating authorities
-		authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
+		this.authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
 	}		
 
 }

@@ -24,7 +24,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -171,20 +170,20 @@ public class Owner extends Person {
 		return null;
 	}
 	
-	protected Set<CitaAdiestramiento> getCitasOperacionInternal() {
+	protected Set<CitaAdiestramiento> getCitasAdiestramientoInternal() {
 		if (this.citasAdiestramiento == null) {
 			this.citasAdiestramiento = new HashSet<>();
 		}
 		return this.citasAdiestramiento;
 	}
 
-	protected void setCitasOperacionInternal(Set<CitaAdiestramiento> citasAdiestramiento) {
+	protected void setCitasCitasAdiestramientoInternal(Set<CitaAdiestramiento> citasAdiestramiento) {
 		this.citasAdiestramiento = citasAdiestramiento;
 	}
 
 	public List<CitaAdiestramiento> getCitasAdiestramiento() {
-		List<CitaAdiestramiento> sortedCitasAdiestramiento = new ArrayList<>(getCitasOperacionInternal());
-		PropertyComparator.sort(sortedCitasAdiestramiento, new MutableSortDefinition("date", true, true));
+		List<CitaAdiestramiento> sortedCitasAdiestramiento = new ArrayList<>(getCitasAdiestramientoInternal());
+		PropertyComparator.sort(sortedCitasAdiestramiento, new MutableSortDefinition("fechaInicio", true, true));
 		return Collections.unmodifiableList(sortedCitasAdiestramiento);
 	}
 
