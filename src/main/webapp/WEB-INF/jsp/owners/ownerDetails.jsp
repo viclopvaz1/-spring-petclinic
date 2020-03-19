@@ -38,6 +38,11 @@
         <spring:param name="ownerId" value="${owner.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Pet</a>
+    
+    <spring:url value="/citasAdiestramiento/{ownerId}" var="citaUrl">
+         <spring:param name="ownerId" value="${owner.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(citaUrl)}" class="btn btn-default">Citas Adiestramiento</a>
 
     <br/>
     <br/>

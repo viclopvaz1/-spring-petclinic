@@ -23,14 +23,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CitaAdiestramientoController {
 
 
+@Autowired
+	private CitaAdiestramientoService citaAdiestramientoService;
+
+
 	@Autowired
-	private CitaAdiestramientoService ciService;
+	public CitaAdiestramientoController(final CitaAdiestramientoService citaAdiestramientoService) {
+		this.citaAdiestramientoService = citaAdiestramientoService;
+	}
 	
-	
-	@Autowired
-    public CitaAdiestramientoController(final CitaAdiestramientoService citaService, final UserService userService, final AuthoritiesService authoritiesService) {
-        this.ciService = citaService;
-    }
+	@GetMapping(value = "/citasAdiestramiento/{ownerId}")
+	public String listadoCitasAdiestramientoPorOwnerId(final ModelMap modelMap, @PathVariable("ownerId") final int ownerId) {
+		Collection<CitaAdiestramiento> citasAdiestramiento = this.citaAdiestramientoService.findCitaAdiestramientoByOwnerId(ownerId);
+		String vista = "citasAdiestramiento/listadoCitasAdiestramientoOwnersId";
+		modelMap.addAttribute("citasAdiestramiento", citasAdiestramiento);
+		return vista;
+	}
 	
 
 	@GetMapping(value = "/all")
