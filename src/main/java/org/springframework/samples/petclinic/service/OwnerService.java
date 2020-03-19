@@ -42,7 +42,7 @@ import org.springframework.util.StringUtils;
  */
 @Service
 public class OwnerService {
-
+	
 	private OwnerRepository ownerRepository;	
 	
 	@Autowired

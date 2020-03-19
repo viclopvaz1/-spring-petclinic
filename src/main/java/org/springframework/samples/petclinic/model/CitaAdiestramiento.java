@@ -13,17 +13,18 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class CitaAdiestramiento extends Cita {
-	
+
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "tipoAdiestramiento_id")
 	private TipoAdiestramiento tipoAdiestramiento;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "adiestrador_id")
 	private Adiestrador adiestrador;
+
 
 }

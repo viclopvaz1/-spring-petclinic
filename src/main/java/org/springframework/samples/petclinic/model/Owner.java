@@ -72,6 +72,11 @@ public class Owner extends Person {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private Set<CitaAdiestramiento> citasAdiestramiento;
 	
+
+	
+	
+	
+	
 	public String getAddress() {
 		return this.address;
 	}
@@ -150,6 +155,7 @@ public class Owner extends Person {
 		}
 		return null;
 	}
+
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.

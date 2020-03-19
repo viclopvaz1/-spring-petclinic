@@ -22,7 +22,7 @@ public class Cita extends BaseEntity {
 //	@ManyToOne
 //	@JoinColumn(name = "person_id")
 //	private Person person;
-	
+
 //	@ManyToOne
 //	@JoinColumn(name = "type_id")
 //	private PetType type;
