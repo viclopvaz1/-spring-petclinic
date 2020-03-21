@@ -11,7 +11,6 @@ import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Causa;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CausaService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,16 +26,16 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/causa")
 public class CausaController {
 
-	@Autowired
 	private CausaService		causaService;
 
-	@Autowired
-	private AuthoritiesService	authoritiesService;
+	final AuthoritiesService	authoritiesService;
 
 
 	@Autowired
-	public CausaController(final CausaService causaService, final UserService userService, final AuthoritiesService authoritiesService) {
+	public CausaController(final CausaService causaService, final AuthoritiesService authoritiesService) {
 		this.causaService = causaService;
+
+		this.authoritiesService = authoritiesService;
 	}
 
 	@GetMapping
@@ -49,7 +48,7 @@ public class CausaController {
 	@GetMapping(value = "/propias")
 	public String listadoCausasPorDonacion(final ModelMap modelMap) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		Iterable<Causa> causas = this.causaService.findCausaByOng(username);
+		Iterable<Causa> causas = this.causaService.findCausaByUsername(username);
 		String vista = "causas/listadoCausas";
 		modelMap.addAttribute("causas", causas);
 		return vista;

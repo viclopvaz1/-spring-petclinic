@@ -14,9 +14,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "causa")
+@Data
 public class Causa extends BaseEntity {
 
 	@Column(name = "fecha_inicio")

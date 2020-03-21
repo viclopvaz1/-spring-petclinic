@@ -1,10 +1,11 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Causa;
-import org.springframework.samples.petclinic.repository.springdatajpa.CausaRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CausaService {
 
-	private CausaRepository causaRepo;
+	private SpringDataCausaRepository causaRepo;
 
 
 	@Autowired
-	public CausaService(final SpringDataCausaRepository stringCausaRepo) {
-		this.causaRepo = stringCausaRepo;
+	public CausaService(final SpringDataCausaRepository springCausaRepo) {
+		this.causaRepo = springCausaRepo;
 	}
 
 	@Transactional
@@ -48,12 +49,12 @@ public class CausaService {
 	}
 
 	@Transactional
-	public Iterable<Causa> findCausaByOng(final String username) {
-		return this.causaRepo.findCausaByOng(username);
+	public Collection<Causa> findCausaByUsername(final String username) {
+		return this.causaRepo.findCausaByDonaciones(username);
 	}
 
-	@Transactional(readOnly = true)
-	public Iterable<Causa> findCausaByValido() throws DataAccessException {
+	@Transactional
+	public Collection<Causa> findCausaByValido() throws DataAccessException {
 		return this.causaRepo.findCausaByValidoFalse();
 	}
 
