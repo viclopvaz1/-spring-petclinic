@@ -1,9 +1,10 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataAdiestradorRepository;
-import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +30,9 @@ public class AdiestradorService {
 	}
 	
 	@Transactional
-	public Iterable<Adiestrador> findAdiestradorByEstrellas(final Integer estrellas){
-		return adiestradorRepo.findAdiestradorByEstrellas(estrellas);
+	public Collection<Adiestrador> findAdiestradorByEstrellas(final Integer estrellas){
+			return adiestradorRepo.findAdiestradorByEstrellas(estrellas);
+		
 	}
 
 }
