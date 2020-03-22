@@ -22,6 +22,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Causa;
+import org.springframework.samples.petclinic.repository.CausaRepository;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 
 /**
@@ -35,9 +36,10 @@ public interface SpringDataCausaRepository extends CausaRepository, Repository<C
 
 	//SELECT * FROM Causa c WHERE c.id IN(SELECT causa_id FROM Donacion a WHERE a.persona_username=:username)
 	//	SELECT * FROM Causa causa WHERE causa.id IN(SELECT donacion.causa_id FROM Donacion donacion WHERE donacion.persona_username LIKE :username%)
+
 	@Override
-	@Query("SELECT causa FROM Causa causa WHERE causa.id IN(SELECT donacion.causa.id FROM Donacion donacion WHERE donacion.user.username LIKE :ong%) AND causa.valido = true")
-	Collection<Causa> findCausaByOng(@Param("ong") String ong);
+	@Query("SELECT causa FROM Causa causa WHERE causa.id IN(SELECT donacion.causa.id FROM Donacion donacion WHERE donacion.user.username LIKE :username%) AND causa.valido = true")
+	Collection<Causa> findCausaByDonaciones(@Param("username") String username);
 
 	@Override
 	@Query("SELECT causa FROM Causa causa WHERE causa.id =:id")

@@ -1,5 +1,5 @@
 
-package org.springframework.samples.petclinic.repository.springdatajpa;
+package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
 
@@ -9,10 +9,10 @@ import org.springframework.samples.petclinic.model.Causa;
 
 public interface CausaRepository extends CrudRepository<Causa, Integer> {
 
-	Collection<Causa> findCausaByOng(String ong) throws DataAccessException;
-	
+	Collection<Causa> findCausaByDonaciones(String username) throws DataAccessException;
+
 	Causa findById(int id) throws DataAccessException;
-	
+
 	Collection<Causa> findCausaByValidoFalse() throws DataAccessException;
 
 	Collection<Causa> findCausaByValidoTrue() throws DataAccessException;

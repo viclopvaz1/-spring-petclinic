@@ -7,8 +7,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="causas">
-    <h2>Causas Validas</h2>
+<petclinic:layout pageName="causas validas">
+    <h2>Causas Válidas</h2>
 
     <table id="causasTable" class="table table-striped">
         <thead>
