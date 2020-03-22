@@ -8,12 +8,12 @@ INSERT INTO authorities VALUES ('owner1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities VALUES ('vet1','veterinarian');
 
-INSERT INTO vets VALUES (1, 'James', 'Carter', 2);
-INSERT INTO vets VALUES (2, 'Helen', 'Leary', 3);
-INSERT INTO vets VALUES (3, 'Linda', 'Douglas', 3);
-INSERT INTO vets VALUES (4, 'Rafael', 'Ortega', 3);
-INSERT INTO vets VALUES (5, 'Henry', 'Stevens', 2);
-INSERT INTO vets VALUES (6, 'Sharon', 'Jenkins', 4);
+INSERT INTO vets VALUES (1, 'James', 'Carter', 2,120);
+INSERT INTO vets VALUES (2, 'Helen', 'Leary', 3,120);
+INSERT INTO vets VALUES (3, 'Linda', 'Douglas', 3,120);
+INSERT INTO vets VALUES (4, 'Rafael', 'Ortega', 3,120);
+INSERT INTO vets VALUES (5, 'Henry', 'Stevens', 2,120);
+INSERT INTO vets VALUES (6, 'Sharon', 'Jenkins', 4,120);
 
 INSERT INTO specialties VALUES (1, 'radiology');
 INSERT INTO specialties VALUES (2, 'surgery');
@@ -32,16 +32,16 @@ INSERT INTO types VALUES (4, 'snake');
 INSERT INTO types VALUES (5, 'bird');
 INSERT INTO types VALUES (6, 'hamster');
 
-INSERT INTO owners VALUES (1, 'George', 'Franklin', '110 W. Liberty St.', 'Madison', '6085551023', 'owner1');
-INSERT INTO owners VALUES (2, 'Betty', 'Davis', '638 Cardinal Ave.', 'Sun Prairie', '6085551749', 'owner1');
-INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez', '2693 Commerce St.', 'McFarland', '6085558763', 'owner1');
-INSERT INTO owners VALUES (4, 'Harold', 'Davis', '563 Friendly St.', 'Windsor', '6085553198', 'owner1');
-INSERT INTO owners VALUES (5, 'Peter', 'McTavish', '2387 S. Fair Way', 'Madison', '6085552765', 'owner1');
-INSERT INTO owners VALUES (6, 'Jean', 'Coleman', '105 N. Lake St.', 'Monona', '6085552654', 'owner1');
-INSERT INTO owners VALUES (7, 'Jeff', 'Black', '1450 Oak Blvd.', 'Monona', '6085555387', 'owner1');
-INSERT INTO owners VALUES (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison', '6085557683', 'owner1');
-INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435', 'owner1');
-INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487', 'owner1');
+INSERT INTO owners VALUES (1, 'George', 'Franklin',120, '110 W. Liberty St.', 'Madison', '6085551023', 'owner1');
+INSERT INTO owners VALUES (2, 'Betty', 'Davis',120, '638 Cardinal Ave.', 'Sun Prairie', '6085551749', 'owner1');
+INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez',120, '2693 Commerce St.', 'McFarland', '6085558763', 'owner1');
+INSERT INTO owners VALUES (4, 'Harold', 'Davis',120, '563 Friendly St.', 'Windsor', '6085553198', 'owner1');
+INSERT INTO owners VALUES (5, 'Peter', 'McTavish',120, '2387 S. Fair Way', 'Madison', '6085552765', 'owner1');
+INSERT INTO owners VALUES (6, 'Jean', 'Coleman',120, '105 N. Lake St.', 'Monona', '6085552654', 'owner1');
+INSERT INTO owners VALUES (7, 'Jeff', 'Black',120, '1450 Oak Blvd.', 'Monona', '6085555387', 'owner1');
+INSERT INTO owners VALUES (8, 'Maria', 'Escobito',0, '345 Maple St.', 'Madison', '6085557683', 'owner1');
+INSERT INTO owners VALUES (9, 'David', 'Schroeder',120, '2749 Blackhawk Trail', 'Madison', '6085559435', 'owner1');
+INSERT INTO owners VALUES (10, 'Carlos', 'Estaban',120, '2335 Independence La.', 'Waunakee', '6085555487', 'owner1');
 
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07', 1, 1);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', 6, 2);
@@ -62,11 +62,13 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
-INSERT INTO adiestrador VALUES (1, 'Alberto', 'Carter', 695857412, 1, 5);
-INSERT INTO adiestrador VALUES (2, 'Manuel', 'Carter', 954663625, 2, 2);
+INSERT INTO adiestrador VALUES (1, 'Alberto', 'Carter',120, 5,695857412,1);
+INSERT INTO adiestrador VALUES (2, 'Manuel', 'Carter',120, 2,954663625,2);
 
-INSERT INTO causa VALUES (1, 120, '2020-05-03', '2020-01-01', 1200, 'Mi mascota', true, 2);
-INSERT INTO causa VALUES (3, 150, '2020-05-11', '2020-01-11', 1200, 'Mi super mascota', true, 5);
+
+INSERT INTO causa VALUES (1, 120, '2020-05-03', '2020-01-01', 1200, 'Mi mascota', true);
+INSERT INTO causa VALUES (3, 150, '2020-05-11', '2020-01-11', 1200, 'Mi super mascota', true);
+
 INSERT INTO donacion VALUES (1, 120, 1, 'vet1');
 
 INSERT INTO tipos_Operaciones VALUES (1, 'Cirugia basica');

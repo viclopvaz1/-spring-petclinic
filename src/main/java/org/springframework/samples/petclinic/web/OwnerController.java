@@ -46,12 +46,9 @@ public class OwnerController {
 
 	private final OwnerService ownerService;
 	
-//	private final CitaAdiestramientoService citaAdiestramientoService;
-
 	@Autowired
 	public OwnerController(OwnerService ownerService, CitaAdiestramientoService citaAdiestramientoService, UserService userService, AuthoritiesService authoritiesService) {
 		this.ownerService = ownerService;
-//		this.citaAdiestramientoService = citaAdiestramientoService;
 	}
 
 	@InitBinder
@@ -125,7 +122,7 @@ public class OwnerController {
 		} else {
 			owner.setId(ownerId);
 			this.ownerService.saveOwner(owner);
-			return "redirect:/owners/{ownerId}";
+			return "redirect:/owners/" + owner.getId();
 		}
 	}
 
@@ -138,9 +135,7 @@ public class OwnerController {
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
-//		Collection<CitaAdiestramiento> citasAdiestramiento = this.citaAdiestramientoService.findCitaAdiestramientoByOwnerId(ownerId);
 		mav.addObject(this.ownerService.findOwnerById(ownerId));
-//		mav.addObject("citasAdiestramiento", citasAdiestramiento);
 		return mav;
 	}
 

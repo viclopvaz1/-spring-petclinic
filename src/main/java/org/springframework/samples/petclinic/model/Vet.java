@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.springframework.samples.petclinic.model;
 
 import java.util.ArrayList;
@@ -48,18 +49,18 @@ import org.springframework.beans.support.PropertyComparator;
 public class Vet extends Person {
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
-			inverseJoinColumns = @JoinColumn(name = "specialty_id"))
-	private Set<Specialty> specialties;
-	
+	@JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"), inverseJoinColumns = @JoinColumn(name = "specialty_id"))
+	private Set<Specialty>		specialties;
+
 	@Column(name = "estrellas")
-	private Integer estrellas;
-	
+	private Integer				estrellas;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
-	private Set<CitaOperacion> citasOperacion;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
-	private Set<Causa> causas;
+	private Set<CitaOperacion>	citasOperacion;
+
+
+	//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
+	//	private Set<Causa> causas;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
@@ -68,30 +69,30 @@ public class Vet extends Person {
 		return this.specialties;
 	}
 
-	protected void setSpecialtiesInternal(Set<Specialty> specialties) {
+	protected void setSpecialtiesInternal(final Set<Specialty> specialties) {
 		this.specialties = specialties;
 	}
 
 	@XmlElement
 	public List<Specialty> getSpecialties() {
-		List<Specialty> sortedSpecs = new ArrayList<>(getSpecialtiesInternal());
+		List<Specialty> sortedSpecs = new ArrayList<>(this.getSpecialtiesInternal());
 		PropertyComparator.sort(sortedSpecs, new MutableSortDefinition("name", true, true));
 		return Collections.unmodifiableList(sortedSpecs);
 	}
 
 	public int getNrOfSpecialties() {
-		return getSpecialtiesInternal().size();
+		return this.getSpecialtiesInternal().size();
 	}
 
-	public void addSpecialty(Specialty specialty) {
-		getSpecialtiesInternal().add(specialty);
+	public void addSpecialty(final Specialty specialty) {
+		this.getSpecialtiesInternal().add(specialty);
 	}
 
 	public Integer getEstrellas() {
-		return estrellas;
+		return this.estrellas;
 	}
 
-	public void setEstrellas(Integer estrellas) {
+	public void setEstrellas(final Integer estrellas) {
 		this.estrellas = estrellas;
 	}
 
@@ -122,17 +123,10 @@ public class Vet extends Person {
 	
 
 	public Set<CitaOperacion> getCitasOperacion() {
-		return citasOperacion;
+		return this.citasOperacion;
 	}
 
-	public void setCitasOperacion(Set<CitaOperacion> citasOperacion) {
+	public void setCitasOperacion(final Set<CitaOperacion> citasOperacion) {
 		this.citasOperacion = citasOperacion;
 	}
-
-
-//	public void addCitasOperaciones(CitaOperacion citaOperacion) {
-//		getCitasOperacion().add(citaOperacion);
-//		citaOperacion.setVet(this);
-//	}
-
 }
