@@ -107,5 +107,4 @@
 
         </c:forEach>
     </table>
-
 </petclinic:layout>

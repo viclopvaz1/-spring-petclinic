@@ -193,6 +193,14 @@ public class Owner extends Person {
 		return Collections.unmodifiableList(sortedCitasAdiestramiento);
 	}
 
+//	public Set<CitaAdiestramiento> getCitasAdiestramiento() {
+//		return citasAdiestramiento;
+//	}
+//
+//	public void setCitasAdiestramiento(Set<CitaAdiestramiento> citasAdiestramiento) {
+//		this.citasAdiestramiento = citasAdiestramiento;
+//	}
+
 	@Override
 	public String toString() {
 		return new ToStringCreator(this)

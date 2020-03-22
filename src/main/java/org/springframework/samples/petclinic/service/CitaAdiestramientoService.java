@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CitaAdiestramientoService {
 	
-private SpringDataCitaAdiestramientoRepository citaAdiestramientoRepo;
+	private SpringDataCitaAdiestramientoRepository citaAdiestramientoRepo;
 	
 	@Autowired
 	public CitaAdiestramientoService(final SpringDataCitaAdiestramientoRepository stringCitaAdiestramientoRepo) {

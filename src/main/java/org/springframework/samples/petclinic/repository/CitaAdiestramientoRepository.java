@@ -1,11 +1,9 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.samples.petclinic.model.CitaAdiestramiento;
-import org.springframework.samples.petclinic.model.TipoAdiestramiento;
 
 public interface CitaAdiestramientoRepository extends CrudRepository<CitaAdiestramiento, Integer> {
 	
@@ -13,6 +11,6 @@ public interface CitaAdiestramientoRepository extends CrudRepository<CitaAdiestr
 
 	Collection<CitaAdiestramiento> findCitaAdiestramientoByPet(String tipo) throws DataAccessException;
   
-  Collection<CitaAdiestramiento> findCitasAdiestramientoByOwnerId(int ownerId) throws DataAccessException;
-
+	Collection<CitaAdiestramiento> findCitasAdiestramientoByOwnerId(int ownerId) throws DataAccessException;
+	
 }
