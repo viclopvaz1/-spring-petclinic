@@ -55,14 +55,16 @@ class OwnerControllerTests {
 	@BeforeEach
 	void setup() {
 
-		this.george = new Owner();
-		this.george.setId(OwnerControllerTests.TEST_OWNER_ID);
-		this.george.setFirstName("George");
-		this.george.setLastName("Franklin");
-		this.george.setAddress("110 W. Liberty St.");
-		this.george.setCity("Madison");
-		this.george.setTelephone("6085551023");
-		BDDMockito.given(this.clinicService.findOwnerById(OwnerControllerTests.TEST_OWNER_ID)).willReturn(this.george);
+
+		george = new Owner();
+		george.setId(TEST_OWNER_ID);
+		george.setFirstName("George");
+		george.setLastName("Franklin");
+		george.setAddress("110 W. Liberty St.");
+		george.setCity("Madison");
+		george.setTelephone("6085551023");
+		george.setMonedero(1000);
+		given(this.clinicService.findOwnerById(TEST_OWNER_ID)).willReturn(george);
 
 	}
 

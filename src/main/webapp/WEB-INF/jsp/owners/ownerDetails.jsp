@@ -28,7 +28,13 @@
         </tr>
     </table>
 
-    <spring:url value="{ownerId}/edit" var="editUrl">
+
+
+
+
+
+
+	<spring:url value="{ownerId}/edit" var="editUrl">
         <spring:param name="ownerId" value="${owner.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit Owner</a>
@@ -93,5 +99,13 @@
 
         </c:forEach>
     </table>
+    
+    
+	<br />
+	<br />
+	<br />
+	<h2>Citas Adiestramiento</h2>
+
+
 
 </petclinic:layout>
