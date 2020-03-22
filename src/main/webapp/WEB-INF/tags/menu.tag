@@ -80,6 +80,12 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span >Filtrar Citas Operaciones Por Tipo Operacion</span>
 				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'causas validas'}" url="/causa/noValidas"
+					title="Causa No Valida">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Listas de Causas Sugeridas</span>
+				</petclinic:menuItem>
 				</sec:authorize>
 				
 						<petclinic:menuItem active="${name eq 'citasAdiestramiento'}" url="/citasAdiestramiento/all"

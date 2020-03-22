@@ -24,7 +24,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -32,13 +31,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
-
-import lombok.Data;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -172,12 +167,6 @@ public class Owner extends Person {
 			}
 		}
 		return null;
-	}
-
-	public List<CitaAdiestramiento> getCitasAdiestramiento() {
-		List<CitaAdiestramiento> sortedCitasAdiestramiento = new ArrayList<>(getCitasAdiestramientoInternal());
-		PropertyComparator.sort(sortedCitasAdiestramiento, new MutableSortDefinition("fechaInicio", true, true));
-		return Collections.unmodifiableList(sortedCitasAdiestramiento);
 	}
 
 	@Override

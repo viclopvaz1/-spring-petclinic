@@ -58,10 +58,6 @@ public class Vet extends Person {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
 	private Set<CitaOperacion>	citasOperacion;
 
-
-	//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
-	//	private Set<Causa> causas;
-
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
 			this.specialties = new HashSet<>();
@@ -94,31 +90,6 @@ public class Vet extends Person {
 
 	public void setEstrellas(final Integer estrellas) {
 		this.estrellas = estrellas;
-	}
-
-//	public Set<CitaOperacion> getCitasOperacionInternal() {
-//		if(this.citasOperacion == null) {
-//			this.citasOperacion = new HashSet<>();
-//		}
-//		return this.citasOperacion;
-//	}
-//
-//	public void setCitasOperacionInternal(Set<CitaOperacion> citasOperacion) {
-//		this.citasOperacion = citasOperacion;
-//	}
-//
-//	public List<CitaOperacion> getCitasOperacion() {
-//		List<CitaOperacion> sortedcitasOperacion = new ArrayList<>(getCitasOperacionInternal());
-//		PropertyComparator.sort(sortedcitasOperacion, new MutableSortDefinition("date", false, false));
-//		return Collections.unmodifiableList(sortedcitasOperacion);
-//	}
-
-	public Set<Causa> getCausas() {
-		return causas;
-	}
-	
-	public void setCausas(Set<Causa> causas) {
-		this.causas = causas;
 	}
 	
 
