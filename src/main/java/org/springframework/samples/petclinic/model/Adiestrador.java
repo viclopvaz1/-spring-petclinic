@@ -13,8 +13,10 @@ import javax.validation.constraints.Max;
 import org.hibernate.validator.constraints.Range;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "adiestrador")
 public class Adiestrador extends Person{

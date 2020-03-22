@@ -73,21 +73,6 @@ public class Owner extends Person {
 	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	//
-
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-//	private Set<CitaAdiestramiento> citasAdiestramiento;
-//
-//	protected Set<CitaAdiestramiento> getCitasAdiestramientosInternal() {
-//		if (this.citasAdiestramiento == null) {
-//			this.citasAdiestramiento = new HashSet<>();
-//		}
-//		return this.citasAdiestramiento;
-//	}
-//
-//	protected void setCitasAdiestramientosInternal(Set<CitaAdiestramiento> citasAdiestramiento) {
-//		this.citasAdiestramiento = citasAdiestramiento;
-//	}
-
 	public String getAddress() {
 		return this.address;
 	}
@@ -168,6 +153,7 @@ public class Owner extends Person {
 		return null;
 	}
 
+
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
 	 * 
@@ -186,6 +172,12 @@ public class Owner extends Person {
 			}
 		}
 		return null;
+	}
+
+	public List<CitaAdiestramiento> getCitasAdiestramiento() {
+		List<CitaAdiestramiento> sortedCitasAdiestramiento = new ArrayList<>(getCitasAdiestramientoInternal());
+		PropertyComparator.sort(sortedCitasAdiestramiento, new MutableSortDefinition("fechaInicio", true, true));
+		return Collections.unmodifiableList(sortedCitasAdiestramiento);
 	}
 
 	@Override

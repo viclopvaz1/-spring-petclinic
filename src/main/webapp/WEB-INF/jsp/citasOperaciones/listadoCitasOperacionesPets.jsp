@@ -7,14 +7,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="citasOperaciones">
-    <h2>Citas Operaciones</h2>
+<petclinic:layout pageName="citasOperacionesPets">
+    <h2>Citas Operaciones Por Mascotas</h2>
 
-    <table id="citasOperacionesTable" class="table table-striped">
+    <table id="citasOperacionesPetsTable" class="table table-striped">
         <thead>
         <tr>
-        	<th>Nombre Animal</th>
-        	<th>Tipo Animal</th>
             <th style="width: 150px;">Fecha de Inicio</th>
             <th>Duracion</th>
             <th>Precio</th>
@@ -24,32 +22,28 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${vet.citasOperacion}" var="citaOperacion">
+        <c:forEach items="${pet.citasOperacion}" var="citaOperacionPet">
             <tr>
                 <td>
-                    <c:out value="${citaOperacion.pet.name}"/>
+                    <c:out value="${citaOperacionPet.fechaInicio}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.pet.type}"/>
+                    <c:out value="${citaOperacionPet.duracion}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.fechaInicio}"/>
+                    <c:out value="${citaOperacionPet.precio}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.duracion}"/>
+                    <c:out value="${citaOperacionPet.vet.firstName}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.precio}"/>
+                    <c:out value="${citaOperacionPet.tipoOperacion}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.vet.firstName}"/>
+                    <c:out value="${citaOperacionPet.cantidadPersonal}"/>
                 </td>
-                <td>
-                    <c:out value="${citaOperacion.tipoOperacion}"/>
-                </td>
-                <td>
-                    <c:out value="${citaOperacion.cantidadPersonal}"/>
-                </td>
+
+
             </tr>
         </c:forEach>
         </tbody>

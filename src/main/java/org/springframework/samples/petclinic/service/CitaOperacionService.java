@@ -1,26 +1,36 @@
 package org.springframework.samples.petclinic.service;
 
-import javax.transaction.Transactional;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.repository.springdatajpa.CitaOperacionRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCitaOperacionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CitaOperacionService {
 	
-	@Autowired
-	CitaOperacionRepository citasOperacionesRepo;
+	private SpringDataCitaOperacionRepository citaOperacionRepo;
 	
-	@Transactional
-	public int citaOperacionCount() {
-		return (int) citasOperacionesRepo.count();
+	@Autowired
+	public CitaOperacionService(final SpringDataCitaOperacionRepository stringCitaOperacionRepo) {
+		this.citaOperacionRepo = stringCitaOperacionRepo;
 	}
 	
 	@Transactional
 	public Iterable<CitaOperacion> findAll() {
-		return citasOperacionesRepo.findAll();
+		return this.citaOperacionRepo.findAll();
 	}
 
+	@Transactional
+	public Collection<CitaOperacion> findCitaOperacionByTipoOperacion(final String tipoOperacion) {
+		return this.citaOperacionRepo.findCitaOperacionByTipoOperacion(tipoOperacion);
+	}
+	
+	@Transactional
+	public CitaOperacion findCitaOperacionById(final int citaAdiestramientoId) {
+		return this.citaOperacionRepo.findCitaOperacionById(citaAdiestramientoId);
+	}
+	
 }

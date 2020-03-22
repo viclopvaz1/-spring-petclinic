@@ -19,7 +19,9 @@ import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.model.CitaAdiestramiento;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.TipoAdiestramiento;
 
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant
@@ -42,6 +44,9 @@ public interface OwnerRepository {
 	 * <code>Collection</code> if none found)
 	 */
 	Collection<Owner> findByLastName(String lastName) throws DataAccessException;
+	
+	
+
 
 	/**
 	 * Retrieve an <code>Owner</code> from the data store by id.

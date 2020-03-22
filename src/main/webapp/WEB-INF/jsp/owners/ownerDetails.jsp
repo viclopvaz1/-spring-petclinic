@@ -26,6 +26,7 @@
             <th>Telephone</th>
             <td><c:out value="${owner.telephone}"/></td>
         </tr>
+        
     </table>
 
 
@@ -43,6 +44,11 @@
         <spring:param name="ownerId" value="${owner.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Pet</a>
+    
+    <spring:url value="/citasAdiestramiento/{ownerId}" var="citaUrl">
+         <spring:param name="ownerId" value="${owner.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(citaUrl)}" class="btn btn-default">Citas Adiestramiento</a>
 
     <br/>
     <br/>
@@ -69,6 +75,7 @@
                         <tr>
                             <th>Visit Date</th>
                             <th>Description</th>
+                            <th>Citas Operacion</th>
                         </tr>
                         </thead>
                         <c:forEach var="visit" items="${pet.visits}">
@@ -92,6 +99,13 @@
                                 </spring:url>
                                 <a href="${fn:escapeXml(visitUrl)}">Add Visit</a>
                             </td>
+                            <td>
+                                <spring:url value="/owners/{ownerId}/pets/{petId}" var="petUrl">
+                                    <spring:param name="ownerId" value="${owner.id}"/>
+                                    <spring:param name="petId" value="${pet.id}"/>
+                                </spring:url>
+                                <a href="${fn:escapeXml(petUrl)}">Citas Operaciones</a>
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -99,13 +113,4 @@
 
         </c:forEach>
     </table>
-    
-    
-	<br />
-	<br />
-	<br />
-	<h2>Citas Adiestramiento</h2>
-
-
-
 </petclinic:layout>

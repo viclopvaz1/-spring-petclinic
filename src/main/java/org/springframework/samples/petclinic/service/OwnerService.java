@@ -33,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class OwnerService {
-
 	private OwnerRepository		ownerRepository;
 
 	@Autowired
@@ -66,7 +65,5 @@ public class OwnerService {
 		this.userService.saveUser(owner.getUser());
 		//creating authorities
 		this.authoritiesService.saveAuthorities(owner.getUser().getUsername(), "user");
-	}		
-
-
+	}	
 }

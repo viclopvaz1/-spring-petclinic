@@ -32,22 +32,47 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
 	@Override
-
-	protected void configure(final HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/resources/**", "/webjars/**", "/h2-console/**").permitAll().antMatchers(HttpMethod.GET, "/", "/oups").permitAll().antMatchers("/users/new").permitAll().antMatchers("/citasOperaciones").permitAll()
-			.antMatchers("/adiestradores/5").permitAll().antMatchers("/adiestradores").permitAll().antMatchers("/users/**").permitAll().antMatchers("/donacion/**").hasAnyAuthority("owner", "admin").antMatchers("/users/addmoney").permitAll()
-			.antMatchers(HttpMethod.GET, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin").antMatchers("/causa").permitAll().antMatchers("/causa/propias").hasAnyAuthority("veterinarian", "owner", "admin").antMatchers("/causa/{causaId}/edit")
-			.hasAnyAuthority("veterinarian").antMatchers("/causa/{causaId}/delete").hasAnyAuthority("veterinarian").antMatchers("/causa/{id}").permitAll().antMatchers(HttpMethod.POST, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
-			.antMatchers("/causa/noValidas").hasAnyAuthority("veterinarian").antMatchers("/admin/**").hasAnyAuthority("admin").antMatchers("/owners/**").hasAnyAuthority("owner", "admin").antMatchers("/vets/**").authenticated().anyRequest().denyAll().and()
-			.formLogin()
-			/* .loginPage("/login") */
-			.failureUrl("/login-error").and().logout().logoutSuccessUrl("/");
-		// Configuración para que funcione la consola de administración 
-		// de la BD H2 (deshabilitar las cabeceras de protección contra
-		// ataques de tipo csrf y habilitar los framesets si su contenido
-		// se sirve desde esta misma página.
-		http.csrf().ignoringAntMatchers("/h2-console/**");
-		http.headers().frameOptions().sameOrigin();
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
+				.antMatchers("/users/new").permitAll()
+				.antMatchers("/citasOperaciones").permitAll()
+				.antMatchers("/citasAdiestramiento").hasAnyAuthority("adiestrador","admin")
+				.antMatchers("/citasAdiestramiento/new").hasAnyAuthority("adiestrador","admin")
+				.antMatchers("/citasAdiestramiento/find").hasAnyAuthority("adiestrador","admin")
+				.antMatchers("/citasAdiestramiento/all").hasAnyAuthority("adiestrador","admin")
+				.antMatchers("/citasOperaciones/**").hasAnyAuthority("vet","admin")
+				.antMatchers("/adiestradores").permitAll()
+        .antMatchers("/adiestradores/5").permitAll()
+				.antMatchers("/admin/**").hasAnyAuthority("admin")
+				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")
+				.antMatchers("/citasAdiestramiento/**").hasAnyAuthority("owner","admin")
+				.antMatchers("/vets/**").authenticated()
+        .antMatchers("/donacion/**").hasAnyAuthority("owner", "admin")
+        .antMatchers("/users/addmoney").permitAll()
+			  .antMatchers(HttpMethod.GET, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
+        .antMatchers("/causa").permitAll()
+        .antMatchers("/causa/propias").hasAnyAuthority("veterinarian", "owner", "admin")
+        .antMatchers("/causa/{causaId}/edit").hasAnyAuthority("veterinarian")
+        .antMatchers("/causa/{causaId}/delete").hasAnyAuthority("veterinarian")
+        .antMatchers("/causa/{id}").permitAll()
+        .antMatchers(HttpMethod.POST, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
+			  .antMatchers("/causa/noValidas").hasAnyAuthority("veterinarian")
+				.anyRequest().denyAll()
+				.and()
+				 	.formLogin()
+				 	/*.loginPage("/login")*/
+				 	.failureUrl("/login-error")
+				.and()
+					.logout()
+						.logoutSuccessUrl("/"); 
+                // Configuración para que funcione la consola de administración 
+                // de la BD H2 (deshabilitar las cabeceras de protección contra
+                // ataques de tipo csrf y habilitar los framesets si su contenido
+                // se sirve desde esta misma página.
+                http.csrf().ignoringAntMatchers("/h2-console/**");
+                http.headers().frameOptions().sameOrigin();
 	}
 
 	@Override
