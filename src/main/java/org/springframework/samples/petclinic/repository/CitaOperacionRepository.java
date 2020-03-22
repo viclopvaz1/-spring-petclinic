@@ -10,4 +10,6 @@ public interface CitaOperacionRepository extends CrudRepository<CitaOperacion, I
 
 	Collection<CitaOperacion> findCitaOperacionByTipoOperacion(String tipoOperacion) throws DataAccessException;
 
+	CitaOperacion findCitaOperacionById(int citaOperacionId);
+
 }

@@ -27,5 +27,10 @@ public class CitaOperacionService {
 	public Collection<CitaOperacion> findCitaOperacionByTipoOperacion(final String tipoOperacion) {
 		return this.citaOperacionRepo.findCitaOperacionByTipoOperacion(tipoOperacion);
 	}
-
+	
+	@Transactional
+	public CitaOperacion findCitaOperacionById(final int citaAdiestramientoId) {
+		return this.citaOperacionRepo.findCitaOperacionById(citaAdiestramientoId);
+	}
+	
 }
