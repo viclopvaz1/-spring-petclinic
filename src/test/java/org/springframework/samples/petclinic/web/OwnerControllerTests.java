@@ -64,7 +64,7 @@ class OwnerControllerTests {
 		george.setCity("Madison");
 		george.setTelephone("6085551023");
 		george.setMonedero(1000);
-		given(this.clinicService.findOwnerById(TEST_OWNER_ID)).willReturn(george);
+		BDDMockito.given(this.clinicService.findOwnerById(TEST_OWNER_ID)).willReturn(george);
 
 	}
 
