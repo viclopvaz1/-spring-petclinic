@@ -72,6 +72,11 @@ public class Owner extends Person {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private Set<CitaAdiestramiento> citasAdiestramiento;
 	
+
+	
+	
+	
+	
 	public String getAddress() {
 		return this.address;
 	}
@@ -151,6 +156,7 @@ public class Owner extends Person {
 		return null;
 	}
 
+
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
 	 * @param name to test
@@ -170,16 +176,30 @@ public class Owner extends Person {
 		return null;
 	}
 	
-	protected Set<CitaAdiestramiento> getCitasAdiestramientosInternal() {
+	protected Set<CitaAdiestramiento> getCitasAdiestramientoInternal() {
 		if (this.citasAdiestramiento == null) {
 			this.citasAdiestramiento = new HashSet<>();
 		}
 		return this.citasAdiestramiento;
 	}
 
-	protected void setCitasAdiestramientosInternal(Set<CitaAdiestramiento> citasAdiestramiento) {
+	protected void setCitasCitasAdiestramientoInternal(Set<CitaAdiestramiento> citasAdiestramiento) {
 		this.citasAdiestramiento = citasAdiestramiento;
 	}
+
+	public List<CitaAdiestramiento> getCitasAdiestramiento() {
+		List<CitaAdiestramiento> sortedCitasAdiestramiento = new ArrayList<>(getCitasAdiestramientoInternal());
+		PropertyComparator.sort(sortedCitasAdiestramiento, new MutableSortDefinition("fechaInicio", true, true));
+		return Collections.unmodifiableList(sortedCitasAdiestramiento);
+	}
+
+//	public Set<CitaAdiestramiento> getCitasAdiestramiento() {
+//		return citasAdiestramiento;
+//	}
+//
+//	public void setCitasAdiestramiento(Set<CitaAdiestramiento> citasAdiestramiento) {
+//		this.citasAdiestramiento = citasAdiestramiento;
+//	}
 
 	@Override
 	public String toString() {

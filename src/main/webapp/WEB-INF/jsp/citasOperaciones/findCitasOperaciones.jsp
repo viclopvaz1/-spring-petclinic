@@ -8,33 +8,27 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 
-<petclinic:layout pageName="owners">
+<petclinic:layout pageName="citasOperaciones">
 
-      <h2>Find Owners</h2>
+    <h2>Encuentra Por Cita Operacion</h2>
 
-    
-    <form:form modelAttribute="owner" action="/owners" method="get" class="form-horizontal"
-               id="search-owner-form">
+    <form:form modelAttribute="citaOperacion" action="/citasOperaciones" method="get" class="form-horizontal"
+               id="search-citaOperacion-form">
         <div class="form-group">
-            <div class="control-group" id="lastName">
-                <label class="col-sm-2 control-label">Last name </label>
+            <div class="control-group" id="tipoOperacion">
+                <label class="col-sm-2 control-label">Tipo Operacion</label>
                 <div class="col-sm-10">
-                    <form:input class="form-control" path="lastName" size="30" maxlength="80"/>
+                    <form:input class="form-control" path="tipoOperacion.name" size="30" maxlength="80"/>
                     <span class="help-inline"><form:errors path="*"/></span>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Find Owner</button>
+                <button type="submit" class="btn btn-default">Encuentra Cita Operacion</button>
             </div>
         </div>
 
     </form:form>
-
-    <br/> 
-    <sec:authorize access="hasAuthority('admin')">
-		<a class="btn btn-default" href='<spring:url value="/owners/new" htmlEscape="true"/>'>Add Owner</a>
-	</sec:authorize>
 	
 </petclinic:layout>

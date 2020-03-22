@@ -7,10 +7,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="citasOperaciones">
-    <h2>Citas Operaciones</h2>
+<petclinic:layout pageName="citasAdiestramientoOwnersId">
+    <h2>Citas Adiestramiento Del Dueño</h2>
 
-    <table id="citasOperacionesTable" class="table table-striped">
+    <table id="citasAdiestramientoOwnersIdTable" class="table table-striped">
         <thead>
         <tr>
         	<th>Nombre Animal</th>
@@ -18,38 +18,36 @@
             <th style="width: 150px;">Fecha de Inicio</th>
             <th>Duracion</th>
             <th>Precio</th>
-            <th>Veterinario</th>
-            <th>Tipo Operacion</th>
-            <th>Cantidad de Personal</th>
+            <th>Tipo Adiestramiento</th>
+            <th>Adiestrador</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${vet.citasOperacion}" var="citaOperacion">
+        <c:forEach items="${citasAdiestramiento}" var="citaAdiestramiento">
             <tr>
                 <td>
-                    <c:out value="${citaOperacion.pet.name}"/>
+                    <c:out value="${citaAdiestramiento.pet.name}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.pet.type}"/>
+                    <c:out value="${citaAdiestramiento.pet.type}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.fechaInicio}"/>
+                    <c:out value="${citaAdiestramiento.fechaInicio}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.duracion}"/>
+                    <c:out value="${citaAdiestramiento.duracion}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.precio}"/>
+                    <c:out value="${citaAdiestramiento.precio}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.vet.firstName}"/>
+                    <c:out value="${citaAdiestramiento.tipoAdiestramiento}"/>
                 </td>
                 <td>
-                    <c:out value="${citaOperacion.tipoOperacion}"/>
+                    <c:out value="${citaAdiestramiento.adiestrador.firstName}"/>
                 </td>
-                <td>
-                    <c:out value="${citaOperacion.cantidadPersonal}"/>
-                </td>
+
+
             </tr>
         </c:forEach>
         </tbody>

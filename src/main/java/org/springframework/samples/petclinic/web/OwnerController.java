@@ -17,14 +17,14 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.CitaAdiestramiento;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
+import org.springframework.samples.petclinic.service.CitaAdiestramientoService;
 import org.springframework.samples.petclinic.service.OwnerService;
-import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,10 +45,13 @@ public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerService ownerService;
+	
+//	private final CitaAdiestramientoService citaAdiestramientoService;
 
 	@Autowired
-	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService, CitaAdiestramientoService citaAdiestramientoService, UserService userService, AuthoritiesService authoritiesService) {
 		this.ownerService = ownerService;
+//		this.citaAdiestramientoService = citaAdiestramientoService;
 	}
 
 	@InitBinder
@@ -66,12 +69,12 @@ public class OwnerController {
 	@PostMapping(value = "/owners/new")
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
 		if (result.hasErrors()) {
+//			modelMap.addAttribute("owner", owner);	, ModelMap modelMap
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			//creating owner, user and authorities
+		} else {
+			// creating owner, user and authorities
 			this.ownerService.saveOwner(owner);
-			
+
 			return "redirect:/owners/" + owner.getId();
 		}
 	}
@@ -96,13 +99,11 @@ public class OwnerController {
 			// no owners found
 			result.rejectValue("lastName", "notFound", "not found");
 			return "owners/findOwners";
-		}
-		else if (results.size() == 1) {
+		} else if (results.size() == 1) {
 			// 1 owner found
 			owner = results.iterator().next();
 			return "redirect:/owners/" + owner.getId();
-		}
-		else {
+		} else {
 			// multiple owners found
 			model.put("selections", results);
 			return "owners/ownersList";
@@ -121,8 +122,7 @@ public class OwnerController {
 			@PathVariable("ownerId") int ownerId) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			owner.setId(ownerId);
 			this.ownerService.saveOwner(owner);
 			return "redirect:/owners/{ownerId}";
@@ -131,14 +131,21 @@ public class OwnerController {
 
 	/**
 	 * Custom handler for displaying an owner.
+	 * 
 	 * @param ownerId the ID of the owner to display
 	 * @return a ModelMap with the model attributes for the view
 	 */
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
+//		Collection<CitaAdiestramiento> citasAdiestramiento = this.citaAdiestramientoService.findCitaAdiestramientoByOwnerId(ownerId);
 		mav.addObject(this.ownerService.findOwnerById(ownerId));
+//		mav.addObject("citasAdiestramiento", citasAdiestramiento);
 		return mav;
 	}
+
+
+
+	
 
 }
