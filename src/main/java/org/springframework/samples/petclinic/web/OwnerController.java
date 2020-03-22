@@ -21,8 +21,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.CitaAdiestramiento;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
+import org.springframework.samples.petclinic.service.CitaAdiestramientoService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -44,10 +46,13 @@ public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerService ownerService;
+	
+	private final CitaAdiestramientoService citaAdiestramientoService;
 
 	@Autowired
-	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService,CitaAdiestramientoService citaAdiestramientoService, UserService userService, AuthoritiesService authoritiesService) {
 		this.ownerService = ownerService;
+		this.citaAdiestramientoService = citaAdiestramientoService;
 	}
 
 	@InitBinder
@@ -124,7 +129,7 @@ public class OwnerController {
 		else {
 			owner.setId(ownerId);
 			this.ownerService.saveOwner(owner);
-			return "redirect:/owners/{ownerId}";
+			return "redirect:/owners/" + owner.getId();
 		}
 	}
 
@@ -134,10 +139,12 @@ public class OwnerController {
 	 * @return a ModelMap with the model attributes for the view
 	 */
 	@GetMapping("/owners/{ownerId}")
-	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
-		ModelAndView mav = new ModelAndView("owners/ownerDetails");
-		mav.addObject(this.ownerService.findOwnerById(ownerId));
-		return mav;
-	}
+    public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
+        ModelAndView mav = new ModelAndView("owners/ownerDetails");
+        Collection<CitaAdiestramiento> citasAdiestramiento = this.citaAdiestramientoService.findCitaAdiestramientoByOwnerId(ownerId);
+        mav.addObject(this.ownerService.findOwnerById(ownerId));
+        mav.addObject("citasAdiestramiento", citasAdiestramiento);
+        return mav;
+    }
 
 }

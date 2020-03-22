@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.model.Donacion;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.springdatajpa.DonacionRepository;
@@ -24,5 +25,10 @@ public class DonacionService {
 		donacionRepo.save(donacion);		
 
 	}	
+	
+	@Transactional
+	public Donacion findById(int id) {
+		return donacionRepo.findById(id).orElse(null);
+	}
 
 }

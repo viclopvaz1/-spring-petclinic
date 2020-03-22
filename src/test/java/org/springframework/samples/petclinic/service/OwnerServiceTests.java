@@ -107,6 +107,7 @@ class OwnerServiceTests {
 		owner.setAddress("4, Evans Street");
 		owner.setCity("Wollongong");
 		owner.setTelephone("4444444444");
+		owner.setMonedero(100);
                 User user=new User();
                 user.setUsername("Sam");
                 user.setPassword("supersecretpassword");
