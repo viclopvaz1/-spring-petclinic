@@ -30,9 +30,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlElement;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 
@@ -53,10 +55,15 @@ public class Vet extends Person {
 	private Set<Specialty>		specialties;
 
 	@Column(name = "estrellas")
+	@Range(min = 0, max = 5)
 	private Integer				estrellas;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
 	private Set<CitaOperacion>	citasOperacion;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "username", referencedColumnName = "username")
+	private User user;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
@@ -100,4 +107,13 @@ public class Vet extends Person {
 	public void setCitasOperacion(final Set<CitaOperacion> citasOperacion) {
 		this.citasOperacion = citasOperacion;
 	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

@@ -23,25 +23,5 @@ public class CitaOperacion extends Cita {
 	
 	@Column(name = "cantidadPersonal")
 	private Double cantidadPersonal;
-	
-//	@ManyToOne
-//	@Column(name = "pet_id")
-//	private Pet pet;
-
-//	public TipoOperacion getTipoOperacion() {
-//		return tipoOperacion;
-//	}
-//
-//	public void setTipoOperacion(TipoOperacion tipoOperacion) {
-//		this.tipoOperacion = tipoOperacion;
-//	}
-//
-//	public Double getCantidadPersonal() {
-//		return cantidadPersonal;
-//	}
-//
-//	public void setCantidadPersonal(Double cantidadPersonal) {
-//		this.cantidadPersonal = cantidadPersonal;
-//	}
 
 }

@@ -37,6 +37,8 @@ public class Cita extends BaseEntity {
 	@Column(name = "precio")
 	@Min(1)
 	private Double precio;
+	
+	private boolean pagado;
 
 //	public Pet getPet() {
 //		return pet;
