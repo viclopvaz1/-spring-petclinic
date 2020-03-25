@@ -3,7 +3,9 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.CitaOperacion;
+import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCitaOperacionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,16 @@ public class CitaOperacionService {
 	public CitaOperacionService(final SpringDataCitaOperacionRepository stringCitaOperacionRepo) {
 		this.citaOperacionRepo = stringCitaOperacionRepo;
 	}
+	
+//	@Transactional
+//	public TipoOperacion findTipoOperacionByName(final String name) {
+//		return this.citaOperacionRepo.findTipoOperacionByName(name);
+//	}
+	
+//	@Transactional(readOnly = true)
+//	public Collection<TipoOperacion> findTiposOperaciones() throws DataAccessException {
+//		return this.citaOperacionRepo.findTiposOperaciones();
+//	}
 	
 	@Transactional
 	public Iterable<CitaOperacion> findAll() {
@@ -33,4 +45,13 @@ public class CitaOperacionService {
 		return this.citaOperacionRepo.findCitaOperacionById(citaAdiestramientoId);
 	}
 	
+	@Transactional
+	public void saveCitaOperacion(final CitaOperacion citaOperacion) {
+		this.citaOperacionRepo.save(citaOperacion);
+	}
+	
+	@Transactional
+	public void deleteCitaOperacion(final CitaOperacion citaOperacion) {
+		this.citaOperacionRepo.delete(citaOperacion);
+	}
 }

@@ -18,10 +18,6 @@ package org.springframework.samples.petclinic.repository;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.model.Vet;
 
 /**
@@ -45,7 +41,7 @@ public interface VetRepository {
 	
 	Vet findById(int id) throws DataAccessException;
 	
-//	Collection<CitaOperacion> findByTipoOperacion(String tipoOperacion, int vetId) throws DataAccessException;
+	Vet findByUsername(String username) throws DataAccessException;
 
 
 }
