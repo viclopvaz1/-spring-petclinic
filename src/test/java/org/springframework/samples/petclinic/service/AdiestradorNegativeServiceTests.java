@@ -95,12 +95,13 @@ public class AdiestradorNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionTelefonoArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	  void testExpectedExceptionTelefonoArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 	 
 	    Assertions.assertThrows(ArithmeticException.class, () -> {
 	    	Integer a = adiestrador.getTelefono() / 0;
 	    });
 	  }
+	
 	//--------------tipoAnimal-----------------------------------------------------------------------------------
 	@Test
 	  void testExpectedExceptionTipoAnimalNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -137,6 +138,7 @@ public class AdiestradorNegativeServiceTests {
 	    	adiestrador.getLastName().charAt(234);
 	    });
 	  }
+	
 	//--------------firstName-----------------------------------------------------------------------------------
 	@Test
 	  void testExpectedExceptionFirstNameNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -199,7 +201,7 @@ public class AdiestradorNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionEstrellasArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	  void testExpectedExceptionEstrellasArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 	 
 	    Assertions.assertThrows(ArithmeticException.class, () -> {
 	    	Integer a = adiestrador.getEstrellas() / 0;
@@ -287,17 +289,11 @@ public class AdiestradorNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionMonederoArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	  void testExpectedExceptionMonederoArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 	 
 	    Assertions.assertThrows(ArithmeticException.class, () -> {
 	    	Integer a = adiestrador.getMonedero() / 0;
 	    });
 	  }
-	
-
-	
-
-	
-	
 
 }
