@@ -19,8 +19,6 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.VetRepository;
 import org.springframework.stereotype.Service;
@@ -52,9 +50,9 @@ public class VetService {
 	public Vet findVetById(int id) throws DataAccessException {
 		return vetRepository.findById(id);
 	}
-
-//	@Transactional(readOnly = true)
-//	public Collection<CitaOperacion> findCitaOperacionByTipoOperacion(String tipoOperacion, int vetId) throws DataAccessException {
-//		return vetRepository.findByTipoOperacion(tipoOperacion, vetId);
-//	}
+	
+	@Transactional
+	public Vet findVetByUser(String username) throws DataAccessException {
+		return this.vetRepository.findByUsername(username);
+	}
 }

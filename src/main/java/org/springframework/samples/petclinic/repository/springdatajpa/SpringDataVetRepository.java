@@ -15,13 +15,9 @@
  */
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
-import java.util.Collection;
-
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.VetRepository;
 
@@ -33,9 +29,8 @@ import org.springframework.samples.petclinic.repository.VetRepository;
  */
 public interface SpringDataVetRepository extends VetRepository, Repository<Vet, Integer> {
 	
-//	@Override
-//	@Query("SELECT DISTINCT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.tipoOperacion.name LIKE :tipoOperacion% AND citaOperacion.vet.id LIKE :vetId%")
-////	@Query("SELECT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.vet.id IN(SELECT vet.id FROM Vet vet WHERE donacion.user.username LIKE :ong%)")
-//	Collection<CitaOperacion> findByTipoOperacion(@Param("tipoOperacion") String tipoOperacion, @Param("vetId") int vetId);
+	@Override
+	@Query("SELECT vet FROM Vet vet WHERE vet.user.username LIKE :username%")
+	Vet findByUsername(String username) throws DataAccessException;
 
 }

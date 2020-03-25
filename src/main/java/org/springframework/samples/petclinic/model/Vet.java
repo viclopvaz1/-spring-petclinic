@@ -32,6 +32,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.xml.bind.annotation.XmlElement;
 
 import org.hibernate.validator.constraints.Range;
@@ -56,6 +57,7 @@ public class Vet extends Person {
 
 	@Column(name = "estrellas")
 	@Range(min = 0, max = 5)
+	@NotEmpty
 	private Integer				estrellas;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")

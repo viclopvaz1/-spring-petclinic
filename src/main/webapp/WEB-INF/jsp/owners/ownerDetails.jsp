@@ -106,6 +106,12 @@
                                 </spring:url>
                                 <a href="${fn:escapeXml(petUrl)}">Citas Operaciones</a>
                             </td>
+                            <td>
+                                <spring:url value="/citasOperaciones/new/{petId}" var="citasOperacionesUrl">
+                                    <spring:param name="petId" value="${pet.id}"/>
+                                </spring:url>
+                                <a href="${fn:escapeXml(citasOperacionesUrl)}">Pedir Cita Operacion</a>
+                            </td>
                         </tr>
                     </table>
                 </td>
