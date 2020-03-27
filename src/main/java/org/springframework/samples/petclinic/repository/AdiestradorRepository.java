@@ -10,4 +10,6 @@ public interface AdiestradorRepository extends CrudRepository<Adiestrador, Integ
 	
 	Collection<Adiestrador> findAdiestradorByEstrellas(Integer estrellas) throws DataAccessException;
 
+	Adiestrador findByUser(String username) throws DataAccessException;
+
 }

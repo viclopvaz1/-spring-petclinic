@@ -46,7 +46,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 class CitaAdiestramientoControllerTests {
 
-//	private static final int TEST_CITA_OPERACION_ID = 1;
+	private static final int TEST_CITA_ADIESTRAMIENTO_ID = 1;
 
 	@Autowired
 	private CitaAdiestramientoController CitaAdiestramientoController;
@@ -63,23 +63,30 @@ class CitaAdiestramientoControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 
+	private CitaAdiestramiento CitaAdiestramiento;
+
+	private Pet pet;
+
 	@BeforeEach
 	void setup() {
 
-		CitaAdiestramiento cita = new CitaAdiestramiento();
-		cita.setDuracion(45);
-		cita.setId(2);
-		cita.setPrecio(75.0);
+		this.pet = new Pet();
+		this.pet.setId(1);
+	
+
+		CitaAdiestramiento = new CitaAdiestramiento();
+		CitaAdiestramiento.setDuracion(45);
+		CitaAdiestramiento.setId(2);
+		CitaAdiestramiento.setPrecio(75.0);
+
 		CitaAdiestramiento cita2 = new CitaAdiestramiento();
-		cita.setDuracion(55);
-		cita.setId(3);
-		cita.setPrecio(85.0);
+		cita2.setDuracion(55);
+		cita2.setId(3);
+		cita2.setPrecio(85.0);
 		TipoAdiestramiento to = new TipoAdiestramiento();
 		to.setId(2);
-		
-		given(this.clinicService.findAll()).willReturn(Lists.newArrayList(cita, cita2));
 
-//		(TEST_CITA_OPERACION_ID)).willReturn(george);
+		given(this.clinicService.findAll()).willReturn(Lists.newArrayList(CitaAdiestramiento, cita2));
 
 	}
 
@@ -89,7 +96,44 @@ class CitaAdiestramientoControllerTests {
 		mockMvc.perform(get("/citasAdiestramiento/all")).andExpect(status().isOk())
 				.andExpect(model().attributeExists("citasAdiestramiento"))
 				.andExpect(view().name("citasAdiestramiento/listadoCitasAdiestramiento"));
-   
+
 	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testListadoCitasAdiestramientoPorOwnerId() throws Exception {
+		mockMvc.perform(get("/citasAdiestramiento/{ownerId}", TEST_CITA_ADIESTRAMIENTO_ID)).andExpect(status().isOk())
+				.andExpect(model().attributeExists("citasAdiestramiento"))
+				.andExpect(view().name("citasAdiestramiento/listadoCitasAdiestramientoOwnersId"));
+
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void initFindForm() throws Exception {
+		mockMvc.perform(get("/citasAdiestramiento/find", TEST_CITA_ADIESTRAMIENTO_ID)).andExpect(status().isOk())
+				.andExpect(model().attributeExists("citaAdiestramiento"))
+				.andExpect(view().name("/citasAdiestramiento/findCitasAdiestramiento"));
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void processFindForm() throws Exception {
+		given(this.clinicService.findCitaAdiestramientoByPet("cat")).willReturn(Lists.newArrayList(CitaAdiestramiento));
+		mockMvc.perform(get("/citasAdiestramiento").param("pet.type.name", "cat"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("/citasAdiestramiento?pet.type.name=" +this.pet.getType().getName()));
+
+	}
+//
+//@WithMockUser(value = "spring")
+//@Test
+//void processFindFormNoResults() throws Exception {
+//
+//	mockMvc.perform(get("/citasAdiestramiento/find", TEST_CITA_ADIESTRAMIENTO_ID)).andExpect(status().isOk())
+//			.andExpect(model().attributeExists("citaAdiestramiento"))
+//			.andExpect(view().name("/citasAdiestramiento/findCitasAdiestramiento"));
+//
+//}
 
 }
