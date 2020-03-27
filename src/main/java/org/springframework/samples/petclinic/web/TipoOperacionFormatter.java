@@ -2,25 +2,24 @@ package org.springframework.samples.petclinic.web;
 
 import java.text.ParseException;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
-import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.model.TipoOperacion;
-import org.springframework.samples.petclinic.service.CitaOperacionService;
+import org.springframework.samples.petclinic.service.TipoOperacionService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TipoOperacionFormatter implements Formatter<TipoOperacion> {
-
-	private final CitaOperacionService citaOperacionService;
-
+	
+	private final TipoOperacionService tipoOperacionService;
+	
 	@Autowired
-	public TipoOperacionFormatter(CitaOperacionService citaOperacionService) {
-		this.citaOperacionService = citaOperacionService;
+	public TipoOperacionFormatter(TipoOperacionService tipoOperacionService) {
+		this.tipoOperacionService = tipoOperacionService;
 	}
+
 
 	@Override
 	public String print(TipoOperacion tipoOperacion, Locale locale) {
@@ -29,11 +28,7 @@ public class TipoOperacionFormatter implements Formatter<TipoOperacion> {
 
 	@Override
 	public TipoOperacion parse(String text, Locale locale) throws ParseException {
-		Collection<TipoOperacion> tipoOperacion = new HashSet<TipoOperacion>();
-		Collection<CitaOperacion> citasOperaciones = (Collection<CitaOperacion>) this.citaOperacionService.findAll();
-		for(CitaOperacion co : citasOperaciones) {
-			tipoOperacion.add(co.getTipoOperacion());
-		}
+		Collection<TipoOperacion> tipoOperacion = (Collection<TipoOperacion>) this.tipoOperacionService.findAll();
 		for (TipoOperacion tipo : tipoOperacion) {
 			if (tipo.getName().equals(text)) {
 				return tipo;

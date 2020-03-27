@@ -13,5 +13,9 @@ public interface SpringDataAdiestradorRepository extends AdiestradorRepository, 
 	@Override
 	@Query("SELECT adiestrador FROM Adiestrador adiestrador WHERE adiestrador.estrellas = 5")
 	Collection<Adiestrador> findAdiestradorByEstrellas(@Param("estrellas") Integer estrellas);
+	
+	@Override
+	@Query("SELECT adiestrador FROM Adiestrador adiestrador WHERE adiestrador.user.username LIKE :username%")
+	Adiestrador findByUser(@Param("username") String username);
 
 }
