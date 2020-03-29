@@ -1,34 +1,52 @@
+
 package org.springframework.samples.petclinic.service;
+
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.model.Donacion;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.DonacionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DonacionService {
-	
-	@Autowired
+
 	private DonacionRepository donacionRepo;
-	
+
+
+	@Autowired
+	public DonacionService(final DonacionRepository donacionRepo) {
+		this.donacionRepo = donacionRepo;
+	}
+
 	@Transactional
 	public int donacionCount() {
-		return (int) donacionRepo.count();
+		return (int) this.donacionRepo.count();
 	}
-	
-	@Transactional
-	public void saveDonacion(Donacion donacion) throws DataAccessException {
-		donacionRepo.save(donacion);		
 
-	}	
-	
 	@Transactional
-	public Donacion findById(int id) {
-		return donacionRepo.findById(id).orElse(null);
+	public void saveDonacion(final Donacion donacion) throws DataAccessException {
+		this.donacionRepo.save(donacion);
+
+	}
+
+	@Transactional
+	public void deleteDonacion(final Donacion donacion) throws DataAccessException {
+		this.donacionRepo.delete(donacion);
+
+	}
+
+	@Transactional
+	public void deleteDonacionAll(final Collection<Donacion> donacion) throws DataAccessException {
+		this.donacionRepo.deleteAll(donacion);
+
+	}
+
+	@Transactional
+	public Donacion findById(final int id) {
+		return this.donacionRepo.findById(id).orElse(null);
 	}
 
 }

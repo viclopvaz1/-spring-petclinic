@@ -37,7 +37,7 @@ public class CausaService {
 	}
 
 	@Transactional
-	public Iterable<Causa> findAll() {
+	public Collection<Causa> findAll() {
 		return this.causaRepo.findCausaByValidoTrue();
 	}
 

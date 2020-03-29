@@ -10,6 +10,9 @@
     <h2>
         <c:if test="${causa['new']}">New </c:if> Causa
     </h2>
+    <b>${mensaje}</b>	
+	
+   	
     <form:form modelAttribute="causa" class="form-horizontal" id="add-causa-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Fecha de inicio" name="fechaInicio"/>

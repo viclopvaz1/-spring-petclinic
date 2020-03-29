@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.model.Vet;
 
 /**
@@ -39,13 +36,15 @@ public interface VetRepository {
 
 	/**
 	 * Retrieve all <code>Vet</code>s from the data store.
+	 *
 	 * @return a <code>Collection</code> of <code>Vet</code>s
 	 */
 	Collection<Vet> findAll() throws DataAccessException;
-	
-	Vet findById(int id) throws DataAccessException;
-	
-//	Collection<CitaOperacion> findByTipoOperacion(String tipoOperacion, int vetId) throws DataAccessException;
 
+	Vet findById(int id) throws DataAccessException;
+
+	Vet findVetByUser(String username) throws DataAccessException;
+
+	//	Collection<CitaOperacion> findByTipoOperacion(String tipoOperacion, int vetId) throws DataAccessException;
 
 }
