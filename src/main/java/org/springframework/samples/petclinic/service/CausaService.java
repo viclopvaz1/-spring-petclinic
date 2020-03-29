@@ -2,10 +2,12 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Causa;
+import org.springframework.samples.petclinic.model.Donacion;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,9 @@ public class CausaService {
 
 	@Transactional
 	public void saveCausa(final Causa causa) {
+		if(causa == null) {
+			throw new NullPointerException();
+		}
 		this.causaRepo.save(causa);
 	}
 
@@ -43,14 +48,17 @@ public class CausaService {
 
 	@Transactional
 	public Causa findCausaById(final int id) {
-		Causa causa;
-		causa = this.causaRepo.findById(id);
+		Causa causa = this.causaRepo.findById(id);
 		return causa;
 	}
 
 	@Transactional
 	public Collection<Causa> findCausaByUsername(final String username) {
-		return this.causaRepo.findCausaByDonaciones(username);
+		Collection<Causa> causa = this.causaRepo.findCausaByDonaciones(username);
+		if (causa.isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		return causa;
 	}
 
 	@Transactional

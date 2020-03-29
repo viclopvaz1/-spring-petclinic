@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.CitaOperacion;
@@ -21,14 +23,21 @@ public class DonacionService {
 	}
 	
 	@Transactional
-	public void saveDonacion(Donacion donacion) throws DataAccessException {
+	public void saveDonacion(Donacion donacion) throws DataAccessException, IllegalArgumentException{
+//		if(donacion.getCantidad() < 0) {
+//			throw new IllegalArgumentException();
+//		}
 		donacionRepo.save(donacion);		
 
 	}	
 	
 	@Transactional
-	public Donacion findById(int id) {
-		return donacionRepo.findById(id).orElse(null);
+	public Donacion findById(int id) throws NoSuchElementException{
+		Donacion donacion = donacionRepo.findById(id).orElse(null);
+		if (donacion == null) {
+			throw new NoSuchElementException();
+		}
+		return donacion;
 	}
 
 }

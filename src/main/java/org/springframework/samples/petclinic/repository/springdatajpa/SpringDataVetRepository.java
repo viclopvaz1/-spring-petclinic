@@ -38,4 +38,7 @@ public interface SpringDataVetRepository extends VetRepository, Repository<Vet, 
 ////	@Query("SELECT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.vet.id IN(SELECT vet.id FROM Vet vet WHERE donacion.user.username LIKE :ong%)")
 //	Collection<CitaOperacion> findByTipoOperacion(@Param("tipoOperacion") String tipoOperacion, @Param("vetId") int vetId);
 
+	@Override
+    @Query("SELECT vet FROM Vet vet WHERE vet.user.username LIKE :username%")
+    Vet findVetByUser(@Param("username") String username);
 }

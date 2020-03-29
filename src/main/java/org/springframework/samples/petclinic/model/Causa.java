@@ -16,7 +16,6 @@ import lombok.Data;
 
 @Entity
 @Table(name = "causa")
-@Data
 public class Causa extends BaseEntity {
 
 	@Column(name = "fecha_inicio")
@@ -45,5 +44,69 @@ public class Causa extends BaseEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "causa")
 	private List<Donacion>	donaciones;
+
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(LocalDate fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public LocalDate getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(LocalDate fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public String getOng() {
+		return ong;
+	}
+
+	public void setOng(String ong) {
+		this.ong = ong;
+	}
+
+	public Integer getObjetivo() {
+		return objetivo;
+	}
+
+	public void setObjetivo(Integer objetivo) {
+		this.objetivo = objetivo;
+	}
+
+	public Integer getDineroRecaudado() {
+		return dineroRecaudado;
+	}
+
+	public void setDineroRecaudado(Integer dineroRecaudado) {
+		this.dineroRecaudado = dineroRecaudado;
+	}
+
+	public boolean isValido() {
+		return valido;
+	}
+
+	public void setValido(boolean valido) {
+		this.valido = valido;
+	}
+
+	public List<Donacion> getDonaciones() {
+		return donaciones;
+	}
+
+	public void setDonaciones(List<Donacion> donaciones) {
+		this.donaciones = donaciones;
+	}
+
+	@Override
+	public String toString() {
+		return "Causa [fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", ong=" + ong + ", objetivo="
+				+ objetivo + ", dineroRecaudado=" + dineroRecaudado + ", valido=" + valido + "]";
+	}
+	
+	
 
 }
