@@ -36,6 +36,12 @@ public class AdiestradorService {
 			return adiestradorRepo.findAdiestradorByEstrellas(estrellas);
 		
 	}
+	
+	@Transactional(readOnly = true)
+	public Adiestrador findAdiestradorById(int id) throws DataAccessException {
+		return adiestradorRepo.findById(id);
+		
+}
 	@Transactional
 	public Adiestrador findAdiestradorByUser(String username) throws DataAccessException {
 		return this.adiestradorRepo.findByUser(username);

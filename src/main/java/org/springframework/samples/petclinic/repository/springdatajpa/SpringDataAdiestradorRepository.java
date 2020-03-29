@@ -19,4 +19,7 @@ public interface SpringDataAdiestradorRepository extends AdiestradorRepository, 
 	@Query("SELECT adiestrador FROM Adiestrador adiestrador WHERE adiestrador.user.username LIKE :username%")
 	Adiestrador findByUser(String username) throws DataAccessException;
 
+	
+	
+	
 }
