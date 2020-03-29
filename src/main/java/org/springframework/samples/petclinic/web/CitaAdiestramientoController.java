@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
@@ -64,7 +65,7 @@ public class CitaAdiestramientoController {
 	}
 
 	@ModelAttribute("tipoAdiestramiento")
-	public Collection<TipoAdiestramiento> populateTiposOperaciones() {
+	public Collection<TipoAdiestramiento> populateTiposAdiestramientos() {
 		return (Collection<TipoAdiestramiento>) this.tipoAdiestramientoService.findAll();
 	}
 
@@ -174,7 +175,7 @@ public class CitaAdiestramientoController {
     }
 
     @PostMapping(value = "/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}")
-    public String processUpdateCausaForm(@Valid CitaAdiestramiento citaAdiestramiento, final BindingResult result, @PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,@PathVariable("ownerId") final int ownerId ,@PathVariable("petId") final int petId) {
+    public String processUpdateCitaForm(@Valid CitaAdiestramiento citaAdiestramiento, final BindingResult result, @PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,@PathVariable("ownerId") final int ownerId ,@PathVariable("petId") final int petId) {
         if (result.hasErrors()) {
             return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
         } else {
@@ -190,34 +191,20 @@ public class CitaAdiestramientoController {
     }
 	
 	
-	
-//	@GetMapping(value = "/citaAdiestramiento/{citaAdiestramientoId}/edit")
-//	public String initUpdateCitaForm(@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,
-//			final Model model) {
-//
-//		CitaAdiestramiento citaAdiestramiento = this.citaAdiestramientoService
-//				.findCitaAdiestramientoById(citaAdiestramientoId);
-//		model.addAttribute(citaAdiestramiento);
-//		return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
-//	}
-//
-//	@PostMapping(value = "/citaAdiestramiento/{citaAdiestramientoId}/edit")
-//	public String processUpdateCitaForm(@Valid CitaAdiestramiento citaAdiestramiento, final BindingResult result,
-//			@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId) {
-//		if (result.hasErrors()) {
-//			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
-//		} else {
-//			citaAdiestramiento = this.citaAdiestramientoService.findCitaAdiestramientoById(citaAdiestramientoId);
-//			this.citaAdiestramientoService.saveCitaAdiestramiento(citaAdiestramiento);
-//			return "redirect:/citaAdiestramiento/" + citaAdiestramiento.getId();
-//		}
-//	}
 
 	@GetMapping(value = "/citaAdiestramiento/{citaAdiestramientoId}/delete")
-	public String processDeleteCitaForm(@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId) {
+	public String processDeleteCitaForm(@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId, ModelMap modelMap) {
+		
+		try {
 		CitaAdiestramiento citaAdiestramiento = this.citaAdiestramientoService
 				.findCitaAdiestramientoById(citaAdiestramientoId);
 		this.citaAdiestramientoService.deleteCitaAdiestramiento(citaAdiestramiento);
-		return "welcome";
+		
+	} catch (NoSuchElementException e) {
+		modelMap.addAttribute("message", "Cita not found");
+		return "exception";
 	}
-}
+		return "welcome";
+
+	
+	}}

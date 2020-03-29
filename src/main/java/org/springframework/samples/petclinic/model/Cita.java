@@ -30,6 +30,7 @@ public class Cita extends BaseEntity {
 	
 	@Column(name = "hora")
 	@NotNull
+	@DateTimeFormat(pattern = "HH:mm")
 	private LocalTime hora;
 	
 	@Column(name = "duracion")
