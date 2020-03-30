@@ -9,13 +9,19 @@
 
 <petclinic:layout pageName="citasOperaciones">
     <h2>CitasOperaciones</h2>
-
+    
+    <c:choose>
+    <c:when test="${conjuntoVacio}">
+    	<h2>No hay ninguna cita de operacion con ese tipo o ha introducido un tipo de operacion inexistente</h2>
+    </c:when>
+	<c:otherwise>
     <table id="citasOperacionesTable" class="table table-striped">
         <thead>
         <tr>
          	<th>Nombre Animal</th>
         	<th>Tipo Animal</th>
             <th style="width: 150px;">Fecha de Inicio</th>
+            <th>Hora</th>
             <th>Duracion</th>
             <th>Precio</th>
             <th>Veterinario</th>
@@ -34,6 +40,9 @@
                 </td>
                 <td>
                     <c:out value="${citaOperacion.fechaInicio}"/>
+                </td>
+                <td>
+                    <c:out value="${citaOperacion.hora}"/>
                 </td>
                 <td>
                     <c:out value="${citaOperacion.duracion}"/>
@@ -56,4 +65,6 @@
         </c:forEach>
         </tbody>
     </table>
+    </c:otherwise>
+    </c:choose>
 </petclinic:layout>

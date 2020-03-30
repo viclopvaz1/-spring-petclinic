@@ -42,6 +42,8 @@ public interface VetRepository {
 	Collection<Vet> findAll() throws DataAccessException;
 
 	Vet findById(int id) throws DataAccessException;
+  
+	//Vet findByUsername(String username) throws DataAccessException;
 
 	Vet findVetByUser(String username) throws DataAccessException;
 

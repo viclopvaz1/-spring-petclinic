@@ -2,35 +2,63 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.NoSuchElementException;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.CitaOperacion;
+import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CitaOperacionService;
-import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.samples.petclinic.service.PetService;
+import org.springframework.samples.petclinic.service.TipoOperacionService;
+import org.springframework.samples.petclinic.service.VetService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-//@RequestMapping("/citasOperaciones")
 public class CitaOperacionController {
 
 	@Autowired
 	private CitaOperacionService citaOperacionService;
+	
+	final AuthoritiesService	authoritiesService;
+	
+	@Autowired
+	private PetService petService;
+
+	@Autowired
+	private VetService vetService;
+	
+	@Autowired
+	private TipoOperacionService tipoOperacionService;
 
 
 	@Autowired
-	public CitaOperacionController(final CitaOperacionService citaOperacionService, final UserService userService, final AuthoritiesService authoritiesService) {
+	public CitaOperacionController(final CitaOperacionService citaOperacionService, TipoOperacionService tipoOperacionService, VetService vetService, PetService petService, final AuthoritiesService authoritiesService) {
 		this.citaOperacionService = citaOperacionService;
+		this.authoritiesService = authoritiesService;
+		this.petService = petService;
+		this.vetService = vetService;
+		this.tipoOperacionService = tipoOperacionService;
+	}
+	
+	@ModelAttribute("tipoOperacion")
+	public Collection<TipoOperacion> populateTiposOperaciones() {
+		return (Collection<TipoOperacion>) this.tipoOperacionService.findAll();
 	}
 	
 	@GetMapping(value = "/citasOperaciones/{tipoOperacion}")
 	public String listadoCitasOperacionesPorTipoDonacion(final ModelMap modelMap, @PathVariable("tipoOperacion") final String tipoOperacion) {
-//		tipoOperacion.substring(33, tipoOperacion.length());
-//		tipoOperacion.
 		Iterable<CitaOperacion> citasOperaciones = this.citaOperacionService.findCitaOperacionByTipoOperacion(tipoOperacion);
 		String vista = "citasOperaciones/listadoCitasOperacionesFiltrado";
 		modelMap.addAttribute("citasOperaciones", citasOperaciones);
@@ -45,29 +73,97 @@ public class CitaOperacionController {
 	
 	@GetMapping(value = "/citasOperaciones")
 	public String processFindForm(CitaOperacion citaOperacion, BindingResult result, Map<String, Object> model) {
-
+		boolean conjuntoVacio = false;
+		
 		String a = citaOperacion.getTipoOperacion().getName();
 		if(a.contains("+")) {
-			a.replace("+", " ");
+				a.replace("+", " ");
 		}
 		citaOperacion.getTipoOperacion().setName(a);
-		// allow parameterless GET request for /owners to return all records
+		// allow parameterless GET request for /citasOperaciones to return all records
 		if (citaOperacion.getTipoOperacion().getName() == null) {
 			citaOperacion.getTipoOperacion().setName(""); // empty string signifies broadest possible search
 		}
-
-		// find owners by last name
-		Collection<CitaOperacion> results = this.citaOperacionService.findCitaOperacionByTipoOperacion(citaOperacion.getTipoOperacion().getName());
-		if (results.isEmpty()) {
-			// no owners found
-			result.rejectValue("tipoOperacion", "notFound", "not found");
-			return "citasOperaciones/findCitasOperaciones";
-		}
-		else {
-			// multiple owners found
-			model.put("citasOperaciones", results);
+		try {
+			model.put("conjuntoVacio", conjuntoVacio);
+			// find Citas Operaciones by Tipo Operacon
+			Collection<CitaOperacion> results = (Collection<CitaOperacion>) this.citaOperacionService.findCitaOperacionByTipoOperacion(citaOperacion.getTipoOperacion().getName());
+				if (results.size() == 1) {
+				// 1 owner found
+				citaOperacion = results.iterator().next();
+				return "redirect:/citaOperacion/" + citaOperacion.getId();
+			}
+			else {
+				// multiple Citas Operaciones found
+				model.put("citasOperaciones", results);
+				return "citasOperaciones/listadoCitasOperacionesFiltrado";
+			}
+		} catch (NoSuchElementException e) {
+			conjuntoVacio = true;
+			model.put("conjuntoVacio", conjuntoVacio);
 			return "citasOperaciones/listadoCitasOperacionesFiltrado";
 		}
+	}
+	
+	@GetMapping(value = "/citasOperaciones/new/{petId}")
+	public String initCreationForm(final Map<String, Object> model, @PathVariable("petId") final int petId) {
+		CitaOperacion citaOperacion = new CitaOperacion();
+		citaOperacion.setPet(this.petService.findPetById(petId));
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		citaOperacion.setVet(this.vetService.findVetByUser(username));
+		model.put("citaOperacion", citaOperacion);
+		return "citasOperaciones/createOrUpdateCitaOperacionForm";
+	}
+
+	@PostMapping(value = "/citasOperaciones/new/{petId}")
+	public String processCreationForm(@Valid final CitaOperacion citaOperacion, final BindingResult result, @PathVariable("petId") final int petId) {
+		if (result.hasErrors()) {
+			return "citasOperaciones/createOrUpdateCitaOperacionForm";
+		} else {
+			//creating Cita Operacion
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			citaOperacion.setVet(this.vetService.findVetByUser(username));
+			citaOperacion.setPet(this.petService.findPetById(petId));
+			citaOperacion.setPagado(false);
+			this.citaOperacionService.saveCitaOperacion(citaOperacion);
+
+			return "redirect:/citaOperacion/" + citaOperacion.getId();
+		}
+	}
+
+	@GetMapping("/citaOperacion/{id}")
+	public ModelAndView showCitaOperacion(@PathVariable("id") final int id) {
+		ModelAndView mav = new ModelAndView("citasOperaciones/citaOperacionDetails");
+		mav.addObject(this.citaOperacionService.findCitaOperacionById(id).get());
+		return mav;
+	}
+
+	@GetMapping(value = "/citaOperacion/{citaOperacionId}/edit/{petId}")
+	public String initUpdateCitaOperacionForm(@PathVariable("citaOperacionId") final int citaOperacionId, @PathVariable("petId") final int petId, final Model model) {
+		CitaOperacion citaOperacion = this.citaOperacionService.findCitaOperacionById(citaOperacionId).get();
+		model.addAttribute(citaOperacion);
+		return "citasOperaciones/createOrUpdateCitaOperacionForm";
+	}
+
+	@PostMapping(value = "/citaOperacion/{citaOperacionId}/edit/{petId}")
+	public String processUpdateCitaOperacionForm(@Valid CitaOperacion citaOperacion, final BindingResult result, @PathVariable("citaOperacionId") final int citaOperacionId, @PathVariable("petId") final int petId) {
+		if (result.hasErrors()) {
+			return "citasOperaciones/createOrUpdateCitaOperacionForm";
+		} else {
+			citaOperacion.setId(citaOperacionId);
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			citaOperacion.setVet(this.vetService.findVetByUser(username));
+			citaOperacion.setPet(this.petService.findPetById(petId));
+			this.citaOperacionService.saveCitaOperacion(citaOperacion);
+			return "redirect:/citaOperacion/" + citaOperacion.getId();
+		}
+	}
+
+	@GetMapping(value = "/citaOperacion/{citaOperacionId}/delete")
+	public String processDeleteCitaOperacionForm(@PathVariable("citaOperacionId") final int citaOperacionId) {
+		CitaOperacion citaOperacion = this.citaOperacionService.findCitaOperacionById(citaOperacionId).get();
+		this.citaOperacionService.deleteCitaOperacion(citaOperacion);
+		return "welcome";
 	}
 	
 }

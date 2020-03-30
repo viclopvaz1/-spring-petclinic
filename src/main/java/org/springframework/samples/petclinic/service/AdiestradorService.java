@@ -8,6 +8,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataAdiestradorRepository;
@@ -49,8 +50,14 @@ public class AdiestradorService {
 		return res;
 	}
 	
+    @Transactional
     public Adiestrador findAdiestradorByUser(String username) {
     	return  adiestradorRepo.findAdiestradorByUser(username);
     }
 
+	@Transactional(readOnly = true)
+	public Adiestrador findAdiestradorById(int id) throws DataAccessException {
+		return adiestradorRepo.findById(id);
+		
+}
 }

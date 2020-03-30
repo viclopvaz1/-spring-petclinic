@@ -26,9 +26,12 @@
         <tbody>
         <c:forEach items="${vet.citasOperacion}" var="citaOperacion">
             <tr>
-                <td>
-                    <c:out value="${citaOperacion.pet.name}"/>
-                </td>
+            	<td>
+                	<spring:url value="/citaOperacion/{id}" var="citaOperacionUrl">
+                        	<spring:param name="id" value="${citaOperacion.id}"/>
+                    	</spring:url>
+                 	<a href="${fn:escapeXml(citaOperacionUrl)}"><c:out value="${citaOperacion.pet.name}"/></a>
+              	</td>
                 <td>
                     <c:out value="${citaOperacion.pet.type}"/>
                 </td>

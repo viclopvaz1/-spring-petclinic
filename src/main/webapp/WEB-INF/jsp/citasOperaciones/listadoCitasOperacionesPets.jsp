@@ -14,6 +14,7 @@
         <thead>
         <tr>
             <th style="width: 150px;">Fecha de Inicio</th>
+            <th>Hora</th>
             <th>Duracion</th>
             <th>Precio</th>
             <th>Veterinario</th>
@@ -26,6 +27,9 @@
             <tr>
                 <td>
                     <c:out value="${citaOperacionPet.fechaInicio}"/>
+                </td>
+                <td>
+                    <c:out value="${citaOperacionPet.hora}"/>
                 </td>
                 <td>
                     <c:out value="${citaOperacionPet.duracion}"/>

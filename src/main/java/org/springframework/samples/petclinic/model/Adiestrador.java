@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.Range;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Data
+//@Data
 @EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "adiestrador")
@@ -39,6 +39,52 @@ public class Adiestrador extends Person{
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
-	//
 
+	public Integer getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(Integer telefono) {
+		this.telefono = telefono;
+	}
+
+	public PetType getTipoAnimal() {
+		return tipoAnimal;
+	}
+
+	public void setTipoAnimal(PetType tipoAnimal) {
+		this.tipoAnimal = tipoAnimal;
+	}
+
+	public Integer getEstrellas() {
+		return estrellas;
+	}
+
+	public void setEstrellas(Integer estrellas) {
+		this.estrellas = estrellas;
+	}
+
+	public Set<CitaAdiestramiento> getCitasAdiestramiento() {
+		return citasAdiestramiento;
+	}
+
+	public void setCitasAdiestramiento(Set<CitaAdiestramiento> citasAdiestramiento) {
+		this.citasAdiestramiento = citasAdiestramiento;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Adiestrador [telefono=" + telefono + ", tipoAnimal=" + tipoAnimal + ", estrellas=" + estrellas
+				+ ", user=" + user + "]";
+	}
+	
+	
 }
