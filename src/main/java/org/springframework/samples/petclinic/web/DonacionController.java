@@ -39,25 +39,18 @@ public class DonacionController {
 
 	private static final String	VIEWS_DONACION_NEW_FORM		= "donaciones/createOrUpdateDonacion";
 
-	@Autowired
 	private UserService			userService;
 
-	@Autowired
 	private CausaService		causaService;
 
-	@Autowired
 	private DonacionService		donacionService;
 	
-	@Autowired
 	private VetService vetService;
 	
-	@Autowired
 	private OwnerService ownerService;
 	
-	@Autowired
 	private AdiestradorService adiestradorService;
 	
-	@Autowired
 	private AuthoritiesService authoritiesService;
 
 

@@ -129,7 +129,7 @@ class CitaAdiestramientoControllerTests {
 		cita.setDuracion(45);
 		cita.setId(TEST_CITA_ADIESTRAMIENTO_ID);
 		cita.setPrecio(75.0);
-		LocalDate fechaInicio = LocalDate.parse("2020/01/11", DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		LocalDate fechaInicio = LocalDate.parse("2020/12/11", DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 		cita.setFechaInicio(fechaInicio);
 		LocalTime hora = LocalTime.parse("15:00");
 		cita.setHora(hora);
@@ -248,7 +248,7 @@ class CitaAdiestramientoControllerTests {
 	void testProcessUpdateCitaFormSuccess() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}", TEST_CITA_ADIESTRAMIENTO_ID, TEST_OWNER_ID, TEST_PET_ID)
 		       .with(SecurityMockMvcRequestPostProcessors.csrf())		
-			    .param("fechaInicio", "2020/01/11")
+			    .param("fechaInicio", "2020/12/11")
 			    .param("hora",  "15:30")
 			    .param("duracion", "45")
 			//	.param("pagado", is(false))))
@@ -291,7 +291,7 @@ class CitaAdiestramientoControllerTests {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/citasAdiestramiento/new/{ownerId}/{petId}", CitaAdiestramientoControllerTests.TEST_OWNER_ID, TEST_PET_ID)//
 				.with(SecurityMockMvcRequestPostProcessors.csrf())
 				.param("id", "1")
-				.param("fechaInicio", "2020/01/11")
+				.param("fechaInicio", "2020/12/11")
 				.param("tipoAdiestramiento", "hola")//
                 .param("precio", "100")
 				.param("hora", "15:00")
@@ -305,7 +305,7 @@ class CitaAdiestramientoControllerTests {
 	 void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/citasAdiestramiento/new/{ownerId}/{petId}", CitaAdiestramientoControllerTests.TEST_OWNER_ID, TEST_PET_ID)
 				.with(SecurityMockMvcRequestPostProcessors.csrf())
-				.param("fechaInicio", "2020/03/27")
+				.param("fechaInicio", "2020/12/11")
 				.param("duracion", "30")
 				.param("precio", "100")
 				.param("tipoOperacion", "hola"))

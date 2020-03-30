@@ -38,19 +38,14 @@ public class CitaAdiestramientoController {
 
 	final AuthoritiesService authoritiesService;
 
-	@Autowired
 	private CitaAdiestramientoService citaAdiestramientoService;
 
-	@Autowired
 	private OwnerService ownerService;
 
-	@Autowired
 	private PetService petService;
 
-	@Autowired
 	private TipoAdiestramientoService tipoAdiestramientoService;
 
-	@Autowired
 	private AdiestradorService adiestradorService;
 
 	@Autowired
@@ -147,9 +142,9 @@ public class CitaAdiestramientoController {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {
 			String mensaje = "";
-			if(citaAdiestramiento.getFechaInicio().isBefore(LocalDate.now()) || !citaAdiestramiento.getFechaInicio().isEqual(LocalDate.now())) {
-				mensaje = "La fecha de inicio debe ser igual o superior a la actual. ";
-				ObjectError errorFechaInicio = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser igual o superior a la actual. ");
+			if(citaAdiestramiento.getFechaInicio().isBefore(LocalDate.now()) || citaAdiestramiento.getFechaInicio().isEqual(LocalDate.now())) {
+				mensaje = "La fecha de inicio debe ser igual.";
+				ObjectError errorFechaInicio = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser igual.");
 				result.addError(errorFechaInicio);
 			}
 			if (mensaje != "") {

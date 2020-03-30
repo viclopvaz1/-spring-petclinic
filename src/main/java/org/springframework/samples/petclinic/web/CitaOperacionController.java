@@ -30,18 +30,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CitaOperacionController {
 
-	@Autowired
+	
 	private CitaOperacionService citaOperacionService;
 	
 	final AuthoritiesService	authoritiesService;
 	
-	@Autowired
 	private PetService petService;
 
-	@Autowired
 	private VetService vetService;
 	
-	@Autowired
 	private TipoOperacionService tipoOperacionService;
 
 
@@ -123,9 +120,9 @@ public class CitaOperacionController {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
 			String mensaje = "";
-			if(citaOperacion.getFechaInicio().isBefore(LocalDate.now()) || !citaOperacion.getFechaInicio().isEqual(LocalDate.now())) {
-				mensaje = "La fecha de inicio debe ser igual o superior a la actual. ";
-				ObjectError errorFechaInicio = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser igual o superior a la actual. ");
+			if(citaOperacion.getFechaInicio().isBefore(LocalDate.now()) || citaOperacion.getFechaInicio().isEqual(LocalDate.now())) {
+				mensaje = "La fecha de inicio debe ser igual.";
+				ObjectError errorFechaInicio = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser igual.");
 				result.addError(errorFechaInicio);
 			}
 			if (mensaje != "") {

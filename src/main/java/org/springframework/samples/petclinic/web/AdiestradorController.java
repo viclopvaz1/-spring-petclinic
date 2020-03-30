@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/adiestradores")
 public class AdiestradorController {
 
-	@Autowired
 	private AdiestradorService adiestradorService;
 	
 	@Autowired
