@@ -123,8 +123,13 @@ public class CausaController {
 	}
 
 	@GetMapping("/{id}")
-	public ModelAndView showCausa(@PathVariable("id") final int id) {
+	public ModelAndView showCausa(@PathVariable("id") final int id, final Model model) {
 		ModelAndView mav = new ModelAndView("causas/causaDetails");
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		Collection<Authorities> collection = this.authoritiesService.findAll();
+		String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+		boolean user = a.equals("owner");
+		model.addAttribute("user", user);
 		mav.addObject(this.causaService.findCausaById(id));
 		return mav;
 	}
@@ -132,12 +137,13 @@ public class CausaController {
 	@GetMapping(value = "/{causaId}/edit")
 	public String initUpdateOwnerForm(@PathVariable("causaId") final int causaId, final Model model) {
 		Causa causa = this.causaService.findCausaById(causaId);
+		model.addAttribute("edit", true);
 		model.addAttribute(causa);
 		return "causas/createOrUpdateCausaForm";
 	}
 
 	@PostMapping(value = "/{causaId}/edit")
-	public String processUpdateCausaForm(@Valid final Causa causa, final BindingResult result, @PathVariable("causaId") final int causaId, final Map<String, Object> model) {
+	public String processUpdateCausaForm(@Valid final Causa causa, final BindingResult result, @PathVariable("causaId") final int causaId, final Model model) {
 		if (result.hasErrors()) {
 			return "causas/createOrUpdateCausaForm";
 		} else {
@@ -153,7 +159,9 @@ public class CausaController {
 				result.addError(errorFecha);
 			}
 			if (mensaje != "") {
-				model.put("mensaje", mensaje);
+				model.addAttribute("mensaje", mensaje);
+				model.addAttribute(causa);
+				model.addAttribute("edit", true);
 				return "causas/createOrUpdateCausaForm";
 			} else {
 				causa.setId(causaId);
