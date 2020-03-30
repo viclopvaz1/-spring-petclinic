@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -22,22 +25,8 @@ public class CitaOperacion extends Cita {
 	private TipoOperacion tipoOperacion;
 	
 	@Column(name = "cantidadPersonal")
+	@NotNull
+	@Min(1)
 	private Double cantidadPersonal;
-
-//	public TipoOperacion getTipoOperacion() {
-//		return tipoOperacion;
-//	}
-//
-//	public void setTipoOperacion(TipoOperacion tipoOperacion) {
-//		this.tipoOperacion = tipoOperacion;
-//	}
-//
-//	public Double getCantidadPersonal() {
-//		return cantidadPersonal;
-//	}
-//
-//	public void setCantidadPersonal(Double cantidadPersonal) {
-//		this.cantidadPersonal = cantidadPersonal;
-//	}
 
 }

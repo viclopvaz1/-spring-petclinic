@@ -34,6 +34,16 @@ public class Person extends BaseEntity {
 	@Column(name = "last_name")
 	@NotEmpty
 	protected String lastName;
+	
+	private Integer monedero;
+	
+	public Integer getMonedero() {
+		return this.monedero;
+	}
+	
+	public void setMonedero(Integer monedero) {
+		this.monedero = monedero;
+	}
 
 	public String getFirstName() {
 		return this.firstName;

@@ -24,13 +24,16 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${citasOperaciones}" var="citaOperacion">
+        <c:forEach items="${vet.citasOperacion}" var="citaOperacion">
             <tr>
+            	<td>
+                	<spring:url value="/citaOperacion/{id}" var="citaOperacionUrl">
+                        	<spring:param name="id" value="${citaOperacion.id}"/>
+                    	</spring:url>
+                 	<a href="${fn:escapeXml(citaOperacionUrl)}"><c:out value="${citaOperacion.pet.name}"/></a>
+              	</td>
                 <td>
-                    <c:out value="${citaOperacion.pet}"/>
-                </td>
-                <td>
-                    <c:out value="${citaOperacion.type}"/>
+                    <c:out value="${citaOperacion.pet.type}"/>
                 </td>
                 <td>
                     <c:out value="${citaOperacion.fechaInicio}"/>
@@ -50,8 +53,6 @@
                 <td>
                     <c:out value="${citaOperacion.cantidadPersonal}"/>
                 </td>
-
-
             </tr>
         </c:forEach>
         </tbody>

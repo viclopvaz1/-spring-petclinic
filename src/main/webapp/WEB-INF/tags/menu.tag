@@ -34,6 +34,12 @@
 					<span>Find owners</span>
 				</petclinic:menuItem>
 				
+				<petclinic:menuItem active="${name eq 'citasAdiestramiento'}" url="/citasAdiestramiento/find"
+					title="find TYPES">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Find types</span>
+				</petclinic:menuItem>
+				
 				
 				
 				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
@@ -48,30 +54,58 @@
 					<span >Adiestradores</span>
 				</petclinic:menuItem>
 				
-				<petclinic:menuItem active="${name eq 'adiestradores'}" url="/causa"
-					title="causas1">
+				<petclinic:menuItem active="${name eq 'causas'}" url="/causa"
+					title="causas">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span >Causas</span>
 				</petclinic:menuItem>
 				
 				<sec:authorize access="isAuthenticated()">
-				<petclinic:menuItem active="${name eq 'causas'}" url="/causa/"
-					title="causas2">
+				<petclinic:menuItem active="${name eq 'causasEnLasQueHeDonado'}" url="/causa/propias "
+					title="causasEnLasQueHeDonado">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span >Causas en las que he donado</span>
 				</petclinic:menuItem>
 				</sec:authorize>
 				
+				<sec:authorize access="isAuthenticated()">
+				<petclinic:menuItem active="${name eq 'crearCausa'}" url="/causa/new"
+					title="crearCausa">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Crear una causa</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'citasOperaciones'}" url="/citasOperaciones/find"
+					title="citasOperaciones">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Filtrar Citas Operaciones Por Tipo Operacion</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'causas validas'}" url="/causa/noValidas"
+					title="Causa No Valida">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Listas de Causas Sugeridas</span>
+				</petclinic:menuItem>
+				</sec:authorize>
+				
+						<petclinic:menuItem active="${name eq 'citasAdiestramiento'}" url="/citasAdiestramiento/all"
+					title="citasAdiestramiento">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span >Citas Adiestramiento</span>
+				</petclinic:menuItem>
+				
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>
-				</petclinic:menuItem>
+				</petclinic:menuItem>	
+			
 				
-				<petclinic:menuItem active="${name eq 'citasOperaciones'}" url="/citasOperaciones"
-					title="citasOperaciones">
+				
+				<petclinic:menuItem active="${name eq 'citasOperaciones'}" url="/adiestradores/5"
+					title="listaAdiestradores">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span >Citas Operaciones</span>
+					<span >Lista Mejores Adiestradores</span>
 				</petclinic:menuItem>
 
 			</ul>
@@ -86,7 +120,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> 
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>ï¿½
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>

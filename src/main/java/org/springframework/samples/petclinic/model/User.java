@@ -1,8 +1,18 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import lombok.Data;
 
@@ -16,4 +26,9 @@ public class User{
 	String password;
 	
 	boolean enabled;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	Set<Donacion> donaciones;
+	
+
 }
