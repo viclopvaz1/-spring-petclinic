@@ -113,7 +113,6 @@ public class CausaController {
 					}
 				}
 				this.causaService.saveCausa(causa);
-				;
 
 				return "redirect:/causa/" + causa.getId();
 			}

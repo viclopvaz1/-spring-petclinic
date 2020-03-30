@@ -19,6 +19,7 @@
     <h2>
         <c:if test="${citaAdiestramiento['new']}">New </c:if> Cita Adiestramiento
     </h2>
+    <b>${mensaje}</b>
     <form:form modelAttribute="citaAdiestramiento" class="form-horizontal" id="add-citaAdiestramiento-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Fecha de Inicio" name="fechaInicio"/>

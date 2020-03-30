@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -140,21 +142,32 @@ public class CitaAdiestramientoController {
 
 	@PostMapping(value = "/citasAdiestramiento/new/{ownerId}/{petId}")
 	public String processCreationForm(@Valid final CitaAdiestramiento citaAdiestramiento, final BindingResult result,
-			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId) {
+			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId, final Map<String, Object> model) {
 		if (result.hasErrors()) {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {
-			// creating Cita Adiestramiento
-//			Collection<Authorities> collection = this.authoritiesService.findAll();
-			String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
-			citaAdiestramiento.setAdiestrador(this.adiestradorService.findAdiestradorByUser(username));
-			citaAdiestramiento.setOwner(this.ownerService.findOwnerById(ownerId));
-			citaAdiestramiento.setPet(this.petService.findPetById(petId));
-			citaAdiestramiento.setPagado(false);
-			this.citaAdiestramientoService.saveCitaAdiestramiento(citaAdiestramiento);
-
-			return "redirect:/citaAdiestramiento/" + citaAdiestramiento.getId();
+			String mensaje = "";
+			if(citaAdiestramiento.getFechaInicio().isBefore(LocalDate.now()) || !citaAdiestramiento.getFechaInicio().isEqual(LocalDate.now())) {
+				mensaje = "La fecha de inicio debe ser igual o superior a la actual. ";
+				ObjectError errorFechaInicio = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser igual o superior a la actual. ");
+				result.addError(errorFechaInicio);
+			}
+			if (mensaje != "") {
+				model.put("mensaje", mensaje);
+				return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
+			} else {
+				// creating Cita Adiestramiento
+	//			Collection<Authorities> collection = this.authoritiesService.findAll();
+				String username = SecurityContextHolder.getContext().getAuthentication().getName();
+	//			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+				citaAdiestramiento.setAdiestrador(this.adiestradorService.findAdiestradorByUser(username));
+				citaAdiestramiento.setOwner(this.ownerService.findOwnerById(ownerId));
+				citaAdiestramiento.setPet(this.petService.findPetById(petId));
+				citaAdiestramiento.setPagado(false);
+				this.citaAdiestramientoService.saveCitaAdiestramiento(citaAdiestramiento);
+	
+				return "redirect:/citaAdiestramiento/" + citaAdiestramiento.getId();
+			}
 		}
 	}
 

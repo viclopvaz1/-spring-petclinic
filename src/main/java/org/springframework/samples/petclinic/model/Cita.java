@@ -35,6 +35,7 @@ public class Cita extends BaseEntity {
 	
 	@Column(name = "duracion")
 	@NotNull
+	@Min(1)
 	private Integer duracion;
 	
 	@Column(name = "precio")
