@@ -46,7 +46,7 @@ public class OwnerController {
 	private final OwnerService ownerService;
 	
 	@Autowired
-	public OwnerController(OwnerService ownerService, CitaAdiestramientoService citaAdiestramientoService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
 		this.ownerService = ownerService;
 	}
 

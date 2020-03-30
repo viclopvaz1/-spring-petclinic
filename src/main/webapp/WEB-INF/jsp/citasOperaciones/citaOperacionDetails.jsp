@@ -24,6 +24,10 @@
             <td><c:out value="${citaOperacion.fechaInicio}"/></td>
         </tr>
         <tr>
+            <th>Hora</th>
+            <td><c:out value="${citaOperacion.hora}"/></td>
+        </tr>
+        <tr>
             <th>Duracion</th>
             <td><c:out value="${citaOperacion.duracion}"/></td>
         </tr>
@@ -45,8 +49,9 @@
         </tr>
     </table>
 
-    <spring:url value="{citaOperacionId}/edit" var="editUrl">
+    <spring:url value="{citaOperacionId}/edit/{petId}" var="editUrl">
         <spring:param name="citaOperacionId" value="${citaOperacion.id}"/>
+        <spring:param name="petId" value="${citaOperacion.pet.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit </a>
 

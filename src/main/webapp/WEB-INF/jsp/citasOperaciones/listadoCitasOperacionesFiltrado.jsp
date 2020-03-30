@@ -9,7 +9,12 @@
 
 <petclinic:layout pageName="citasOperaciones">
     <h2>CitasOperaciones</h2>
-
+    
+    <c:choose>
+    <c:when test="${conjuntoVacio}">
+    	<h2>No hay ninguna cita de operacion con ese tipo o ha introducido un tipo de operacion inexistente</h2>
+    </c:when>
+	<c:otherwise>
     <table id="citasOperacionesTable" class="table table-striped">
         <thead>
         <tr>
@@ -60,4 +65,6 @@
         </c:forEach>
         </tbody>
     </table>
+    </c:otherwise>
+    </c:choose>
 </petclinic:layout>

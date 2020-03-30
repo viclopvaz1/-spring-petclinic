@@ -1,6 +1,9 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -32,17 +35,28 @@ public class CitaOperacionService {
 	
 	@Transactional
 	public Iterable<CitaOperacion> findAll() {
-		return this.citaOperacionRepo.findAll();
+//		return this.citaOperacionRepo.findAll();
+		Iterable<CitaOperacion> res = this.citaOperacionRepo.findAll();
+		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
+		return res;
 	}
 
 	@Transactional
-	public Collection<CitaOperacion> findCitaOperacionByTipoOperacion(final String tipoOperacion) {
-		return this.citaOperacionRepo.findCitaOperacionByTipoOperacion(tipoOperacion);
+	public Iterable<CitaOperacion> findCitaOperacionByTipoOperacion(final String tipoOperacion) throws NoSuchElementException {
+		Iterable<CitaOperacion> res = this.citaOperacionRepo.findCitaOperacionByTipoOperacion(tipoOperacion);
+//		Optional<CitaOperacion> vacio;
+//		if (StreamSupport.stream(res.spliterator(), false).findAny().isEmpty()) {
+		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+			throw new NoSuchElementException();
+		}
+		return res;
 	}
 	
 	@Transactional
-	public CitaOperacion findCitaOperacionById(final int citaAdiestramientoId) {
-		return this.citaOperacionRepo.findCitaOperacionById(citaAdiestramientoId);
+	public Optional<CitaOperacion> findCitaOperacionById(final int CitaOperacionId) throws NoSuchElementException{
+		return this.citaOperacionRepo.findCitaOperacionById(CitaOperacionId);
 	}
 	
 	@Transactional

@@ -1,12 +1,12 @@
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
 import java.util.Collection;
-import org.springframework.dao.DataAccessException;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.repository.CitaOperacionRepository;
 
 public interface SpringDataCitaOperacionRepository extends CitaOperacionRepository, Repository<CitaOperacion, Integer> {
@@ -17,7 +17,7 @@ public interface SpringDataCitaOperacionRepository extends CitaOperacionReposito
 	
 	@Override
 	@Query("SELECT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.id = :citaOperacionId")
-	CitaOperacion findCitaOperacionById(@Param("citaOperacionId") int citaOperacionId);
+	Optional<CitaOperacion> findCitaOperacionById(@Param("citaOperacionId") int citaOperacionId);
 	
 //	@Override
 //	@Query("SELECT tipoOperacion FROM TipoOperacion tipoOperacion WHERE tipoOperacion.name LIKE :name%")
