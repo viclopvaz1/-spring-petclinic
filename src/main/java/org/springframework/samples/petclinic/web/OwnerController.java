@@ -20,7 +20,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.CitaAdiestramiento;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CitaAdiestramientoService;
@@ -47,7 +46,7 @@ public class OwnerController {
 	private final OwnerService ownerService;
 	
 	@Autowired
-	public OwnerController(OwnerService ownerService, CitaAdiestramientoService citaAdiestramientoService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
 		this.ownerService = ownerService;
 	}
 

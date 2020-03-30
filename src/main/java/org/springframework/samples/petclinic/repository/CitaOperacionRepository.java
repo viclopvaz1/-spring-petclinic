@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +11,10 @@ public interface CitaOperacionRepository extends CrudRepository<CitaOperacion, I
 
 	Collection<CitaOperacion> findCitaOperacionByTipoOperacion(String tipoOperacion) throws DataAccessException;
 
-	CitaOperacion findCitaOperacionById(int citaOperacionId);
+	Optional<CitaOperacion> findCitaOperacionById(int citaOperacionId);
+	
+//	TipoOperacion findTipoOperacionByName(String name);
+	
+//	Collection<TipoOperacion> findTiposOperaciones() throws DataAccessException;
 
 }
