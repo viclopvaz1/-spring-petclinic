@@ -48,9 +48,7 @@ public class CitaOperacionControllerTests {
 	private static final int TEST_VET_ID = 1;
 
 	private static final int TEST_PET_ID = 1;
-	
-//	private static final int TEST_OWNER_ID = 1;
-	
+		
 	private static final int TEST_CITAOPERACION_ID = 1;
 	
 	@Autowired
@@ -65,8 +63,6 @@ public class CitaOperacionControllerTests {
 	@MockBean
 	private PetService petService;
 	
-//	@MockBean
-//	private OwnerService ownerService;
 	
 	@MockBean
 	private VetService vetService;

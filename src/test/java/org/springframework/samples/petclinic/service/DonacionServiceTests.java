@@ -41,7 +41,7 @@ public class DonacionServiceTests {
 	@Autowired
 	private CausaService causaService;
 
-	@ParameterizedTest //POsitivo
+	@ParameterizedTest //Positivo
 	@CsvSource({"100", "1200"})
 	public void saveDonacion(final Integer cantidad) {
 		Donacion donacion = new Donacion();

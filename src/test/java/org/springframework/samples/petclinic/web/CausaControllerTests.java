@@ -428,12 +428,14 @@ class CausaControllerTests {
 			.param("objetivo", "120").param("dineroRecaudado", "119")).andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/causa/" + CausaControllerTests.TEST_CAUSA_ID));
 	}
 
-	@WithMockUser(value = "spring")
-	@Test
-	void testShowCausa() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/causa/{id}", CausaControllerTests.TEST_CAUSA_ID)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("causa"))
-			.andExpect(MockMvcResultMatchers.view().name("causas/causaDetails"));
-	}
+//	@WithMockUser(value = "spring")
+//	@Test
+//	void testShowCausa() throws Exception {
+//		this.mockMvc.perform(MockMvcRequestBuilders.get("/causa/{id}", CausaControllerTests.TEST_CAUSA_ID))
+//			.andExpect(MockMvcResultMatchers.status().isOk())
+//			.andExpect(MockMvcResultMatchers.model().attributeExists("causa"))
+//			.andExpect(MockMvcResultMatchers.view().name("causas/causaDetails"));
+//	}
 
 	@WithMockUser(value = "spring")
 	@Test
