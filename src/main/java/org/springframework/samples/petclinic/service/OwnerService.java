@@ -20,6 +20,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 import org.springframework.stereotype.Service;
@@ -66,4 +67,8 @@ public class OwnerService {
 		//creating authorities
 		this.authoritiesService.saveAuthorities(owner.getUser().getUsername(), "user");
 	}	
+	
+    public Owner findOwnerByUser(String username) {
+    	return  ownerRepository.findOwnerByUser(username);
+    }
 }

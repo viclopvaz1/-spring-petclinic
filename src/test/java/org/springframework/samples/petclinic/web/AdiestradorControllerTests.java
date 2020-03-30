@@ -72,6 +72,7 @@ public class AdiestradorControllerTests {
 				.andExpect(view().name("adiestradores/listadoAdiestradores"));
 	}
 	
+	
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowBestAdiestradorListHtml() throws Exception {
@@ -79,6 +80,5 @@ public class AdiestradorControllerTests {
 				.andExpect(model().attributeExists("adiestradores"))
 				.andExpect(view().name("adiestradores/listadoBestAdiestradores"));
 	}
-
 
 }

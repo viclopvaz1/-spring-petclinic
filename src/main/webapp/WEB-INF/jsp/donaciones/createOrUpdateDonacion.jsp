@@ -10,6 +10,7 @@
     <h2>
         <c:if test="${donacion['new']}">New </c:if> Donacion
     </h2>
+    <b>${message}</b>
     <form:form modelAttribute="donacion" class="form-horizontal" id="add-donacion-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Donacion" name="cantidad"/>

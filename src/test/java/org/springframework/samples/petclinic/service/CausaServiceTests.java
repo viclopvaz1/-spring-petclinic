@@ -2,16 +2,23 @@
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.Causa;
+import org.springframework.samples.petclinic.model.Donacion;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataAdiestradorRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -60,19 +67,56 @@ public class CausaServiceTests {
 		Assertions.assertThat(causa.getFechaFin()).isEqualTo(nuevoFechaFin);
 		Assertions.assertThat(causa.isValido()).isEqualTo(nuevoValido);
 	}
+	
+	@Test//Negativo es null la causa
+	public void saveFailCausa() {
+		Causa causa = null;		
+		org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class, () -> {
+			this.causaService.saveCausa(causa);
+		});
+	}
 
 	@ParameterizedTest
-	@CsvSource({
+	@CsvSource({//NEGATIVO 
 		"1", "3"
 	})
 	public void deleteCausa(final Integer id) {
 		Causa causa = this.causaService.findCausaById(id);
 		Assertions.assertThat(causa != null);
 		this.causaService.deleteCausa(causa);
-		Causa causaBorrada = this.causaService.findCausaById(id);
-		Assertions.assertThat(causaBorrada == null);
-		// retrieving new name from database
+		causa =  this.causaService.findCausaById(id);
+		Assertions.assertThat(causa).isNull();
 
+	}
+	
+	@ParameterizedTest
+	@CsvSource({
+		"1", "3"
+	})
+	public void testFindCausaByIdWithCsvSource(final Integer id) {
+		Causa causas = this.causaService.findCausaById(id);
+		Assertions.assertThat(causas).isNotNull();
+	}
+	
+	
+	@ParameterizedTest // NEGATIVO no encuentra USERNAME
+	@CsvSource({
+		"Ajhasfdds", "sdfgsdg"
+	})
+	public void testFindNotCausaByUsernameWithCsvSource(final String username) {
+		org.junit.jupiter.api.Assertions.assertThrows(NoSuchElementException.class, () -> {
+			this.causaService.findCausaByUsername(username);
+		});
+	}
+	
+	
+	@ParameterizedTest // NEGATIVO no encuentra ID
+	@CsvSource({
+		"10", "14"
+	})
+	public void testFindNotCausaByIdWithCsvSource(final Integer id) {
+		Causa causa = this.causaService.findCausaById(id);
+		Assertions.assertThat(causa).isNull();
 	}
 
 	@Test

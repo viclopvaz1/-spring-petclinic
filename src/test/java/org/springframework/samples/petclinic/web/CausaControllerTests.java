@@ -4,6 +4,7 @@ package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +40,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 class CausaControllerTests {
 
 	private static final int	TEST_CAUSA_ID	= 1;
+	
 
 	@Autowired
 	private CausaController		causaController;
@@ -87,8 +89,7 @@ class CausaControllerTests {
 		this.causa.setObjetivo(1200);
 		this.causa.setOng("ONG");
 		this.causa.setValido(true);
-		BDDMockito.given(this.causaService.findCausaById(CausaControllerTests.TEST_CAUSA_ID)).willReturn(this.causa);
-	}
+		BDDMockito.given(this.causaService.findCausaById(CausaControllerTests.TEST_CAUSA_ID)).willReturn(this.causa);	}
 
 	@WithMockUser(value = "spring")
 	@Test
@@ -104,6 +105,28 @@ class CausaControllerTests {
 			.perform(MockMvcRequestBuilders.post("/causa/new").param("fechaFin", "2020/05/11").param("fechaInicio", "2020/01/11").with(SecurityMockMvcRequestPostProcessors.csrf()).param("ong", "ONG").param("objetivo", "1200").param("dineroRecaudado", "0"))
 			.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 	}
+	
+//	@WithMockUser(value = "spring")
+//	@Test
+//	void testInitEditForm() throws Exception {
+//		this.mockMvc.perform(MockMvcRequestBuilders.get("/causa/{causaId}/edit",TEST_CAUSA_ID))
+//					.andExpect(MockMvcResultMatchers.status().isOk())
+//					.andExpect(MockMvcResultMatchers.model().attributeExists("causa"))
+//					.andExpect(MockMvcResultMatchers.view().name("causas/createOrUpdateCausaForm"));
+//	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitNotEditForm() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/causa/{causaId}/edit",2))
+					.andExpect(MockMvcResultMatchers.status().isOk())
+					.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("causa"))
+					.andExpect(MockMvcResultMatchers.view().name("exception"));
+	}
+	
+	
+	
+	
 
 	//		@WithMockUser(value = "spring")
 	//		@Test
