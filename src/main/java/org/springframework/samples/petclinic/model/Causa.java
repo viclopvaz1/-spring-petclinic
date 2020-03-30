@@ -56,60 +56,75 @@ public class Causa extends BaseEntity {
 	}
 
 	public void setFechaInicio(final LocalDate fechaInicio) {
+
 		this.fechaInicio = fechaInicio;
 	}
 
 	public LocalDate getFechaFin() {
+
 		return this.fechaFin;
 	}
 
 	public void setFechaFin(final LocalDate fechaFin) {
+
 		this.fechaFin = fechaFin;
 	}
 
 	public String getOng() {
+
 		return this.ong;
 	}
 
 	public void setOng(final String ong) {
+
 		this.ong = ong;
 	}
 
 	public Integer getObjetivo() {
+
 		return this.objetivo;
 	}
 
 	public void setObjetivo(final Integer objetivo) {
+
 		this.objetivo = objetivo;
 	}
 
 	public Integer getDineroRecaudado() {
+    
 		return this.dineroRecaudado;
 	}
 
 	public void setDineroRecaudado(final Integer dineroRecaudado) {
+
 		this.dineroRecaudado = dineroRecaudado;
 	}
 
 	public boolean isValido() {
+
 		return this.valido;
 	}
 
 	public void setValido(final boolean valido) {
+
 		this.valido = valido;
 	}
 
 	public List<Donacion> getDonaciones() {
+
 		return this.donaciones;
 	}
 
 	public void setDonaciones(final List<Donacion> donaciones) {
+
 		this.donaciones = donaciones;
 	}
 
 	@Override
 	public String toString() {
+
 		return "Causa [fechaInicio=" + this.fechaInicio + ", fechaFin=" + this.fechaFin + ", ong=" + this.ong + ", objetivo=" + this.objetivo + ", dineroRecaudado=" + this.dineroRecaudado + ", valido=" + this.valido + "]";
 	}
+
 
 }

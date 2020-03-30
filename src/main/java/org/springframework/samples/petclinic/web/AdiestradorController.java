@@ -1,5 +1,8 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.service.AdiestradorService;
@@ -34,7 +37,7 @@ public class AdiestradorController {
 	@GetMapping(value = "/{estrellas}")
 	public String listadoBestAdiestradores(final ModelMap modelMap, @PathVariable("estrellas") final Integer estrellas){
 		String vista = "adiestradores/listadoBestAdiestradores";
-		Iterable<Adiestrador> bestAdiestradores = adiestradorService.findAdiestradorByEstrellas(estrellas);
+		Collection<Adiestrador> bestAdiestradores = adiestradorService.findAdiestradorByEstrellas(estrellas);
 		modelMap.addAttribute("adiestradores", bestAdiestradores);
 		return vista;
 	}

@@ -1,7 +1,9 @@
 
 package org.springframework.samples.petclinic.service;
 
-import java.util.Collection;
+
+import java.util.NoSuchElementException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -38,15 +40,14 @@ public class DonacionService {
 
 	}
 
-	@Transactional
-	public void deleteDonacionAll(final Collection<Donacion> donacion) throws DataAccessException {
-		this.donacionRepo.deleteAll(donacion);
-
-	}
 
 	@Transactional
-	public Donacion findById(final int id) {
-		return this.donacionRepo.findById(id).orElse(null);
+	public Donacion findById(int id) throws NoSuchElementException{
+		Donacion donacion = donacionRepo.findById(id).orElse(null);
+		if (donacion == null) {
+			throw new NoSuchElementException();
+		}
+		return donacion;
 	}
 
 }

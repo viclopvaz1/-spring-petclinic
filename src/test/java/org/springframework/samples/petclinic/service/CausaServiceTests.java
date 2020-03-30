@@ -2,7 +2,9 @@
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import javax.validation.ConstraintViolationException;
 
@@ -10,11 +12,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.samples.petclinic.model.Causa;
+import org.springframework.samples.petclinic.model.Donacion;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataAdiestradorRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -98,6 +104,14 @@ public class CausaServiceTests {
 		org.assertj.core.api.Assertions.assertThat(causa.getFechaFin()).isEqualTo(nuevoFechaFin);
 		org.assertj.core.api.Assertions.assertThat(causa.isValido()).isEqualTo(nuevoValido);
 	}
+	
+	@Test//Negativo es null la causa
+	public void saveFailCausa() {
+		Causa causa = null;		
+		org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class, () -> {
+			this.causaService.saveCausa(causa);
+		});
+	}
 
 	@ParameterizedTest
 	@CsvSource({
@@ -107,6 +121,7 @@ public class CausaServiceTests {
 		Causa causa = this.causaService.findCausaById(id);
 		org.assertj.core.api.Assertions.assertThat(causa).isNotNull();
 		this.causaService.deleteCausa(causa);
+
 		Causa causaBorrada = this.causaService.findCausaById(id);
 		org.assertj.core.api.Assertions.assertThat(causaBorrada).isNull();
 
@@ -121,6 +136,7 @@ public class CausaServiceTests {
 			this.causaService.deleteCausa(causa);
 		});
 	}
+
 	@Test
 	public void testCountWithInitialData() {
 		int count = this.causaService.causaCount();

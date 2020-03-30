@@ -4,6 +4,7 @@ package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.assertj.core.util.Lists;
@@ -46,6 +47,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WebMvcTest(controllers = CausaController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 class CausaControllerTests {
 
+
 	private static final int	TEST_CAUSA_ID			= 1;
 
 	private static final int	TEST_CAUSA_NO_VALIDA_ID	= 2;
@@ -55,6 +57,7 @@ class CausaControllerTests {
 	private static final int	TEST_VET_ID				= 1;
 
 	private static final int	TEST_ADIESTRADOR_ID		= 1;
+
 
 	@Autowired
 	private CausaController		causaController;
@@ -183,6 +186,7 @@ class CausaControllerTests {
 		this.causa.setOng("ONG");
 		this.causa.setValido(true);
 
+
 		this.causaNoValida.setId(CausaControllerTests.TEST_CAUSA_NO_VALIDA_ID);
 		this.causaNoValida.setDineroRecaudado(120);
 		this.causaNoValida.setFechaFin(fechaFin);
@@ -208,6 +212,7 @@ class CausaControllerTests {
 
 	}
 
+
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
@@ -222,6 +227,7 @@ class CausaControllerTests {
 			.perform(MockMvcRequestBuilders.post("/causa/new").with(SecurityMockMvcRequestPostProcessors.csrf()).param("fechaFin", "2020/05/11").param("fechaInicio", "2020/01/11").param("ong", "ONG").param("objetivo", "1200").param("dineroRecaudado", "0"))
 			.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 	}
+
 	// Los siguientes errores comprueban que ningun atributo, excepto valido, pueden ser nulos al crear la causa
 	@WithMockUser(value = "spring")
 	@Test
@@ -230,6 +236,8 @@ class CausaControllerTests {
 			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeHasErrors("causa")).andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("causa", "fechaFin"))
 			.andExpect(MockMvcResultMatchers.view().name("causas/createOrUpdateCausaForm"));
 	}
+
+
 
 	@WithMockUser(value = "spring")
 	@Test

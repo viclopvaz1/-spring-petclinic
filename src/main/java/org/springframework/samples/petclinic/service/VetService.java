@@ -57,8 +57,19 @@ public class VetService {
 		return this.vetRepository.findById(id);
 	}
 
+
 	//	@Transactional(readOnly = true)
 	//	public Collection<CitaOperacion> findCitaOperacionByTipoOperacion(String tipoOperacion, int vetId) throws DataAccessException {
 	//		return vetRepository.findByTipoOperacion(tipoOperacion, vetId);
 	//	}
+
+	public Vet findVetByUser(String username) {
+		return  vetRepository.findVetByUser(username);
+	}
+
+//	@Transactional(readOnly = true)
+//	public Collection<CitaOperacion> findCitaOperacionByTipoOperacion(String tipoOperacion, int vetId) throws DataAccessException {
+//		return vetRepository.findByTipoOperacion(tipoOperacion, vetId);
+//	}
+
 }
