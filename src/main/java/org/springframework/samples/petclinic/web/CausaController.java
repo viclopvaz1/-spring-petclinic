@@ -179,7 +179,7 @@ public class CausaController {
 				Owner owner = this.ownerService.findByUser(username);
 				owner.setMonedero(owner.getMonedero() + donacion.getCantidad());
 			} else if (a.equals("adiestrador")) {
-				Adiestrador adiestrador = this.adiestradorService.findByUser(username);
+				Adiestrador adiestrador = this.adiestradorService.findAdiestradorByUser(username);
 				adiestrador.setMonedero(adiestrador.getMonedero() + donacion.getCantidad());
 			}
 		}

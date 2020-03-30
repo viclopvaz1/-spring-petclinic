@@ -2,6 +2,7 @@
 package org.springframework.samples.petclinic.service;
 
 
+import java.util.Collection;
 import java.util.NoSuchElementException;
 
 
@@ -39,7 +40,12 @@ public class DonacionService {
 		this.donacionRepo.delete(donacion);
 
 	}
-
+	
+	@Transactional
+	public void deleteDonacionAll(final Collection<Donacion> donacion) throws DataAccessException {
+	     this.donacionRepo.deleteAll(donacion);
+	 
+	}
 
 	@Transactional
 	public Donacion findById(int id) throws NoSuchElementException{

@@ -55,9 +55,6 @@ public class CausaService {
 	@Transactional
 	public Collection<Causa> findCausaByUsername(final String username) {
 		Collection<Causa> causa = this.causaRepo.findCausaByDonaciones(username);
-		if (causa.isEmpty()) {
-			throw new NoSuchElementException();
-		}
 		return causa;
 	}
 
