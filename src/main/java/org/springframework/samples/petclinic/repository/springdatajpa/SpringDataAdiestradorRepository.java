@@ -18,12 +18,4 @@ public interface SpringDataAdiestradorRepository extends AdiestradorRepository, 
 	@Override
 	@Query("SELECT adiestrador FROM Adiestrador adiestrador WHERE adiestrador.user.username LIKE :username%")
 	Adiestrador findByUser(@Param("username") String username);
-
-	@Override
-	@Query("SELECT adiestrador FROM Adiestrador adiestrador WHERE adiestrador.user.username LIKE :username%")
-	Adiestrador findByUser(String username) throws DataAccessException;
-
-	
-	
-	
 }

@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.repository.CitaOperacionRepository;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCitaOperacionRepository;
 import org.springframework.stereotype.Service;
 
@@ -108,26 +107,6 @@ public class CitaOperacionServiceTests {
 		org.assertj.core.api.Assertions.assertThat(citaOperacion.getCantidadPersonal()).isEqualTo(nuevaCantidadPersonal);
 
 	}
-	
-//	@ParameterizedTest
-//	@CsvSource({
-//		"1, , 15:00, 50, 100.0, false, Cirugia visual, 5.0"
-//	})
-//	public void updateFailCitaOperacion(final int citaOperacionId, final LocalDate nuevaFechaInicio, final LocalTime nuevaHora, final Integer nuevaDuracion,
-//			final Double nuevoPrecio, final boolean nuevoPagado, final String nuevoTipoOperacionName, final Double nuevaCantidadPersonal) {
-//		CitaOperacion citaOperacion = this.citaOperacionService.findCitaOperacionById(citaOperacionId).get();
-//		citaOperacion.setFechaInicio(nuevaFechaInicio);
-//		citaOperacion.setHora(nuevaHora);
-//		citaOperacion.setDuracion(nuevaDuracion);
-//		citaOperacion.setPrecio(nuevoPrecio);
-//		citaOperacion.setPagado(nuevoPagado);
-//		citaOperacion.setTipoOperacion(this.tipoOperacionService.findTipoOperacionByName(nuevoTipoOperacionName));
-//		citaOperacion.setCantidadPersonal(nuevaCantidadPersonal);
-//		Assertions.assertThrows(javax.validation.ConstraintViolationException.class, () -> {
-//			this.citaOperacionService.saveCitaOperacion(citaOperacion);
-//		});
-//
-//	}
 	
 	@Test
 	void shouldFindAllCitasOperaciones() {
