@@ -41,13 +41,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/citaOperacion/{citaOperacionId}/delete").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers(HttpMethod.GET, "/citaOperacion/new").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers(HttpMethod.POST, "/citaOperacion/new/{petId}").hasAnyAuthority("veterinarian", "admin")
+				.antMatchers(HttpMethod.GET, "/citasAdiestramiento/new/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
+				.antMatchers(HttpMethod.POST, "/citasAdiestramiento/new/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
+				.antMatchers("/citaAdiestramiento/{id}").hasAnyAuthority("veterinarian", "admin","adiestrador")
+				.antMatchers(HttpMethod.GET,"/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
+				.antMatchers(HttpMethod.POST,"/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
+
+				.antMatchers("/citaAdiestramiento/{citaAdiestramientoId}/delete").hasAnyAuthority("adiestrador", "admin")
+				
+				
 				.antMatchers("/citasAdiestramiento").hasAnyAuthority("adiestrador", "admin")
+				.antMatchers("/citasAdiestramiento/{ownerId}").hasAnyAuthority("adiestrador", "admin")
+
 				.antMatchers("/citasAdiestramiento/new").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/citasAdiestramiento/find").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/citasAdiestramiento/all").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/adiestradores").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
-				.antMatchers("/owners/**").hasAnyAuthority("owner", "admin", "veterinarian")
+				.antMatchers("/owners/**").hasAnyAuthority("owner", "admin", "veterinarian","adiestrador")
 //				.antMatchers("/owners/find").hasAnyAuthority("owner", "admin")
 //				.antMatchers("/owners").hasAnyAuthority("owner", "admin", "veterinarian")
 //				.antMatchers("/owners/{ownerId}").hasAnyAuthority("owner", "admin", "veterinarian")

@@ -28,7 +28,7 @@ import org.springframework.samples.petclinic.repository.VetRepository;
  * @since 15.1.2013
  */
 public interface SpringDataVetRepository extends VetRepository, Repository<Vet, Integer> {
-	
+
 	@Override
 	@Query("SELECT vet FROM Vet vet WHERE vet.user.username LIKE :username%")
 	Vet findByUsername(String username) throws DataAccessException;

@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.repository.springdatajpa;
 
 import java.util.Collection;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +15,11 @@ public interface SpringDataAdiestradorRepository extends AdiestradorRepository, 
 	@Query("SELECT adiestrador FROM Adiestrador adiestrador WHERE adiestrador.estrellas = 5")
 	Collection<Adiestrador> findAdiestradorByEstrellas(@Param("estrellas") Integer estrellas);
 
+	@Override
+	@Query("SELECT adiestrador FROM Adiestrador adiestrador WHERE adiestrador.user.username LIKE :username%")
+	Adiestrador findByUser(String username) throws DataAccessException;
+
+	
+	
+	
 }
