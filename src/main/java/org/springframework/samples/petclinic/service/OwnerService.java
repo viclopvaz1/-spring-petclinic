@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.repository.OwnerRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataOwnerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,18 +34,24 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class OwnerService {
-	private OwnerRepository		ownerRepository;
+
+	private SpringDataOwnerRepository	ownerRepository;
 
 	@Autowired
-	private UserService			userService;
+	private UserService					userService;
 
 	@Autowired
-	private AuthoritiesService	authoritiesService;
+	private AuthoritiesService			authoritiesService;
 
 
 	@Autowired
-	public OwnerService(final OwnerRepository ownerRepository) {
+	public OwnerService(final SpringDataOwnerRepository ownerRepository) {
 		this.ownerRepository = ownerRepository;
+	}
+
+	@Transactional(readOnly = true)
+	public Owner findByUser(final String username) throws DataAccessException {
+		return this.ownerRepository.findByUser(username);
 	}
 
 	@Transactional(readOnly = true)

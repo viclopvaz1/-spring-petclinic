@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
@@ -15,20 +16,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AdiestradorService {
-	
 
 	private SpringDataAdiestradorRepository adiestradorRepo;
-	
+
+
 	@Autowired
 	public AdiestradorService(final SpringDataAdiestradorRepository stringAdiestradorRepo) {
 		this.adiestradorRepo = stringAdiestradorRepo;
 	}
-	
+
 	@Transactional
 	public int adiestradorCount() throws NoSuchElementException{
 		return (int) adiestradorRepo.count();
+
 	}
-	
+
 	@Transactional
 	public Iterable<Adiestrador> findAll() throws NoSuchElementException{
 		Iterable<Adiestrador> res = this.adiestradorRepo.findAll();
@@ -37,7 +39,7 @@ public class AdiestradorService {
 		}
 		return res;
 	}
-	
+
 	@Transactional
 	public Collection<Adiestrador> findAdiestradorByEstrellas(final Integer estrellas) throws NoSuchElementException{
 		Collection<Adiestrador> res = this.adiestradorRepo.findAdiestradorByEstrellas(estrellas);
@@ -45,7 +47,6 @@ public class AdiestradorService {
 			throw new NoSuchElementException();
 		}
 		return res;
-		
 	}
 	
     public Adiestrador findAdiestradorByUser(String username) {
