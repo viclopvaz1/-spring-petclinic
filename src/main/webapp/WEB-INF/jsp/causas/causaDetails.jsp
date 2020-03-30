@@ -37,6 +37,8 @@
         </tr>
     </table>
 
+	<c:choose>
+              <c:when test="${!user}">
     <spring:url value="{causaId}/edit" var="editUrl">
         <spring:param name="causaId" value="${causa.id}"/>
     </spring:url>
@@ -46,7 +48,10 @@
         <spring:param name="causaId" value="${causa.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete </a>
-
+  </c:when>
+         <c:otherwise>
+         </c:otherwise>
+        </c:choose>
 		<c:choose>
               <c:when test="${causa.valido}">
               <spring:url value="/donacion/{causaId}/new" var="causaUrl">

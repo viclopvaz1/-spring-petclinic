@@ -8,7 +8,7 @@
 
 <petclinic:layout pageName="crearCausa">
     <h2>
-        <c:if test="${causa['new']}">New </c:if> Causa
+        <c:if test="${!edit}">New </c:if> Causa
     </h2>
     <b>${mensaje}</b>	
 	
@@ -21,7 +21,7 @@
             <petclinic:inputField label="Objetivo" name="objetivo"/>
             <petclinic:inputField label="Dinero Recaudado" name="dineroRecaudado"/>
             <c:choose>
-				<c:when test="${!causa['new']}">
+				<c:when test="${edit}">
                    <petclinic:inputField label="Validez" name="valido"/>
                 </c:when>
              <c:otherwise>
@@ -31,11 +31,11 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
-                    <c:when test="${causa['new']}">
+                    <c:when test="${!edit}">
                         <button class="btn btn-default" type="submit">Add Causa</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update Causa</button>
+                         <button class="btn btn-default" type="submit">Update Causa</button> 
                     </c:otherwise>
                 </c:choose>
             </div>
