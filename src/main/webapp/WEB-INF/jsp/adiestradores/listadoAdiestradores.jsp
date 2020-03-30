@@ -30,13 +30,13 @@
                     <c:out value="${adiestrador.lastName}"/>
                 </td>
                 <td>
-                    <c:out value="${adiestrador.estrellas}"/>
+                    <c:out value="${adiestrador.telefono}"/>
                 </td>
                 <td>
                     <c:out value="${adiestrador.tipoAnimal}"/>
                 </td>
                 <td>
-                    <c:out value="${adiestrador.telefono}"/>
+                    <c:out value="${adiestrador.estrellas}"/>
                 </td>
                 
               

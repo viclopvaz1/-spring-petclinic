@@ -128,9 +128,7 @@ public class DonacionController {
 			this.donacionService.saveDonacion(donacion);
 			this.causaService.saveCausa(causa);
 
-			
-
-			return DonacionController.VIEWS_DONACION_CREATE_FORM;
+			return "redirect:/causa/" + causa.getId();
 		}
 	}
 

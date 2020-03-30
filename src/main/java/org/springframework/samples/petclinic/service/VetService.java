@@ -48,8 +48,8 @@ public class VetService {
 	}
 
 	@Transactional
-	public Vet findVetByUser(final String username) throws DataAccessException {
-		return this.vetRepository.findVetByUser(username);
+	public Vet findVetByUser(String username) throws DataAccessException {
+		return vetRepository.findVetByUser(username);
 	}
 
 	@Transactional(readOnly = true)

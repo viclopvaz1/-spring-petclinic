@@ -32,13 +32,11 @@ public class DonacionService {
 	@Transactional
 	public void saveDonacion(final Donacion donacion) throws DataAccessException {
 		this.donacionRepo.save(donacion);
-
 	}
 
 	@Transactional
 	public void deleteDonacion(final Donacion donacion) throws DataAccessException {
 		this.donacionRepo.delete(donacion);
-
 	}
 	
 	@Transactional
