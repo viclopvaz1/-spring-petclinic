@@ -20,9 +20,12 @@ import java.util.Collection;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.stereotype.Service;
@@ -123,5 +126,24 @@ class OwnerServiceTests {
 		owner = this.ownerService.findOwnerById(1);
 		Assertions.assertThat(owner.getLastName()).isEqualTo(newLastName);
 	}
+	
+	@ParameterizedTest
+	@CsvSource({//NEGATIVO 
+		"owner2", "owner3"
+	})
+	public void testFindOwnerByUsernamesvSource(final String username) {
+		Owner owner = this.ownerService.findOwnerByUser(username);
+		Assertions.assertThat(owner).isNotNull();
+	}
+	
+	@ParameterizedTest
+	@CsvSource({//NEGATIVO 
+		"owner124", "owner444"
+	})
+	public void testNotFindOwnerByUsermeCsvSource(final String username) {
+		Owner owner = this.ownerService.findOwnerByUser(username);
+		Assertions.assertThat(owner).isNull();
+	}
+	
 
 }

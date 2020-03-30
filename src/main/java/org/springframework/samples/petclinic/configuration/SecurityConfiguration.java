@@ -51,12 +51,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				
 				
 				.antMatchers("/citasAdiestramiento").hasAnyAuthority("adiestrador", "admin")
+        .antMatchers("/citasAdiestramiento/**").hasAnyAuthority("owner", "admin")
 				.antMatchers("/citasAdiestramiento/{ownerId}").hasAnyAuthority("adiestrador", "admin")
 
 				.antMatchers("/citasAdiestramiento/new").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/citasAdiestramiento/find").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/citasAdiestramiento/all").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/adiestradores").permitAll()
+      	.antMatchers("/adiestradores/5").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner", "admin", "veterinarian","adiestrador")
 //				.antMatchers("/owners/find").hasAnyAuthority("owner", "admin")
@@ -73,6 +75,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/causa/{id}").permitAll()
 				.antMatchers(HttpMethod.POST, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/causa/noValidas").hasAnyAuthority("veterinarian")
+        .antMatchers("/donacion/**").hasAnyAuthority("owner", "admin","veterinarian")
 				.anyRequest().denyAll().and().formLogin()
 				/* .loginPage("/login") */
 				.failureUrl("/login-error").and().logout().logoutSuccessUrl("/");

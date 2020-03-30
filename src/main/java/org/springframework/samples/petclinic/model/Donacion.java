@@ -6,6 +6,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -15,11 +17,14 @@ import lombok.Data;
 public class Donacion extends BaseEntity {
 	
 	@Column(name = "cantidad")
+	@Min(value = 0)
+	@NotNull
 	private Integer cantidad;
 	
 	@ManyToOne
 	@JoinColumn(name = "username")
 	private User user;
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "causa_id")

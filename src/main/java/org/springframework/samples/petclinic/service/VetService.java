@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
@@ -20,7 +21,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.repository.VetRepository;
+import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataVetRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,26 +34,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class VetService {
 
-	private VetRepository vetRepository;
+	private SpringDataVetRepository vetRepository;
 
 
 	@Autowired
-	public VetService(VetRepository vetRepository) {
+	public VetService(final SpringDataVetRepository vetRepository) {
 		this.vetRepository = vetRepository;
-	}		
-
-	@Transactional(readOnly = true)	
-	public Collection<Vet> findVets() throws DataAccessException {
-		return vetRepository.findAll();
-	}	
-	
-	@Transactional(readOnly = true)
-	public Vet findVetById(int id) throws DataAccessException {
-		return vetRepository.findById(id);
 	}
-	
+
+	@Transactional(readOnly = true)
+	public Collection<Vet> findVets() throws DataAccessException {
+		return this.vetRepository.findAll();
+	}
+
 	@Transactional
-	public Vet findVetByUser(String username) throws DataAccessException {
-		return this.vetRepository.findByUsername(username);
+	public Vet findVetByUser(final String username) throws DataAccessException {
+		return this.vetRepository.findVetByUser(username);
+	}
+
+	@Transactional(readOnly = true)
+	public Vet findVetById(final int id) throws DataAccessException {
+		return this.vetRepository.findById(id);
 	}
 }
