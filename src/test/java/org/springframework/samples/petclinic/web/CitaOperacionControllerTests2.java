@@ -43,7 +43,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 includeFilters = @ComponentScan.Filter(value = TipoOperacionFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
-public class CitaOperacionControllerTests {
+public class CitaOperacionControllerTests2 {
 	
 	private static final int TEST_VET_ID = 1;
 
@@ -85,11 +85,7 @@ public class CitaOperacionControllerTests {
 		this.citaOperacion1.setPrecio(100.0);
 		this.citaOperacion1.setPagado(false);
 		this.citaOperacion1.setCantidadPersonal(2.0);
-		TipoOperacion cirugiaVisual = new TipoOperacion();
-		cirugiaVisual.setId(1);
-		cirugiaVisual.setName("hola");
-		this.citaOperacion1.setTipoOperacion(cirugiaVisual);
-		BDDMockito.given(this.tipoOperacionService.findAll()).willReturn(Lists.newArrayList(cirugiaVisual));
+		
 		BDDMockito.given(this.petService.findPetById(TEST_PET_ID)).willReturn(new Pet());
 		BDDMockito.given(this.vetService.findVetById(TEST_VET_ID)).willReturn(new Vet());
 		BDDMockito.given(this.citaOperacionService.findCitaOperacionById(TEST_CITAOPERACION_ID)).willReturn(Optional.of(this.citaOperacion1));
@@ -121,12 +117,17 @@ public class CitaOperacionControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessFindFormByTipoOperacion() throws Exception {
+		TipoOperacion cirugiaVisual = new TipoOperacion();
+		cirugiaVisual.setId(1);
+		cirugiaVisual.setName("hola");
+		this.citaOperacion1.setTipoOperacion(cirugiaVisual);
+		BDDMockito.given(this.tipoOperacionService.findAll()).willReturn(Lists.newArrayList(cirugiaVisual));
 		BDDMockito.given(this.citaOperacionService.findCitaOperacionByTipoOperacion("hola")).willReturn(Lists.newArrayList(this.citaOperacion1));
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/citasOperaciones")
 		.param("tipoOperacion", "hola"))
 		.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-		.andExpect(MockMvcResultMatchers.view().name("redirect:/citaOperacion/" + CitaOperacionControllerTests.TEST_CITAOPERACION_ID));
+		.andExpect(MockMvcResultMatchers.view().name("redirect:/citaOperacion/" + CitaOperacionControllerTests2.TEST_CITAOPERACION_ID));
 	}
 	
 	@WithMockUser(value = "spring")
@@ -154,6 +155,11 @@ public class CitaOperacionControllerTests {
 	@WithMockUser(value = "spring")
     @Test
     void testProcessCreationFormSuccess() throws Exception {
+		TipoOperacion cirugiaVisual = new TipoOperacion();
+		cirugiaVisual.setId(1);
+		cirugiaVisual.setName("hola");
+		this.citaOperacion1.setTipoOperacion(cirugiaVisual);
+		BDDMockito.given(this.tipoOperacionService.findAll()).willReturn(Lists.newArrayList(cirugiaVisual));
 		mockMvc.perform(post("/citasOperaciones/new/{petId}", TEST_PET_ID)
 				.with(csrf())
 				.param("id", "1")
@@ -182,23 +188,6 @@ public class CitaOperacionControllerTests {
 					.andExpect(view().name("citasOperaciones/createOrUpdateCitaOperacionForm"));
 	}
 	
-	@WithMockUser(value = "spring")
-    @Test
-    void testProcessCreationFormHasErrorsInFechaInicio() throws Exception {
-		mockMvc.perform(post("/citasOperaciones/new/{petId}", TEST_PET_ID)
-				.with(csrf())
-				.param("id", "1")
-				.param("fechaInicio", "2019/05/11")
-				.param("hora", "15:00")
-				.param("duracion", "30")
-				.param("precio", "100")
-				.param("tipoOperacion", "hola")
-				.param("cantidadPersonal", "2"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("citasOperaciones/createOrUpdateCitaOperacionForm"))
-			.andExpect(model().attributeExists("mensaje"));
-	}
-	
 	//								Update Tipo Operacion
 
 	
@@ -224,6 +213,11 @@ public class CitaOperacionControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateFormSuccess() throws Exception {
+		TipoOperacion cirugiaVisual = new TipoOperacion();
+		cirugiaVisual.setId(1);
+		cirugiaVisual.setName("hola");
+		this.citaOperacion1.setTipoOperacion(cirugiaVisual);
+		BDDMockito.given(this.tipoOperacionService.findAll()).willReturn(Lists.newArrayList(cirugiaVisual));
 		mockMvc.perform(post("/citaOperacion/{citaOperacionId}/edit/{petId}",TEST_CITAOPERACION_ID, TEST_PET_ID)
 							.with(csrf())
 							.param("id", "1")
@@ -256,13 +250,18 @@ public class CitaOperacionControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowOwner() throws Exception {
+		TipoOperacion cirugiaVisual = new TipoOperacion();
+		cirugiaVisual.setId(1);
+		cirugiaVisual.setName("hola");
+		this.citaOperacion1.setTipoOperacion(cirugiaVisual);
+		BDDMockito.given(this.tipoOperacionService.findAll()).willReturn(Lists.newArrayList(cirugiaVisual));
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/citaOperacion/{id}", TEST_CITAOPERACION_ID))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("citaOperacion"))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("fechaInicio", Matchers.is(LocalDate.parse("2020/12/29", DateTimeFormatter.ofPattern("yyyy/MM/dd"))))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("hora", Matchers.is(LocalTime.parse("17:00")))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("duracion", Matchers.is(30))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("precio", Matchers.is(100.0))))
-//		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("tipoOperacion", Matchers.is(hola))))
+		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("tipoOperacion", Matchers.is(cirugiaVisual))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("cantidadPersonal", Matchers.is(2.0))))
 		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/citaOperacionDetails"));
 	}

@@ -102,13 +102,13 @@ public class DonacionControllerTests {
 
 	}
 
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testNewDonacionHtml() throws Exception {
-//		mockMvc.perform(get("/donacion/{causaId}/new", TEST_CAUSA_ID)).andExpect(MockMvcResultMatchers.status().isOk())
-//				.andExpect(MockMvcResultMatchers.model().attributeExists("donacion"))
-//				.andExpect(MockMvcResultMatchers.view().name("donaciones/createOrUpdateDonacion"));
-//	}
+	@WithMockUser(value = "spring")
+	@Test
+	void testNewDonacionHtml() throws Exception {
+		mockMvc.perform(get("/donacion/{causaId}/new", TEST_CAUSA_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.model().attributeExists("donacion"))
+				.andExpect(MockMvcResultMatchers.view().name("donaciones/createOrUpdateDonacion"));
+	}
 
 	@WithMockUser(value = "spring")
 	@Test
