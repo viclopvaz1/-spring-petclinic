@@ -23,7 +23,6 @@ import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,19 +43,26 @@ public class DonacionController {
 	private CausaService		causaService;
 
 	private DonacionService		donacionService;
-	
-	private VetService vetService;
-	
-	private OwnerService ownerService;
-	
-	private AdiestradorService adiestradorService;
-	
-	private AuthoritiesService authoritiesService;
+
+	private VetService			vetService;
+
+	private OwnerService		ownerService;
+
+	private AdiestradorService	adiestradorService;
+
+	private AuthoritiesService	authoritiesService;
 
 
 	@Autowired
-	public DonacionController(final DonacionService donacionService, final UserService userService, final AuthoritiesService authoritiesService) {
+	public DonacionController(final CausaService causaService, final VetService vetService, final AdiestradorService adiestradorService, final DonacionService donacionService, final OwnerService ownerService, final UserService userService,
+		final AuthoritiesService authoritiesService) {
 		this.donacionService = donacionService;
+		this.adiestradorService = adiestradorService;
+		this.authoritiesService = authoritiesService;
+		this.causaService = causaService;
+		this.vetService = vetService;
+		this.userService = userService;
+		this.ownerService = ownerService;
 	}
 
 	//	@InitBinder("donacion")
@@ -77,42 +83,41 @@ public class DonacionController {
 	}
 
 	@PostMapping(value = "/{causaId}/new")
-	public String processCreationForm(@Valid final Donacion donacion, final BindingResult result, @PathVariable("causaId") final int causaId, final Map<String, Object> model, ModelMap modelMap) {
+	public String processCreationForm(@Valid final Donacion donacion, final BindingResult result, @PathVariable("causaId") final int causaId, final Map<String, Object> model, final ModelMap modelMap) {
 		Causa causa = this.causaService.findCausaById(causaId);
 		if (result.hasErrors() || !causa.isValido()) {
 			model.put("donacion", donacion);
 			return DonacionController.VIEWS_DONACION_CREATE_FORM;
 		} else {
 
-
 			User user = this.userService.findUserById(SecurityContextHolder.getContext().getAuthentication().getName());
 			donacion.setUser(user);
-			
-            Collection<Authorities> collection = this.authoritiesService.findAll();
-            String username = donacion.getUser().getUsername();
-            String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+
+			Collection<Authorities> collection = this.authoritiesService.findAll();
+			String username = donacion.getUser().getUsername();
+			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
 			if (a.equals("veterinarian")) {
 				Vet vet = this.vetService.findVetByUser(username);
 				if (donacion.getCantidad() > vet.getMonedero()) {
 					modelMap.addAttribute("message", "Dinero superior a su monedero");
 					return DonacionController.VIEWS_DONACION_NEW_FORM;
 				}
-				vet.setMonedero(vet.getMonedero()-donacion.getCantidad());
-            } else if (a.equals("owner")) {
-                Owner owner = this.ownerService.findOwnerByUser(username);
+				vet.setMonedero(vet.getMonedero() - donacion.getCantidad());
+			} else if (a.equals("owner")) {
+				Owner owner = this.ownerService.findOwnerByUser(username);
 				if (donacion.getCantidad() > owner.getMonedero()) {
 					modelMap.addAttribute("message", "Dinero superior a su monedero");
 					return DonacionController.VIEWS_DONACION_NEW_FORM;
 				}
-				owner.setMonedero(owner.getMonedero()-donacion.getCantidad());
-            } else if (a.equals("adiestrador")) {
-                Adiestrador adiestrador = this.adiestradorService.findAdiestradorByUser(username);
+				owner.setMonedero(owner.getMonedero() - donacion.getCantidad());
+			} else if (a.equals("adiestrador")) {
+				Adiestrador adiestrador = this.adiestradorService.findAdiestradorByUser(username);
 				if (donacion.getCantidad() > adiestrador.getMonedero()) {
 					modelMap.addAttribute("message", "Dinero superior a su monedero");
 					return DonacionController.VIEWS_DONACION_NEW_FORM;
 				}
-				adiestrador.setMonedero(adiestrador.getMonedero()-donacion.getCantidad());
-            }
+				adiestrador.setMonedero(adiestrador.getMonedero() - donacion.getCantidad());
+			}
 			if (causa.getDineroRecaudado() > causa.getObjetivo()) {
 				return DonacionController.VIEWS_DONACION_NEW_FORM;
 			}

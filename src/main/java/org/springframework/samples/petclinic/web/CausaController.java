@@ -35,6 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/causa")
 public class CausaController {
 
+	private CausaValidator		causaValidator	= new CausaValidator();
+
 	private CausaService		causaService;
 
 	private DonacionService		donacionService;
@@ -87,12 +89,16 @@ public class CausaController {
 			return "causas/createOrUpdateCausaForm";
 		} else {
 			String mensaje = "";
-			if (!causa.getFechaInicio().isBefore(causa.getFechaFin())) {
+			try {
+				this.causaValidator.validateFechas(causa);
+			} catch (FechasException e) {
 				mensaje = "La fecha de incio debe ser anterior a la de fin. ";
 				ObjectError errorFecha = new ObjectError("ErrorFecha", "La fecha de incio debe ser anterior a la de fin. ");
 				result.addError(errorFecha);
 			}
-			if (causa.getObjetivo() <= causa.getDineroRecaudado()) {
+			try {
+				this.causaValidator.validateObjetivo(causa);
+			} catch (RecaudadoYObjetivoException e) {
 				mensaje = mensaje.concat("El dinero recaudado debe ser menor al objetivo");
 				ObjectError errorFecha = new ObjectError("ErrorDineroRecaudadoYObjetivo", "El dinero recaudado debe ser menor al objetivo");
 				result.addError(errorFecha);
@@ -147,12 +153,16 @@ public class CausaController {
 			return "causas/createOrUpdateCausaForm";
 		} else {
 			String mensaje = "";
-			if (!causa.getFechaInicio().isBefore(causa.getFechaFin())) {
+			try {
+				this.causaValidator.validateFechas(causa);
+			} catch (FechasException e) {
 				mensaje = "La fecha de incio debe ser anterior a la de fin. ";
 				ObjectError errorFecha = new ObjectError("ErrorFecha", "La fecha de incio debe ser anterior a la de fin. ");
 				result.addError(errorFecha);
 			}
-			if (causa.getObjetivo() <= causa.getDineroRecaudado()) {
+			try {
+				this.causaValidator.validateObjetivo(causa);
+			} catch (RecaudadoYObjetivoException e) {
 				mensaje = mensaje.concat("El dinero recaudado debe ser menor al objetivo");
 				ObjectError errorFecha = new ObjectError("ErrorDineroRecaudadoYObjetivo", "El dinero recaudado debe ser menor al objetivo");
 				result.addError(errorFecha);
