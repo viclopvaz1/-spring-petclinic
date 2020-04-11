@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -8,12 +9,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.TipoOperacion;
-import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CitaOperacionService;
-import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.TipoOperacionService;
 import org.springframework.samples.petclinic.service.VetService;
@@ -31,8 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CitaOperacionController {
-	
-	private CitaOperacionValidator		citaOperacionValidator	= new CitaOperacionValidator();
+
 	
 	private CitaOperacionService citaOperacionService;
 	
@@ -43,20 +40,15 @@ public class CitaOperacionController {
 	private VetService vetService;
 	
 	private TipoOperacionService tipoOperacionService;
-	
-	private OwnerService ownerService;
 
 
 	@Autowired
-	public CitaOperacionController(final CitaOperacionService citaOperacionService, final TipoOperacionService tipoOperacionService,
-			final VetService vetService, final PetService petService, final AuthoritiesService authoritiesService,
-			final OwnerService ownerService) {
+	public CitaOperacionController(final CitaOperacionService citaOperacionService, TipoOperacionService tipoOperacionService, VetService vetService, PetService petService, final AuthoritiesService authoritiesService) {
 		this.citaOperacionService = citaOperacionService;
 		this.authoritiesService = authoritiesService;
 		this.petService = petService;
 		this.vetService = vetService;
 		this.tipoOperacionService = tipoOperacionService;
-		this.ownerService = ownerService;
 	}
 	
 	@ModelAttribute("tipoOperacion")
@@ -82,20 +74,14 @@ public class CitaOperacionController {
 	public String processFindForm(CitaOperacion citaOperacion, BindingResult result, Map<String, Object> model) {
 		boolean conjuntoVacio = false;
 		
-//		String a = citaOperacion.getTipoOperacion().getName();
-//		if(a.contains("+")) {
-//				a.replace("+", " ");
-//		}
-//		citaOperacion.getTipoOperacion().setName(a);
+		String a = citaOperacion.getTipoOperacion().getName();
+		if(a.contains("+")) {
+				a.replace("+", " ");
+		}
+		citaOperacion.getTipoOperacion().setName(a);
 		// allow parameterless GET request for /citasOperaciones to return all records
 		if (citaOperacion.getTipoOperacion().getName() == null) {
 			citaOperacion.getTipoOperacion().setName(""); // empty string signifies broadest possible search
-		} else {
-			String a = citaOperacion.getTipoOperacion().getName();
-			if(a.contains("+")) {
-					a.replace("+", " ");
-			}
-			citaOperacion.getTipoOperacion().setName(a);
 		}
 		try {
 			model.put("conjuntoVacio", conjuntoVacio);
@@ -134,12 +120,10 @@ public class CitaOperacionController {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
 			String mensaje = "";
-			try {
-				this.citaOperacionValidator.validateFechas(citaOperacion);
-			} catch (FechasException e) {
-				mensaje = "La fecha de inicio debe ser mayor a la fecha actual.";
-				ObjectError errorFecha = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser mayor a la fecha actual.");
-				result.addError(errorFecha);
+			if(citaOperacion.getFechaInicio().isBefore(LocalDate.now()) || citaOperacion.getFechaInicio().isEqual(LocalDate.now())) {
+				mensaje = "La fecha de inicio debe ser igual.";
+				ObjectError errorFechaInicio = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser igual.");
+				result.addError(errorFechaInicio);
 			}
 			if (mensaje != "") {
 				model.put("mensaje", mensaje);
@@ -172,29 +156,15 @@ public class CitaOperacionController {
 	}
 
 	@PostMapping(value = "/citaOperacion/{citaOperacionId}/edit/{petId}")
-	public String processUpdateCitaOperacionForm(@Valid CitaOperacion citaOperacion, final BindingResult result, @PathVariable("citaOperacionId") final int citaOperacionId,
-			@PathVariable("petId") final int petId, Map<String, Object> model) {
+	public String processUpdateCitaOperacionForm(@Valid CitaOperacion citaOperacion, final BindingResult result, @PathVariable("citaOperacionId") final int citaOperacionId, @PathVariable("petId") final int petId) {
 		if (result.hasErrors()) {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
-			String mensaje = "";
-			try {
-				this.citaOperacionValidator.validateFechas(citaOperacion);
-			} catch (FechasException e) {
-				mensaje = "La fecha de inicio debe ser mayor a la fecha actual.";
-				ObjectError errorFecha = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser mayor a la fecha actual.");
-				result.addError(errorFecha);
-			}
-			if (mensaje != "") {
-				model.put("mensaje", mensaje);
-				return "citasOperaciones/createOrUpdateCitaOperacionForm";
-			} else {
-				citaOperacion.setId(citaOperacionId);
-				String username = SecurityContextHolder.getContext().getAuthentication().getName();
-				citaOperacion.setVet(this.vetService.findVetByUser(username));
-				citaOperacion.setPet(this.petService.findPetById(petId));
-				this.citaOperacionService.saveCitaOperacion(citaOperacion);
-			}
+			citaOperacion.setId(citaOperacionId);
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			citaOperacion.setVet(this.vetService.findVetByUser(username));
+			citaOperacion.setPet(this.petService.findPetById(petId));
+			this.citaOperacionService.saveCitaOperacion(citaOperacion);
 			return "redirect:/citaOperacion/" + citaOperacion.getId();
 		}
 	}
@@ -204,40 +174,6 @@ public class CitaOperacionController {
 		CitaOperacion citaOperacion = this.citaOperacionService.findCitaOperacionById(citaOperacionId).get();
 		this.citaOperacionService.deleteCitaOperacion(citaOperacion);
 		return "welcome";
-	}
-	
-	@GetMapping(value = "/citaOperacion/{citaOperacionId}/pay/{vetId}")
-	public String processPayCitaOperacionForm(@PathVariable("citaOperacionId") final int citaOperacionId,
-			final Map<String, Object> model) {
-		CitaOperacion citaOperacion = this.citaOperacionService.findCitaOperacionById(citaOperacionId).get();
-		String mensaje = "";
-		try {
-			this.citaOperacionValidator.validateDineroMonedero(citaOperacion);
-		} catch (PagoException e) {
-			mensaje = "No puedes pagar la cita si no tienes suficiente dinero en el monedero";
-//			ObjectError errorPago = new ObjectError("ErrorPago", "No puedes pagar la cita si no tienes suficiente dinero en el monedero");
-//			result.addError(errorPago);
-			model.put("mensaje", mensaje);
-			return "welcome";
-		}
-//		if (mensaje != "") {
-//			model.put("mensaje", mensaje);
-//			return "citasOperaciones/listadoCitasOperacionesPets";
-//		} else {
-			citaOperacion.getPet().getOwner().setMonedero(citaOperacion.getPet().getOwner().getMonedero() - citaOperacion.getPrecio().intValue());
-			this.ownerService.saveOwner(citaOperacion.getPet().getOwner());
-			citaOperacion.getVet().setMonedero(citaOperacion.getVet().getMonedero() + citaOperacion.getPrecio().intValue());
-			this.vetService.saveVet(citaOperacion.getVet());
-//			Owner owner = this.ownerService.findOwnerById(citaOperacion.getPet().getOwner().getId());
-//			owner.setMonedero(owner.getMonedero() - citaOperacion.getPrecio().intValue());
-//			Vet vet = this.vetService.findVetById(citaOperacion.getVet().getId());
-//			vet.setMonedero(vet.getMonedero() + citaOperacion.getPrecio().intValue());
-			citaOperacion.setPagado(true);
-			this.citaOperacionService.saveCitaOperacion(citaOperacion);
-			model.put("pagado", citaOperacion.isPagado());
-			model.put("pet", citaOperacion.getPet());
-//		}
-		return "citasOperaciones/listadoCitasOperacionesPets";
 	}
 	
 }

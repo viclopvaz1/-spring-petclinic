@@ -30,6 +30,7 @@ import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CitaOperacionService;
+import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.TipoOperacionService;
 import org.springframework.samples.petclinic.service.VetService;
@@ -70,6 +71,9 @@ public class CitaOperacionControllerTests {
 	@MockBean
 	private TipoOperacionService tipoOperacionService;
 	
+	@MockBean
+	private OwnerService ownerService;
+	
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -106,17 +110,17 @@ public class CitaOperacionControllerTests {
 		.andExpect(MockMvcResultMatchers.view().name("/citasOperaciones/findCitasOperaciones"));
 	}
 	
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testProcessFindFormByTipoOperacionMoreThanOne() throws Exception {
-//		BDDMockito.given(this.citaOperacionService.findCitaOperacionByTipoOperacion("")).willReturn(Lists.newArrayList(this.citaOperacion1, new CitaOperacion()));
-//		
-//		this.mockMvc.perform(MockMvcRequestBuilders.get("/citasOperaciones"))
-////		.param("tipoOperacion", "hola"))
-//		.andExpect(MockMvcResultMatchers.status().isOk())
-//		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesFiltrado"));
-//
-//	}
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessFindFormByTipoOperacionMoreThanOne() throws Exception {
+		BDDMockito.given(this.citaOperacionService.findCitaOperacionByTipoOperacion("")).willReturn(Lists.newArrayList(this.citaOperacion1, new CitaOperacion()));
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/citasOperaciones")
+		.param("tipoOperacion", ""))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesFiltrado"));
+
+	}
 	
 	@WithMockUser(value = "spring")
 	@Test

@@ -10,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCitaOperacionRepository;
+import org.springframework.samples.petclinic.web.TipoOperacionException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +19,12 @@ public class CitaOperacionService {
 	
 	private SpringDataCitaOperacionRepository citaOperacionRepo;
 	
+//	private TipoOperacionService tipoOperacionService;
+	
 	@Autowired
 	public CitaOperacionService(final SpringDataCitaOperacionRepository stringCitaOperacionRepo) {
 		this.citaOperacionRepo = stringCitaOperacionRepo;
+//		this.tipoOperacionService = tipoOperacionService;
 	}
 	
 //	@Transactional
@@ -46,8 +50,11 @@ public class CitaOperacionService {
 	@Transactional
 	public Iterable<CitaOperacion> findCitaOperacionByTipoOperacion(final String tipoOperacion) throws NoSuchElementException {
 		Iterable<CitaOperacion> res = this.citaOperacionRepo.findCitaOperacionByTipoOperacion(tipoOperacion);
-//		Optional<CitaOperacion> vacio;
-//		if (StreamSupport.stream(res.spliterator(), false).findAny().isEmpty()) {
+//		Collection<TipoOperacion> tiposOperacion = (Collection<TipoOperacion>) this.tipoOperacionService.findAll();
+//		// Tipo Operacion validation
+//		if (!tiposOperacion.contains(citaOperacion.getTipoOperacion())) {
+//			throw new TipoOperacionException();
+//		}
 		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
 			throw new NoSuchElementException();
 		}

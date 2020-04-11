@@ -102,7 +102,8 @@ class OwnerControllerTests {
 	void testProcessFindFormSuccess() throws Exception {
 		BDDMockito.given(this.clinicService.findOwnerByLastName("")).willReturn(Lists.newArrayList(this.george, new Owner()));
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/owners")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("owners/ownersList"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/owners"))
+		.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("owners/ownersList"));
 	}
 
 	@WithMockUser(value = "spring")

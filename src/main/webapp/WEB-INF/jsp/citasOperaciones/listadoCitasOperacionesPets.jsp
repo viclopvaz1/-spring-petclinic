@@ -20,6 +20,7 @@
             <th>Veterinario</th>
             <th>Tipo Operacion</th>
             <th>Cantidad de Personal</th>
+            <th>Pagado</th>
         </tr>
         </thead>
         <tbody>
@@ -45,6 +46,14 @@
                 </td>
                 <td>
                     <c:out value="${citaOperacionPet.cantidadPersonal}"/>
+                </td>
+                <td>
+                    <c:out value="${citaOperacionPet.pagado}"/>
+                    </br>
+                    <spring:url value="/citaOperacion/{citaOperacionId}/pay" var="citaOperacionUrl">
+                                    <spring:param name="citaOperacionId" value="${citaOperacionPet.id}"/>                                    
+                                </spring:url>
+                                <a href="${fn:escapeXml(citaOperacionUrl)}">Pagar</a>
                 </td>
 
 
