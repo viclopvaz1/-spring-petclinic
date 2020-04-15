@@ -7,10 +7,12 @@ import java.util.NoSuchElementException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.model.Vet;
+import org.springframework.samples.petclinic.service.AdiestradorService;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CitaOperacionService;
 import org.springframework.samples.petclinic.service.OwnerService;
@@ -45,7 +47,6 @@ public class CitaOperacionController {
 	private TipoOperacionService tipoOperacionService;
 	
 	private OwnerService ownerService;
-
 
 	@Autowired
 	public CitaOperacionController(final CitaOperacionService citaOperacionService, final TipoOperacionService tipoOperacionService,
@@ -206,7 +207,7 @@ public class CitaOperacionController {
 		return "welcome";
 	}
 	
-	@GetMapping(value = "/citaOperacion/{citaOperacionId}/pay/{vetId}")
+	@GetMapping(value = "/citaOperacion/{citaOperacionId}/pay")
 	public String processPayCitaOperacionForm(@PathVariable("citaOperacionId") final int citaOperacionId,
 			final Map<String, Object> model) {
 		CitaOperacion citaOperacion = this.citaOperacionService.findCitaOperacionById(citaOperacionId).get();
@@ -224,14 +225,16 @@ public class CitaOperacionController {
 //			model.put("mensaje", mensaje);
 //			return "citasOperaciones/listadoCitasOperacionesPets";
 //		} else {
-			citaOperacion.getPet().getOwner().setMonedero(citaOperacion.getPet().getOwner().getMonedero() - citaOperacion.getPrecio().intValue());
-			this.ownerService.saveOwner(citaOperacion.getPet().getOwner());
-			citaOperacion.getVet().setMonedero(citaOperacion.getVet().getMonedero() + citaOperacion.getPrecio().intValue());
-			this.vetService.saveVet(citaOperacion.getVet());
-//			Owner owner = this.ownerService.findOwnerById(citaOperacion.getPet().getOwner().getId());
-//			owner.setMonedero(owner.getMonedero() - citaOperacion.getPrecio().intValue());
-//			Vet vet = this.vetService.findVetById(citaOperacion.getVet().getId());
-//			vet.setMonedero(vet.getMonedero() + citaOperacion.getPrecio().intValue());
+			Owner owner = citaOperacion.getPet().getOwner();
+			Integer monederoOwner = owner.getMonedero();
+			Integer precio = citaOperacion.getPrecio().intValue();
+			owner.setMonedero(monederoOwner - precio);
+			this.ownerService.saveOwner(owner);
+			Vet vet = citaOperacion.getVet();
+			Integer monederoVet = vet.getMonedero();
+//			vet.setMonedero(monederoVet + precio);
+//			this.vetService.saveVet(vet);
+			this.vetService.monedero(monederoVet + precio, vet.getId());
 			citaOperacion.setPagado(true);
 			this.citaOperacionService.saveCitaOperacion(citaOperacion);
 			model.put("pagado", citaOperacion.isPagado());

@@ -191,7 +191,8 @@ public class CausaController {
 			if (a.equals("veterinarian")) {
 				Vet vet = this.vetService.findVetByUser(username);
 				System.out.println("" + vet);
-				vet.setMonedero(vet.getMonedero() + donacion.getCantidad());
+//				vet.setMonedero(vet.getMonedero() + donacion.getCantidad());
+				this.vetService.monedero(vet.getMonedero() + donacion.getCantidad(), vet.getId());
 			} else if (a.equals("owner")) {
 				Owner owner = this.ownerService.findByUser(username);
 				owner.setMonedero(owner.getMonedero() + donacion.getCantidad());

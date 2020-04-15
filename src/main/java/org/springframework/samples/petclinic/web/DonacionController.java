@@ -102,7 +102,8 @@ public class DonacionController {
 					modelMap.addAttribute("message", "Dinero superior a su monedero");
 					return DonacionController.VIEWS_DONACION_NEW_FORM;
 				}
-				vet.setMonedero(vet.getMonedero() - donacion.getCantidad());
+//				vet.setMonedero(vet.getMonedero() - donacion.getCantidad());
+				this.vetService.monedero(vet.getMonedero() - donacion.getCantidad(), vet.getId());
 			} else if (a.equals("owner")) {
 				Owner owner = this.ownerService.findOwnerByUser(username);
 				if (donacion.getCantidad() > owner.getMonedero()) {

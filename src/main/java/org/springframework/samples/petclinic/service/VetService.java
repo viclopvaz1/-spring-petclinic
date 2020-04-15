@@ -50,7 +50,7 @@ public class VetService {
 	
 	@Transactional
 	public void saveVet(final Vet vet) throws DataAccessException {
-		//creating owner
+		//creating vet
 		this.vetRepository.save(vet);
 		//creating user
 		this.userService.saveUser(vet.getUser());
@@ -71,5 +71,15 @@ public class VetService {
 	@Transactional(readOnly = true)
 	public Vet findVetById(final int id) throws DataAccessException {
 		return this.vetRepository.findById(id);
+	}
+	
+//	@Transactional
+//	public Vet monedero(Integer newMonedero, int vetId) throws DataAccessException {
+//		return vetRepository.monedero(newMonedero, vetId);
+//	}
+	
+	@Transactional
+	public void monedero(Integer newMonedero, int vetId) throws DataAccessException {
+		this.vetRepository.monedero(newMonedero, vetId);
 	}
 }
