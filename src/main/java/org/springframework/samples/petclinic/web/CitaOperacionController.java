@@ -211,20 +211,16 @@ public class CitaOperacionController {
 	public String processPayCitaOperacionForm(@PathVariable("citaOperacionId") final int citaOperacionId,
 			final Map<String, Object> model) {
 		CitaOperacion citaOperacion = this.citaOperacionService.findCitaOperacionById(citaOperacionId).get();
-		String mensaje = "";
+		boolean noPuedePagar = false;
 		try {
 			this.citaOperacionValidator.validateDineroMonedero(citaOperacion);
 		} catch (PagoException e) {
-			mensaje = "No puedes pagar la cita si no tienes suficiente dinero en el monedero";
-//			ObjectError errorPago = new ObjectError("ErrorPago", "No puedes pagar la cita si no tienes suficiente dinero en el monedero");
-//			result.addError(errorPago);
-			model.put("mensaje", mensaje);
-			return "welcome";
+			noPuedePagar = true;
+			model.put("noPuedePagar", noPuedePagar);
+			model.put("pagado", citaOperacion.isPagado());
+			model.put("pet", citaOperacion.getPet());
+			return "citasOperaciones/listadoCitasOperacionesPets";
 		}
-//		if (mensaje != "") {
-//			model.put("mensaje", mensaje);
-//			return "citasOperaciones/listadoCitasOperacionesPets";
-//		} else {
 			Owner owner = citaOperacion.getPet().getOwner();
 			Integer monederoOwner = owner.getMonedero();
 			Integer precio = citaOperacion.getPrecio().intValue();
@@ -232,13 +228,12 @@ public class CitaOperacionController {
 			this.ownerService.saveOwner(owner);
 			Vet vet = citaOperacion.getVet();
 			Integer monederoVet = vet.getMonedero();
-//			vet.setMonedero(monederoVet + precio);
-//			this.vetService.saveVet(vet);
 			this.vetService.monedero(monederoVet + precio, vet.getId());
 			citaOperacion.setPagado(true);
 			this.citaOperacionService.saveCitaOperacion(citaOperacion);
 			model.put("pagado", citaOperacion.isPagado());
 			model.put("pet", citaOperacion.getPet());
+			model.put("noPuedePagar", noPuedePagar);
 //		}
 		return "citasOperaciones/listadoCitasOperacionesPets";
 	}

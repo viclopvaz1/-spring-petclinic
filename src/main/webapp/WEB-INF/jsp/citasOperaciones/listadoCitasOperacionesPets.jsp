@@ -9,6 +9,10 @@
 
 <petclinic:layout pageName="citasOperacionesPets">
     <h2>Citas Operaciones Por Mascotas</h2>
+    
+    <c:if test="${noPuedePagar}">
+    <h2>No puedes pagar la cita si no tienes suficiente dinero en el monedero</h2>
+    </c:if>
 
     <table id="citasOperacionesPetsTable" class="table table-striped">
         <thead>
@@ -21,6 +25,9 @@
             <th>Tipo Operacion</th>
             <th>Cantidad de Personal</th>
             <th>Pagado</th>
+            <c:if test="${!pagado}">
+            	<th>Pagar</th>
+            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -49,12 +56,15 @@
                 </td>
                 <td>
                     <c:out value="${citaOperacionPet.pagado}"/>
-                    </br>
-                    <spring:url value="/citaOperacion/{citaOperacionId}/pay" var="citaOperacionUrl">
-                                    <spring:param name="citaOperacionId" value="${citaOperacionPet.id}"/>                                    
-                                </spring:url>
-                                <a href="${fn:escapeXml(citaOperacionUrl)}">Pagar</a>
                 </td>
+                <c:if test="${!pagado}">
+	                <td>
+	                	<spring:url value="/citaOperacion/{citaOperacionId}/pay" var="citaOperacionUrl">
+	                                    <spring:param name="citaOperacionId" value="${citaOperacionPet.id}"/>                                    
+	                                </spring:url>
+	                                <a href="${fn:escapeXml(citaOperacionUrl)}">Pagar</a>
+	                </td>
+	            </c:if>
 
 
             </tr>
