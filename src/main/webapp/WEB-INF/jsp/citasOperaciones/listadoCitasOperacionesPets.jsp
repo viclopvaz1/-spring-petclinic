@@ -25,9 +25,6 @@
             <th>Tipo Operacion</th>
             <th>Cantidad de Personal</th>
             <th>Pagado</th>
-            <c:if test="${!pagado}">
-            	<th>Pagar</th>
-            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -57,7 +54,7 @@
                 <td>
                     <c:out value="${citaOperacionPet.pagado}"/>
                 </td>
-                <c:if test="${!pagado}">
+                <c:if test="${!pagado || !citaOperacionPet.pagado}">
 	                <td>
 	                	<spring:url value="/citaOperacion/{citaOperacionId}/pay" var="citaOperacionUrl">
 	                                    <spring:param name="citaOperacionId" value="${citaOperacionPet.id}"/>                                    

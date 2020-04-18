@@ -18,8 +18,8 @@ public class EditarCitaOperacionUITest {
 
   @BeforeEach
   public void setUp() throws Exception {
-	String pathToGeckoDriver="C:\\Users\\vlope\\Downloads";
-	System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
+//	String pathToGeckoDriver="C:\\Users\\vlope\\Downloads";
+//	System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
 	driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -36,7 +36,7 @@ public class EditarCitaOperacionUITest {
 	driver.findElement(By.xpath("//button[@type='submit']")).click();
 	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
     driver.findElement(By.linkText("Citas Operaciones")).click();
-    driver.findElement(By.linkText("Leo")).click();
+    driver.findElement(By.linkText("Basil")).click();
     driver.findElement(By.linkText("Edit")).click();
     driver.findElement(By.id("hora")).click();
     driver.findElement(By.id("hora")).click();

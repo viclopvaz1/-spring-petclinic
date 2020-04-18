@@ -18,8 +18,8 @@ public class LoginVetUITest {
 
   @BeforeEach
   public void setUp() throws Exception {
-	String pathToGeckoDriver="C:\\Users\\vlope\\Downloads";
-	System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
+//	String pathToGeckoDriver="C:\\Users\\vlope\\Downloads";
+//	System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
 	driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
