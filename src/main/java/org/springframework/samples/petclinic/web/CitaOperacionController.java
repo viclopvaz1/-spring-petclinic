@@ -7,12 +7,10 @@ import java.util.NoSuchElementException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.service.AdiestradorService;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CitaOperacionService;
 import org.springframework.samples.petclinic.service.OwnerService;

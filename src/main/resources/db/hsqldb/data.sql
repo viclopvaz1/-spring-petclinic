@@ -82,7 +82,7 @@ INSERT INTO types VALUES (6, 'hamster');
 
 INSERT INTO owners VALUES (1, 'George', 'Franklin',1200, '110 W. Liberty St.', 'Madison', '6085551023', 'owner1');
 INSERT INTO owners VALUES (2, 'Betty', 'Davis',1200, '638 Cardinal Ave.', 'Sun Prairie', '6085551749', 'owner2');
-INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez',1200, '2693 Commerce St.', 'McFarland', '6085558763', 'owner3');
+INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez',10, '2693 Commerce St.', 'McFarland', '6085558763', 'owner3');
 INSERT INTO owners VALUES (4, 'Harold', 'Davis',1200, '563 Friendly St.', 'Windsor', '6085553198', 'owner4');
 INSERT INTO owners VALUES (5, 'Peter', 'McTavish',1200, '2387 S. Fair Way', 'Madison', '6085552765', 'owner5');
 INSERT INTO owners VALUES (6, 'Jean', 'Coleman',1200, '105 N. Lake St.', 'Monona', '6085552654', 'owner6');

@@ -1,16 +1,24 @@
 package org.springframework.samples.petclinic.web.ui;
 
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.Assert.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginVetUITest {
+	
+	@LocalServerPort
+	private int port;
+	
+  private String username;
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -27,16 +35,36 @@ public class LoginVetUITest {
 
   @Test
   public void testUntitledTestCase() throws Exception {
-	  driver.get("http://localhost:8080/");
+	  
+	  as("vet1").
+	  whenIamLoggedIntheSystem().
+	  thenISeeMyUsernameInTheMenuBar();
+  }
+  
+  private LoginVetUITest as(final String vet) {
+	  this.username = vet;
+	  this.driver.get("http://localhost:" + this.port);
 	  driver.findElement(By.linkText("LOGIN")).click();
 	  driver.findElement(By.id("username")).clear();
-	  driver.findElement(By.id("username")).sendKeys("vet1");
+	  driver.findElement(By.id("username")).sendKeys(username);
 	  driver.findElement(By.id("password")).clear();
-	  driver.findElement(By.id("password")).sendKeys("v3t");
+	  driver.findElement(By.id("password")).sendKeys(passwordOf(username));
 	  driver.findElement(By.xpath("//button[@type='submit']")).click();
-	  driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a")).click();
-	  assertEquals("vet1", driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/ul/li/div/div/div[2]/p/strong")).getText());
+	  return this;
+	}
+  
+  private void thenISeeMyUsernameInTheMenuBar() {
+	  assertEquals(this.username.toUpperCase(), driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
+	
   }
+  
+  private CharSequence passwordOf(String username) {
+		return "v3t";
+	}
+  
+  private LoginVetUITest whenIamLoggedIntheSystem() {	
+		return this;
+	}
 
   @AfterEach
   public void tearDown() throws Exception {

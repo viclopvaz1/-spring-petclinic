@@ -3,14 +3,26 @@ package org.springframework.samples.petclinic.web.ui;
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PagarCitaOperacionUITest {
+	
+	@LocalServerPort
+	private int port;
+	
+  private String username;
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -26,35 +38,78 @@ public class PagarCitaOperacionUITest {
   }
 
   @Test
-  public void testUntitledTestCase() throws Exception {
-    driver.get("http://localhost:8080/");
-	driver.findElement(By.linkText("LOGIN")).click();
-	driver.findElement(By.id("username")).clear();
-	driver.findElement(By.id("username")).sendKeys("owner1");
-	driver.findElement(By.id("password")).clear();
-	driver.findElement(By.id("password")).sendKeys("0wn3r");
-	driver.findElement(By.xpath("//button[@type='submit']")).click();
-	driver.findElement(By.linkText("VETERINARIANS")).click();
-    assertEquals("300", driver.findElement(By.xpath("//table[@id='vetsTable']/tbody/tr[3]/td[3]")).getText());
-    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
-    driver.findElement(By.name("lastName")).click();
-    driver.findElement(By.name("lastName")).clear();
-    driver.findElement(By.name("lastName")).sendKeys("Franklin");
-    driver.findElement(By.xpath("//button[@type='submit']")).click();
-    assertEquals("1200", driver.findElement(By.xpath("//tr[5]/td")).getText());
-    driver.findElement(By.linkText("Citas Operaciones")).click();
-    assertEquals("false", driver.findElement(By.xpath("//table[@id='citasOperacionesPetsTable']/tbody/tr/td[8]")).getText());
-    driver.findElement(By.linkText("Pagar")).click();
-    assertEquals("true", driver.findElement(By.xpath("//table[@id='citasOperacionesPetsTable']/tbody/tr/td[8]")).getText());
-    driver.findElement(By.linkText("FIND OWNERS")).click();
-    driver.findElement(By.name("lastName")).click();
-    driver.findElement(By.name("lastName")).clear();
-    driver.findElement(By.name("lastName")).sendKeys("Franklin");
-    driver.findElement(By.xpath("//button[@type='submit']")).click();
-    assertEquals("1150", driver.findElement(By.xpath("//tr[5]/td")).getText());
-    driver.findElement(By.linkText("VETERINARIANS")).click();
-    assertEquals("350", driver.findElement(By.xpath("//table[@id='vetsTable']/tbody/tr[3]/td[3]")).getText());
+  public void pagarCitaOperacion() throws Exception {
+	
+	  as("owner1").
+	  whenIamLoggedIntheSystem().
+	  thenIPayCitaOperacion();
   }
+  
+  @Test
+  public void pagarCitaOperacionConDineroInsuficiente() throws Exception {
+	
+	  as("owner2").
+	  whenIamLoggedIntheSystem().
+	  thenIPayCitaOperacionWithLessMoney();
+  }
+  
+  private PagarCitaOperacionUITest as(final String owner) {
+	  this.username = owner;
+	  this.driver.get("http://localhost:" + this.port);
+	  driver.findElement(By.linkText("LOGIN")).click();
+	  driver.findElement(By.id("username")).clear();
+	  driver.findElement(By.id("username")).sendKeys(username);
+	  driver.findElement(By.id("password")).clear();
+	  driver.findElement(By.id("password")).sendKeys(passwordOf(username));
+	  driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  return this;
+	}
+  
+  private void thenIPayCitaOperacion() {
+	  driver.findElement(By.linkText("VETERINARIANS")).click();
+	  assertEquals("300", driver.findElement(By.xpath("//table[@id='vetsTable']/tbody/tr[3]/td[3]")).getText());
+	  driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
+	  driver.findElement(By.name("lastName")).click();
+	  driver.findElement(By.name("lastName")).clear();
+	  driver.findElement(By.name("lastName")).sendKeys("Franklin");
+	  driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  assertEquals("1200", driver.findElement(By.xpath("//tr[5]/td")).getText());
+	  driver.findElement(By.linkText("Citas Operaciones")).click();
+	  assertEquals("false", driver.findElement(By.xpath("//table[@id='citasOperacionesPetsTable']/tbody/tr/td[8]")).getText());
+	  driver.findElement(By.linkText("Pagar")).click();
+	  assertEquals("true", driver.findElement(By.xpath("//table[@id='citasOperacionesPetsTable']/tbody/tr/td[8]")).getText());
+	  driver.findElement(By.linkText("FIND OWNERS")).click();
+	  driver.findElement(By.name("lastName")).click();
+	  driver.findElement(By.name("lastName")).clear();
+	  driver.findElement(By.name("lastName")).sendKeys("Franklin");
+	  driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  assertEquals("1150", driver.findElement(By.xpath("//tr[5]/td")).getText());
+	  driver.findElement(By.linkText("VETERINARIANS")).click();
+	  assertEquals("350", driver.findElement(By.xpath("//table[@id='vetsTable']/tbody/tr[3]/td[3]")).getText());
+	
+  }
+  
+  private void thenIPayCitaOperacionWithLessMoney() {
+	  driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
+  	  driver.findElement(By.name("lastName")).click();
+  	  driver.findElement(By.name("lastName")).clear();
+  	  driver.findElement(By.name("lastName")).sendKeys("Rodriquez");
+  	  driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  assertEquals("10", driver.findElement(By.xpath("//tr[5]/td")).getText());
+	  driver.findElement(By.linkText("Citas Operaciones")).click();
+	  assertEquals("false", driver.findElement(By.xpath("//table[@id='citasOperacionesPetsTable']/tbody/tr/td[8]")).getText());
+	  driver.findElement(By.linkText("Pagar")).click();
+	  assertEquals("No puedes pagar la cita si no tienes suficiente dinero en el monedero", driver.findElement(By.xpath("//h2[2]")).getText());
+	
+  }
+  
+  private CharSequence passwordOf(String username) {
+		return "0wn3r";
+	}
+  
+  private PagarCitaOperacionUITest whenIamLoggedIntheSystem() {	
+		return this;
+	}
 
   @AfterEach
   public void tearDown() throws Exception {
