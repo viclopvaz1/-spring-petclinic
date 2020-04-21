@@ -72,6 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/causa/noValidas").hasAnyAuthority("veterinarian")
 				.antMatchers("/donacion/**").hasAnyAuthority("owner", "admin","veterinarian", "adiestrador")
+				.antMatchers("/monedero/**").hasAnyAuthority("owner", "admin","veterinarian", "adiestrador")
 				.anyRequest().denyAll().and().formLogin()
 				/* .loginPage("/login") */
 				.failureUrl("/login-error").and().logout().logoutSuccessUrl("/");
