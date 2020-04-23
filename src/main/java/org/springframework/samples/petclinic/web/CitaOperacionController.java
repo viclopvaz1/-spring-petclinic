@@ -226,13 +226,14 @@ public class CitaOperacionController {
 			this.ownerService.saveOwner(owner);
 			Vet vet = citaOperacion.getVet();
 			Integer monederoVet = vet.getMonedero();
-			this.vetService.monedero(monederoVet + precio, vet.getId());
+//			this.vetService.monedero(monederoVet + precio, vet.getId());
+			vet.setMonedero(monederoVet + precio);
+			this.vetService.saveVet(vet);
 			citaOperacion.setPagado(true);
 			this.citaOperacionService.saveCitaOperacion(citaOperacion);
 			model.put("pagado", citaOperacion.isPagado());
 			model.put("pet", citaOperacion.getPet());
 			model.put("noPuedePagar", noPuedePagar);
-//		}
 		return "citasOperaciones/listadoCitasOperacionesPets";
 	}
 	

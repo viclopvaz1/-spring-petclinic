@@ -1,14 +1,12 @@
 package org.springframework.samples.petclinic.web.ui;
 
-import java.util.regex.Pattern;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +20,17 @@ public class CrearCitaOperacionUITest {
 	@LocalServerPort
 	private int port;
 	
+  private String newNombre;
+  private String newTipo;
+  private String newFechaInicio;
+  private String newHora;
+  private String newDuracion;
+  private String newPrecio;
+  private String newVeterinario;
+  private String newTipoOperacion;
+  private String newCantidadPersonal;
+  private String newPagado;
+//  private int mascotasAlInicio;
   private String username;
   private WebDriver driver;
   private String baseUrl;
@@ -87,9 +96,10 @@ public class CrearCitaOperacionUITest {
   }
   
   private void andThenICreateCitaOperacion() {
+//	  this.mascotasAlInicio = this.contarCitasOperaciones();
 	  driver.findElement(By.id("fechaInicio")).click();
 	  driver.findElement(By.id("fechaInicio")).clear();
-	  driver.findElement(By.id("fechaInicio")).sendKeys("2020/12/17");
+	  driver.findElement(By.id("fechaInicio")).sendKeys("2020/12/27");
 	  driver.findElement(By.id("hora")).click();
 	  driver.findElement(By.id("hora")).clear();
 	  driver.findElement(By.id("hora")).sendKeys("15:00");
@@ -106,6 +116,27 @@ public class CrearCitaOperacionUITest {
 	  driver.findElement(By.id("cantidadPersonal")).sendKeys("2");
 	  driver.findElement(By.xpath("//button[@type='submit']")).click();
 	  assertEquals("Cita Operacion Information", driver.findElement(By.xpath("//h2")).getText());
+	  this.newNombre = driver.findElement(By.xpath("//b")).getText();
+	  this.newTipo = driver.findElement(By.xpath("//tr[2]/td")).getText();
+	  this.newFechaInicio = driver.findElement(By.xpath("//tr[3]/td")).getText();
+	  this.newHora = driver.findElement(By.xpath("//tr[4]/td")).getText();
+	  this.newDuracion = driver.findElement(By.xpath("//tr[5]/td")).getText();
+	  this.newPrecio = driver.findElement(By.xpath("//tr[6]/td")).getText();
+	  this.newVeterinario = driver.findElement(By.xpath("//tr[7]/td")).getText();
+	  this.newTipoOperacion = driver.findElement(By.xpath("//tr[8]/td")).getText();
+	  this.newCantidadPersonal = driver.findElement(By.xpath("//tr[9]/td")).getText();
+	  this.newPagado = driver.findElement(By.xpath("//tr[10]/td")).getText();
+	  assertEquals("Leo", this.newNombre);
+	  assertEquals("cat", this.newTipo);
+	  assertEquals("2020-12-27", this.newFechaInicio);
+	  assertEquals("15:00", this.newHora);
+	  assertEquals("30", this.newDuracion);
+	  assertEquals("100.0", this.newPrecio);
+	  assertEquals("James", this.newVeterinario);
+	  assertEquals("Cirugia basica", this.newTipoOperacion);
+	  assertEquals("2.0", this.newCantidadPersonal);
+	  assertEquals("false", this.newPagado);
+//	  assertTrue(this.contarCitasOperaciones() > mascotasAlInicio );
   }
   
   private void andThenICreateCitaOperacionWithErrors() {
@@ -164,6 +195,18 @@ public class CrearCitaOperacionUITest {
   private CrearCitaOperacionUITest whenIamLoggedIntheSystem() {	
 		return this;
 	}
+  
+//  private int contarCitasOperaciones() {
+//	  driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
+//	  driver.findElement(By.name("lastName")).click();
+//	  driver.findElement(By.name("lastName")).clear();
+//	  driver.findElement(By.name("lastName")).sendKeys("Franklin");
+//	  driver.findElement(By.xpath("//button[@type='submit']")).click();
+//	  driver.findElement(By.linkText("Citas Operaciones")).click();
+//	  WebElement tablaCitasOperciones= driver.findElement(By.xpath("//table"));
+//	  List<WebElement> filasDeTablaCitasOperaciones = tablaCitasOperciones.findElements(By.tagName("tr"));
+//	  return filasDeTablaCitasOperaciones.size() - 1;
+//  }
 
   @AfterEach
   public void tearDown() throws Exception {

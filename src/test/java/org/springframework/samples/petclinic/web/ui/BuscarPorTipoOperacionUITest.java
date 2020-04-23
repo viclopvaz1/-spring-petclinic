@@ -19,6 +19,7 @@ public class BuscarPorTipoOperacionUITest {
 	private int port;
 	
   private String username;
+  private String tipoOperacion;
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -81,12 +82,14 @@ private void thenISeeAllCitasOperaciones() {
 }
 
 private void thenISeeOneCitasOperaciones() {
+	this.tipoOperacion = "Cirugia visual";
 	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[9]/a/span[2]")).click();
 	driver.findElement(By.id("tipoOperacion.name")).click();
 	driver.findElement(By.id("tipoOperacion.name")).clear();
-	driver.findElement(By.id("tipoOperacion.name")).sendKeys("Cirugia visual");
+	driver.findElement(By.id("tipoOperacion.name")).sendKeys(this.tipoOperacion);
 	driver.findElement(By.xpath("//button[@type='submit']")).click();
 	assertEquals("Cita Operacion Information", driver.findElement(By.xpath("//h2")).getText());
+	assertEquals(this.tipoOperacion, driver.findElement(By.xpath("//tr[8]/td")).getText());
 }
 
 private void thenIDontSeeAnyCitasOperaciones() {

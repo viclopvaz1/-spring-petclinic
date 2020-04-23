@@ -21,7 +21,9 @@ public class EditarCitaOperacionUITest {
 	
 	@LocalServerPort
 	private int port;
-	
+
+  private String newDuracion;
+  private String newTipoOperacion;
   private String username;
   private WebDriver driver;
   private String baseUrl;
@@ -37,23 +39,23 @@ public class EditarCitaOperacionUITest {
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
-//  @Test
-//  public void editarCitaOperacionSinErrores() throws Exception {
-//	  
-//	  as("vet1").
-//	  whenIamLoggedIntheSystem().
-//	  thenIPressBasilsEditButton().
-//	  andThenIEditCitaOperacion();
-//  }
-//  
-//  @Test
-//  public void editarCitaOperacionConErrores() throws Exception {
-//	  
-//	  as("vet1").
-//	  whenIamLoggedIntheSystem().
-//	  thenIPressBasilsEditButton().
-//	  andThenIEditCitaOperacionWithErrors();
-//  }
+  @Test
+  public void editarCitaOperacionSinErrores() throws Exception {
+	  
+	  as("vet1").
+	  whenIamLoggedIntheSystem().
+	  thenIPressBasilsEditButton().
+	  andThenIEditCitaOperacion();
+  }
+  
+  @Test
+  public void editarCitaOperacionConErrores() throws Exception {
+	  
+	  as("vet1").
+	  whenIamLoggedIntheSystem().
+	  thenIPressBasilsEditButton().
+	  andThenIEditCitaOperacionWithErrors();
+  }
   
   @Test
   public void editarCitaOperacionConErroresEnFechaInicio() throws Exception {
@@ -92,8 +94,10 @@ public class EditarCitaOperacionUITest {
 	  new Select(driver.findElement(By.id("tipoOperacion"))).selectByVisibleText("Cirugia de emergencia");
 	  driver.findElement(By.xpath("//option[@value='Cirugia de emergencia']")).click();
 	  driver.findElement(By.xpath("//button[@type='submit']")).click();
-	  assertEquals("Cita Operacion Information", driver.findElement(By.xpath("//h2")).getText());
-	  assertEquals("15:00", driver.findElement(By.xpath("//tr[4]/td")).getText());
+	  this.newTipoOperacion = driver.findElement(By.xpath("//h2")).getText();
+	  this.newDuracion = driver.findElement(By.xpath("//tr[4]/td")).getText();
+	  assertEquals("Cita Operacion Information", this.newTipoOperacion);
+	  assertEquals("15:00", this.newDuracion);
 	  assertEquals("Cirugia de emergencia", driver.findElement(By.xpath("//tr[8]/td")).getText());
   }
   

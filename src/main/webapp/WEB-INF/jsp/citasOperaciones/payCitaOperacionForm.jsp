@@ -10,6 +10,7 @@
 <petclinic:layout pageName="payCitaOperacion">
     <b>${mensaje}</b>
     <form:form modelAttribute="citaOperacion" class="form-horizontal" id="pay-citaOperacion-form">
+    <!-- Todo este div es el hidden -->
         <div class="form-group has-feedback">
         	<div id="divCheckbox" style="display: none;">
         		<petclinic:inputField label="Fecha de Inicio" name="fechaInicio"/>
@@ -18,6 +19,7 @@
             	<petclinic:inputField label="Tipo De Operacion" name="tipoOperacion"/>
             	<petclinic:inputField label="Cantidad de Personal" name="cantidadPersonal"/>
         	</div>
+        <!-- Hasta aqui -->
             <petclinic:inputField label="Precio" name="precio"/>
         </div>
         <div class="form-group">
