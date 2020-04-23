@@ -83,23 +83,27 @@ public class PersonController {
 			
 			Collection<Authorities> collection = this.authoritiesService.findAll();
 			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
-			if (a.equals("veterinarian")) {
-				Vet vet = this.vetService.findVetByUser(username);
-				vet.setMonedero(person.getMonedero() + vet.getMonedero());
-				this.vetService.saveVet(vet);
-			} else if (a.equals("owner")) {
-				Owner owner = this.ownerService.findOwnerByUser(username);
-				owner.setMonedero(person.getMonedero() + owner.getMonedero());
-				this.ownerService.saveOwner(owner);
-			} else if (a.equals("adiestrador")) {
-				Adiestrador adiestrador = this.adiestradorService.findAdiestradorByUser(username);
-				adiestrador.setMonedero(person.getMonedero() + adiestrador.getMonedero());
-				this.adiestradorService.saveAdiestrador(adiestrador);
+			if(person.getMonedero() >=0) {
+				if (a.equals("veterinarian")) {
+					Vet vet = this.vetService.findVetByUser(username);
+					vet.setMonedero(person.getMonedero() + vet.getMonedero());
+					this.vetService.saveVet(vet);
+				} else if (a.equals("owner")) {
+					Owner owner = this.ownerService.findOwnerByUser(username);
+					owner.setMonedero(person.getMonedero() + owner.getMonedero());
+					this.ownerService.saveOwner(owner);
+				} else if (a.equals("adiestrador")) {
+					Adiestrador adiestrador = this.adiestradorService.findAdiestradorByUser(username);
+					adiestrador.setMonedero(person.getMonedero() + adiestrador.getMonedero());
+					this.adiestradorService.saveAdiestrador(adiestrador);
+				}
+				
+				return "welcome";
 			}
 			
 
 
-			return "welcome";
+			return "exception";
 		}
 	}
 	
