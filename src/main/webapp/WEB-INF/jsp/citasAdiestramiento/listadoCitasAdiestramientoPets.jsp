@@ -22,7 +22,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${owner.citasAdiestramiento}" var="citaAdiestramientoPet">
+			<c:forEach items="${owner.citaAdiestramiento}" var="citaAdiestramientoPet">
 				<tr>
 					<td><c:out value="${citaAdiestramientoPet.fechaInicio}" /></td>
 					<td><c:out value="${citaAdiestramientoPet.duracion}" /></td>

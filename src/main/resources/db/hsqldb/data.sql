@@ -82,7 +82,7 @@ INSERT INTO types VALUES (6, 'hamster');
 
 INSERT INTO owners VALUES (1, 'George', 'Franklin',1200, '110 W. Liberty St.', 'Madison', '6085551023', 'owner1');
 INSERT INTO owners VALUES (2, 'Betty', 'Davis',1200, '638 Cardinal Ave.', 'Sun Prairie', '6085551749', 'owner2');
-INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez',1200, '2693 Commerce St.', 'McFarland', '6085558763', 'owner3');
+INSERT INTO owners VALUES (3, 'Eduardo', 'Rodriquez',10, '2693 Commerce St.', 'McFarland', '6085558763', 'owner3');
 INSERT INTO owners VALUES (4, 'Harold', 'Davis',1200, '563 Friendly St.', 'Windsor', '6085553198', 'owner4');
 INSERT INTO owners VALUES (5, 'Peter', 'McTavish',1200, '2387 S. Fair Way', 'Madison', '6085552765', 'owner5');
 INSERT INTO owners VALUES (6, 'Jean', 'Coleman',1200, '105 N. Lake St.', 'Monona', '6085552654', 'owner6');
@@ -138,5 +138,6 @@ INSERT INTO citas_Operaciones VALUES (4,30,'2020-12-12', '17:00',false,50.0,3,4,
 INSERT INTO citas_Adiestramiento VALUES (1,30,'2020-12-12', '17:00',false,50.0,1,1,1,1);
 INSERT INTO citas_Adiestramiento VALUES (2,30,'2020-12-12', '17:00',false,50.0,2,2,2,2);
 INSERT INTO citas_Adiestramiento VALUES (3,30,'2020-12-12', '17:00',false,50.0,1,1,1,4);
-INSERT INTO citas_Adiestramiento VALUES (4,30,'2020-12-12', '17:00',false,50.0,2,2,2,3);
+INSERT INTO citas_Adiestramiento VALUES (4,30,'2020-12-12', '17:00',false,50.0,3,2,3,3);
+INSERT INTO citas_Adiestramiento VALUES (5,30,'2021-12-12', '17:00',false,50.0,4,2,3,4);
 

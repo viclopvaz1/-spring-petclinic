@@ -43,7 +43,10 @@
 			<th>Propietario</th>
 			<td><c:out value="${citaAdiestramiento.owner.firstName}" /></td>
 		</tr>
-
+    <tr>
+            <th>Pagado</th>
+            <td><c:out value="${citaAdiestramiento.pagado}"/></td>
+        </tr>
 	</table>
 
 	<spring:url
