@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.ui;
 
 
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +28,8 @@ import org.openqa.selenium.support.ui.Select;
 public class AdiestradoresUITest {
 	
 	@LocalServerPort
-    private int port;
+	private int port;
+	
 	  private WebDriver driver;
 	  private String baseUrl;
 	  private String username;
@@ -41,20 +40,20 @@ public class AdiestradoresUITest {
 	  public void setUp() throws Exception {
 //		String lugar = "C:\\Users\\House\\webdrivers";
 //		System.setProperty("webdriver.chrome.driver", lugar + "\\chromedriver.exe");
-	    driver = new ChromeDriver();
+	    driver = new FirefoxDriver();
 	    baseUrl = "https://www.google.com/";
 	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	  }
 	  
 	  @Test
-	  public void testUntitledTestCase() throws Exception {
+	  public void listarAdiestradores() throws Exception {
 		  as("vet1").
 		  whenIamLoggedIntheSystem().
-		  thenISeeMyUsernameInTheMenuBar();
+		  thenISeeAdiestradores();
 	  }
 	  
-	  private AdiestradoresUITest as(final String adiestrador) {
-		  this.username = adiestrador;
+	  private AdiestradoresUITest as(final String vet) {
+		  this.username = vet;
 		  this.driver.get("http://localhost:" + this.port);
 		  driver.findElement(By.linkText("LOGIN")).click();
 		  driver.findElement(By.id("username")).clear();
@@ -64,23 +63,7 @@ public class AdiestradoresUITest {
 		  driver.findElement(By.xpath("//button[@type='submit']")).click();
 		  return this;
 		}
-
-	  @Test
-	  public void testListaAdiestradores() throws Exception {
-	    driver.get("http://localhost:8080/");
-	    driver.findElement(By.linkText("LOGIN")).click();
-	    driver.findElement(By.id("username")).clear();
-	    driver.findElement(By.id("username")).sendKeys("vet1");
-	    driver.findElement(By.id("password")).clear();
-	    driver.findElement(By.id("password")).sendKeys("v3t");
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
-	    driver.get("http://localhost:8080/");
-	    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[5]/a/span[2]")).click();
-	  }
-	  private void thenISeeMyUsernameInTheMenuBar() {
-		  assertEquals(this.username.toUpperCase(), driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
-		
-	  }
+	  
 	  
 	  private CharSequence passwordOf(String username) {
 			return "v3t";
@@ -89,6 +72,17 @@ public class AdiestradoresUITest {
 	  private AdiestradoresUITest whenIamLoggedIntheSystem() {	
 			return this;
 		}
+	  
+	  
+	  
+	  
+	  
+
+	  public void thenISeeAdiestradores() {
+	    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[5]/a/span[2]")).click();
+	  }
+	  
+
 
 
 	  @AfterEach

@@ -87,7 +87,7 @@ public class DonacionController {
 		Causa causa = this.causaService.findCausaById(causaId);
 		if (result.hasErrors() || !causa.isValido()) {
 			model.put("donacion", donacion);
-			return DonacionController.VIEWS_DONACION_CREATE_FORM;
+			return DonacionController.VIEWS_DONACION_NEW_FORM;
 		} else {
 
 			User user = this.userService.findUserById(SecurityContextHolder.getContext().getAuthentication().getName());

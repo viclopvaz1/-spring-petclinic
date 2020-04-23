@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.ui;
 
 
 import java.util.regex.Pattern;
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,12 +23,17 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CausasUITest {
+	
+	
 	@LocalServerPort
     private int port;
 	  private WebDriver driver;
@@ -40,20 +46,49 @@ public class CausasUITest {
 
 	  @BeforeEach
 	  public void setUp() throws Exception {
-//		String lugar = "C:\\Users\\House\\webdrivers";
-//		System.setProperty("webdriver.gecko.driver", lugar + "\\geckodriver.exe");
+//		String lugar = "C:\\Users\\Alberto\\Downloads\\gecko";
+//		System.setProperty("webdriver.gecko.driver", lugar + "\\geckodriver.exe");	
 		driver = new FirefoxDriver();
 		baseUrl = "https://www.google.com/";
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	  }
 	  
 	  @Test
-	  public void testUntitledTestCase() throws Exception {
+	  public void testCausasEnLasQueHeDonado() throws Exception {
 		  as("vet1").
 		  whenIamLoggedIntheSystem().
-		  thenISeeMyUsernameInTheMenuBar();
+		  thenISeeCausasEnLasQueHeDonado();
 	  }
 	  
+	  @Test
+	  public void testEdicionCausas() throws Exception {
+		  as("vet1").
+		  whenIamLoggedIntheSystem().
+		  thenEdicionCausas();
+	  }
+	  
+	  @Test
+	  public void testCreacionYBorrarCausas() throws Exception {
+		  as("vet1").
+		  whenIamLoggedIntheSystem().
+		  thenCreacionYBorrarCausa();
+	  }
+	  
+	  @Test
+	  public void testErrorEdicion() throws Exception {
+		  as("vet1").
+		  whenIamLoggedIntheSystem().
+		  thenErrorEdicion();
+	  }
+	  
+	  @Test
+	  public void testListadoCausasSugeridas() throws Exception {
+		  as("vet1").
+		  whenIamLoggedIntheSystem().
+		  thenListadoCausasSugeridas();
+	  }
+	  
+
 	  private CausasUITest as(final String adiestrador) {
 		  this.username = adiestrador;
 		  this.driver.get("http://localhost:" + this.port);
@@ -65,29 +100,27 @@ public class CausasUITest {
 		  driver.findElement(By.xpath("//button[@type='submit']")).click();
 		  return this;
 		}
+	  
+	  private CharSequence passwordOf(String username) {
+			return "v3t";
+		}
+	  
+	  private CausasUITest whenIamLoggedIntheSystem() {	
+			return this;
+		}
+	  
+	  //------------------------------------------------------
+	  
 
-	  @Test
-	  public void testCausasQueHeDonadoSeleccion() throws Exception {
-	    driver.get("http://localhost:8080/");
-	    driver.findElement(By.linkText("LOGIN")).click();
-	    driver.findElement(By.id("username")).clear();
-	    driver.findElement(By.id("username")).sendKeys("vet1");
-	    driver.findElement(By.id("password")).clear();
-	    driver.findElement(By.id("password")).sendKeys("v3t");
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  public void thenISeeCausasEnLasQueHeDonado(){
 	    driver.findElement(By.linkText("CAUSAS EN LAS QUE HE DONADO")).click();
 	    driver.findElement(By.linkText("Mi mascota")).click();
 	  }
+	  
+	  
+	  
 	  	  
-	  @Test
-	  public void testCausaEdicionPrueba() throws Exception {
-	    driver.get("http://localhost:8080/");
-	    driver.findElement(By.linkText("LOGIN")).click();
-	    driver.findElement(By.id("username")).clear();
-	    driver.findElement(By.id("username")).sendKeys("vet1");
-	    driver.findElement(By.id("password")).clear();
-	    driver.findElement(By.id("password")).sendKeys("v3t");
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  public void thenEdicionCausas() {
 	    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
 	    driver.findElement(By.linkText("Mi mascota")).click();
 	    driver.findElement(By.linkText("Edit")).click();
@@ -99,15 +132,8 @@ public class CausasUITest {
 	  }
 	  
 
-	  @Test
-	  public void testCausaBorrar() throws Exception {
-	    driver.get("http://localhost:8080/");
-	    driver.findElement(By.linkText("LOGIN")).click();
-	    driver.findElement(By.id("username")).clear();
-	    driver.findElement(By.id("username")).sendKeys("vet1");
-	    driver.findElement(By.id("password")).clear();
-	    driver.findElement(By.id("password")).sendKeys("v3t");
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+	  public void thenCreacionYBorrarCausa() throws Exception {
 	    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[8]/a/span[2]")).click();
 	    driver.findElement(By.id("fechaInicio")).click();
 	    driver.findElement(By.id("fechaInicio")).clear();
@@ -127,15 +153,7 @@ public class CausasUITest {
 	  
 
 	  
-	  @Test
-	  public void testCausaErrorEdicion() throws Exception {
-	    driver.get("http://localhost:8080/");
-	    driver.findElement(By.linkText("LOGIN")).click();
-	    driver.findElement(By.id("username")).clear();
-	    driver.findElement(By.id("username")).sendKeys("vet1");
-	    driver.findElement(By.id("password")).clear();
-	    driver.findElement(By.id("password")).sendKeys("v3t");
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  public void thenErrorEdicion() throws Exception {
 	    driver.findElement(By.linkText("CAUSAS")).click();
 	    driver.findElement(By.linkText("Mi mascota")).click();
 	    driver.findElement(By.linkText("Edit")).click();
@@ -150,42 +168,14 @@ public class CausasUITest {
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
 	  }
 	  
-	  @Test
-	  public void testCausasEnLasQueHeDonado() throws Exception {
-	    driver.get("http://localhost:8080/");
-	    driver.findElement(By.linkText("LOGIN")).click();
-	    driver.findElement(By.id("password")).clear();
-	    driver.findElement(By.id("password")).sendKeys("v3t");
-	    driver.findElement(By.id("username")).clear();
-	    driver.findElement(By.id("username")).sendKeys("vet1");
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
-	    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[7]/a/span[2]")).click();
-	  }
 	  
-	  @Test
-	  public void testListadoCausasSugeridas() throws Exception {
-	    driver.get("http://localhost:8080/");
-	    driver.findElement(By.linkText("LOGIN")).click();
-	    driver.findElement(By.id("password")).clear();
-	    driver.findElement(By.id("password")).sendKeys("v3t");
-	    driver.findElement(By.id("username")).clear();
-	    driver.findElement(By.id("username")).sendKeys("vet1");
-	    driver.findElement(By.xpath("//button[@type='submit']")).click();
+	  public void thenListadoCausasSugeridas() throws Exception {
 	    driver.findElement(By.linkText("LISTAS DE CAUSAS SUGERIDAS")).click();
 	  }
 	  
-	  private void thenISeeMyUsernameInTheMenuBar() {
-		  assertEquals(this.username.toUpperCase(), driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
-		
-	  }
 	  
-	  private CharSequence passwordOf(String username) {
-			return "v3t";
-		}
 	  
-	  private CausasUITest whenIamLoggedIntheSystem() {	
-			return this;
-		}
+
 	 
 
 	  @AfterEach
