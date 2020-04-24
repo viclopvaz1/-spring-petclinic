@@ -34,10 +34,5 @@ public interface SpringDataVetRepository extends VetRepository, Repository<Vet, 
 	@Override
 	@Query("SELECT vet FROM Vet vet WHERE vet.user.username LIKE :username%")
 	Vet findVetByUser(@Param("username") String username);
-	
-	@Override
-	@Modifying
-	@Query("UPDATE Vet vet SET vet.monedero = :newMonedero WHERE vet.id = :vetId")
-	void monedero(@Param("newMonedero") Integer newMonedero, @Param("vetId") int vetId);
 
 }

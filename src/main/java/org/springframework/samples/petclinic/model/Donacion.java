@@ -17,7 +17,7 @@ import lombok.Data;
 public class Donacion extends BaseEntity {
 	
 	@Column(name = "cantidad")
-	@Min(value = 0)
+	@Min(1)
 	@NotNull
 	private Integer cantidad;
 	

@@ -83,6 +83,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/causa/noValidas").hasAnyAuthority("veterinarian")
 				//				Doancion
 				.antMatchers("/donacion/**").hasAnyAuthority("owner", "admin","veterinarian", "adiestrador")
+				.antMatchers("/monedero/**").hasAnyAuthority("owner", "admin","veterinarian", "adiestrador")
 				.anyRequest().denyAll().and().formLogin()
 				/* .loginPage("/login") */
 				.failureUrl("/login-error").and().logout().logoutSuccessUrl("/");

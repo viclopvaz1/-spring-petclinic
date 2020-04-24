@@ -20,6 +20,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataVetRepository;
 import org.springframework.stereotype.Service;
@@ -73,13 +74,8 @@ public class VetService {
 		return this.vetRepository.findById(id);
 	}
 	
-//	@Transactional
-//	public Vet monedero(Integer newMonedero, int vetId) throws DataAccessException {
-//		return vetRepository.monedero(newMonedero, vetId);
-//	}
-	
 	@Transactional
-	public void monedero(Integer newMonedero, int vetId) throws DataAccessException {
-		this.vetRepository.monedero(newMonedero, vetId);
-	}
+	public void saveVet(final Vet vet) throws DataAccessException {
+		this.vetRepository.save(vet);
+	}	
 }
