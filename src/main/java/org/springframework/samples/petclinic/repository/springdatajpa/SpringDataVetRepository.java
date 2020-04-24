@@ -16,6 +16,7 @@
 
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
@@ -41,5 +42,10 @@ public interface SpringDataVetRepository extends VetRepository, Repository<Vet, 
 	@Override
 	@Query("SELECT vet FROM Vet vet WHERE vet.user.username LIKE :username%")
 	Vet findVetByUser(@Param("username") String username);
+	
+//	@Override
+//	@Modifying
+//	@Query("UPDATE Vet vet SET vet.monedero = :newMonedero WHERE vet.id = :vetId")
+//	void monedero(@Param("newMonedero") Integer newMonedero, @Param("vetId") int vetId);
 
 }
