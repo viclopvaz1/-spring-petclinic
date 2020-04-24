@@ -17,11 +17,9 @@
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
 import java.util.Collection;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 
@@ -38,16 +36,12 @@ public interface SpringDataOwnerRepository extends OwnerRepository, Repository<O
 	Collection<Owner> findByLastName(@Param("lastName") String lastName);
 
 	@Override
-	@Query("SELECT owner FROM Owner owner WHERE owner.user.username LIKE :username")
-	Owner findByUser(@Param("username") String username);
-
-	@Override
 	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
 	Owner findById(@Param("id") int id);
 	
 	
 	@Override
-    @Query("SELECT owner FROM Owner owner WHERE owner.user.username LIKE :username%")
+    @Query("SELECT owner FROM Owner owner WHERE owner.user.username =:username")
     Owner findOwnerByUser(@Param("username") String username);
 
 }

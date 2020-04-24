@@ -18,6 +18,7 @@
             <th style="width: 150px;">Telefono</th>
             <th>Tipo Animal</th>
             <th>Estrellas</th>
+            <th>Monedero</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +38,9 @@
                 </td>
                 <td>
                     <c:out value="${adiestrador.estrellas}"/>
+                </td>
+                <td>
+                    <c:out value="${adiestrador.monedero}"/>
                 </td>
                 
               

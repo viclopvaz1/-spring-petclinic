@@ -17,6 +17,7 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -47,11 +48,6 @@ public class OwnerService {
 	@Autowired
 	public OwnerService(final SpringDataOwnerRepository ownerRepository) {
 		this.ownerRepository = ownerRepository;
-	}
-
-	@Transactional(readOnly = true)
-	public Owner findByUser(final String username) throws DataAccessException {
-		return this.ownerRepository.findByUser(username);
 	}
 
 	@Transactional(readOnly = true)

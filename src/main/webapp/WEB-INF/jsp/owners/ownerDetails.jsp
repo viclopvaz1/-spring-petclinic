@@ -27,6 +27,11 @@
             <td><c:out value="${owner.telephone}"/></td>
         </tr>
         
+        <tr>
+            <th>Monedero</th>
+            <td><c:out value="${owner.monedero}"/></td>
+        </tr>
+        
     </table>
 
 

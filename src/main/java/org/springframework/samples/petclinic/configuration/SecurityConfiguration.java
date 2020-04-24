@@ -34,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/resources/**", "/webjars/**", "/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/", "/oups").permitAll().antMatchers("/users/new").permitAll()
+				//	Citas 		Operaciones
 				.antMatchers("/citasOperaciones").permitAll()
 				.antMatchers("/citasOperaciones/**").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers("/citaOperacion/{id}").hasAnyAuthority("veterinarian", "admin")
@@ -41,6 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/citaOperacion/{citaOperacionId}/delete").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers(HttpMethod.GET, "/citaOperacion/new").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers(HttpMethod.POST, "/citaOperacion/new/{petId}").hasAnyAuthority("veterinarian", "admin")
+				.antMatchers("/citaOperacion/{citaOperacionId}/pay").hasAnyAuthority("owner", "admin")
+				.antMatchers("/citasOperaciones/error").hasAnyAuthority("owner", "admin")
+				//	Citas 		Adiestramiento
 				.antMatchers(HttpMethod.GET, "/citasAdiestramiento/new/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers(HttpMethod.POST, "/citasAdiestramiento/new/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/citaAdiestramiento/{id}").hasAnyAuthority("veterinarian", "admin","adiestrador")
@@ -62,6 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/owners/{ownerId}").hasAnyAuthority("owner", "admin", "veterinarian")
 				.antMatchers("/citasAdiestramiento/**").hasAnyAuthority("owner", "admin")
 				.antMatchers("/vets/**").authenticated().antMatchers("/donacion/**").hasAnyAuthority("owner", "admin")
+				//				Causa
 				.antMatchers("/users/addmoney").permitAll()
 				.antMatchers(HttpMethod.GET, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/causa").permitAll()
@@ -71,6 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/causa/{id}").permitAll()
 				.antMatchers(HttpMethod.POST, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/causa/noValidas").hasAnyAuthority("veterinarian")
+				//				Doancion
 				.antMatchers("/donacion/**").hasAnyAuthority("owner", "admin","veterinarian", "adiestrador")
 				.anyRequest().denyAll().and().formLogin()
 				/* .loginPage("/login") */
