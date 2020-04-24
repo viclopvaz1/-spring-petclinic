@@ -20,9 +20,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.VetRepository;
 
@@ -34,18 +31,8 @@ import org.springframework.samples.petclinic.repository.VetRepository;
  */
 public interface SpringDataVetRepository extends VetRepository, Repository<Vet, Integer> {
 
-	//	@Override
-	//	@Query("SELECT DISTINCT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.tipoOperacion.name LIKE :tipoOperacion% AND citaOperacion.vet.id LIKE :vetId%")
-	////	@Query("SELECT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.vet.id IN(SELECT vet.id FROM Vet vet WHERE donacion.user.username LIKE :ong%)")
-	//	Collection<CitaOperacion> findByTipoOperacion(@Param("tipoOperacion") String tipoOperacion, @Param("vetId") int vetId);
-
 	@Override
 	@Query("SELECT vet FROM Vet vet WHERE vet.user.username LIKE :username%")
 	Vet findVetByUser(@Param("username") String username);
-	
-//	@Override
-//	@Modifying
-//	@Query("UPDATE Vet vet SET vet.monedero = :newMonedero WHERE vet.id = :vetId")
-//	void monedero(@Param("newMonedero") Integer newMonedero, @Param("vetId") int vetId);
 
 }

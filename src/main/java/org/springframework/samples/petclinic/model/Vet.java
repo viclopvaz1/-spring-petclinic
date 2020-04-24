@@ -107,7 +107,7 @@ public class Vet extends Person {
 		return this.citasOperacion;
 	}
 
-	public void setCitasOperacion(final Set<CitaOperacion> citasOperacion) {
+	public void setCitasOperacion(Set<CitaOperacion> citasOperacion) {
 		this.citasOperacion = citasOperacion;
 	}
 	
@@ -117,6 +117,12 @@ public class Vet extends Person {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Vet [specialties=" + specialties + ", estrellas=" + estrellas + ", citasOperacion=" + citasOperacion
+				+ ", user=" + user + "]";
 	}
 
 }
