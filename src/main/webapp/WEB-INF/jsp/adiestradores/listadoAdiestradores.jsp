@@ -9,7 +9,6 @@
 
 <petclinic:layout pageName="adiestradores">
 	<h2>Adiestradores</h2>
-
 	<table id="adiestradoresTable" class="table table-striped">
 		<thead>
 			<tr>

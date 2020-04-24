@@ -13,6 +13,7 @@
         <tr>
             <th>Name</th>
             <th>Specialties</th>
+            <th>Monedero</th>
             <th>Citas Operaciones</th>
         </tr>
         </thead>
@@ -27,6 +28,9 @@
                         <c:out value="${specialty.name} "/>
                     </c:forEach>
                     <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>
+                </td>
+                <td>
+                    <c:out value="${vet.monedero}"/>
                 </td>
                 <td>
                     <spring:url value="/vets/{vetId}" var="vetUrl">
