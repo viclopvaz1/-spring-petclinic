@@ -33,6 +33,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 
 import org.hibernate.validator.constraints.Range;
@@ -57,7 +58,7 @@ public class Vet extends Person {
 
 	@Column(name = "estrellas")
 	@Range(min = 0, max = 5)
-	@NotEmpty
+	@NotNull
 	private Integer				estrellas;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "vet")
@@ -106,7 +107,7 @@ public class Vet extends Person {
 		return this.citasOperacion;
 	}
 
-	public void setCitasOperacion(final Set<CitaOperacion> citasOperacion) {
+	public void setCitasOperacion(Set<CitaOperacion> citasOperacion) {
 		this.citasOperacion = citasOperacion;
 	}
 	
@@ -116,6 +117,12 @@ public class Vet extends Person {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Vet [specialties=" + specialties + ", estrellas=" + estrellas + ", citasOperacion=" + citasOperacion
+				+ ", user=" + user + "]";
 	}
 
 }

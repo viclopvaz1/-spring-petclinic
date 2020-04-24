@@ -43,10 +43,10 @@ public interface VetRepository {
 
 	Vet findById(int id) throws DataAccessException;
   
-	//Vet findByUsername(String username) throws DataAccessException;
-
 	Vet findVetByUser(String username) throws DataAccessException;
-
-	//	Collection<CitaOperacion> findByTipoOperacion(String tipoOperacion, int vetId) throws DataAccessException;
+	
+	void save(Vet vet) throws DataAccessException;
+	
+	void monedero(Integer newMonedero, int vetId) throws DataAccessException;
 
 }

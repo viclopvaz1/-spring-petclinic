@@ -47,6 +47,10 @@
             <th>Cantidad de Personal</th>
             <td><c:out value="${citaOperacion.cantidadPersonal}"/></td>
         </tr>
+        <tr>
+            <th>Pagado</th>
+            <td><c:out value="${citaOperacion.pagado}"/></td>
+        </tr>
     </table>
 
     <spring:url value="{citaOperacionId}/edit/{petId}" var="editUrl">
