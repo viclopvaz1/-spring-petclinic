@@ -25,19 +25,12 @@
         <tr>
             <th>Telephone</th>
             <td><c:out value="${owner.telephone}"/></td>
-        </tr>
-        
+      </tr>
         <tr>
             <th>Monedero</th>
             <td><c:out value="${owner.monedero}"/></td>
         </tr>
-        
-    </table>
-
-
-
-
-
+            </table>
 
 
 	<spring:url value="{ownerId}/edit" var="editUrl">
