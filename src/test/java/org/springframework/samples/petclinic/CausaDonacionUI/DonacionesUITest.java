@@ -8,6 +8,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -44,32 +46,40 @@ public class DonacionesUITest {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
-	@Test
-	public void Donacion() throws Exception {
-		as("vet1")
+	@ParameterizedTest
+	@CsvSource({"owner7","vet1","adiestrador2"})
+	public void Donacion(String username) throws Exception {
+		as(username)
 		.whenIamLoggedIntheSystem()
+		.thenPressDonationButton()
 		.thenDonacion();
 	}
 
-	@Test
-	public void dineroSuperiorAMonedero() throws Exception {
-		as("vet1")
+	@ParameterizedTest
+	@CsvSource({"owner7","vet1","adiestrador2"})
+	public void dineroSuperiorAMonedero(String username) throws Exception {
+		as(username)
 		.whenIamLoggedIntheSystem()
+		.thenPressDonationButton()
 		.thenDonacionSuperiorMonedero();
 	}
 
-	@Test
-	public void dineroErroneo() throws Exception {
-		as("vet1")
+	@ParameterizedTest
+	@CsvSource({"owner7","vet1","adiestrador2"})
+	public void dineroErroneo(String username) throws Exception {
+		as(username)
 		.whenIamLoggedIntheSystem()
+		.thenPressDonationButton()
 		.thenDonacionErronea();
 	}
 
-	@Test
-	public void dineroNull() throws Exception {
-		as("vet1")
+	@ParameterizedTest
+	@CsvSource({"owner7","vet1","adiestrador2"})
+	public void dineroNull(String username) throws Exception {
+		as(username)
 		.whenIamLoggedIntheSystem()
-		.	thenDonacionNull();
+		.thenPressDonationButton()
+		.thenDonacionNull();
 	}
 
 	private DonacionesUITest as(final String vet) {
@@ -85,7 +95,12 @@ public class DonacionesUITest {
 	}
 
 	private CharSequence passwordOf(String username) {
-		return "v3t";
+		if(username.contains("owner7")) {
+			return "0wn3r";
+		} else if(username.contains("vet1")) {
+			return "v3t";
+		}
+			return "adiestrador";
 	}
 
 	private DonacionesUITest whenIamLoggedIntheSystem() {
@@ -93,11 +108,15 @@ public class DonacionesUITest {
 	}
 
 	// -----------------------------------------------
-
-	public void thenDonacion() throws Exception {
+	
+	public DonacionesUITest thenPressDonationButton() {
 		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
 		driver.findElement(By.linkText("Mi mascota")).click();
 		driver.findElement(By.linkText("Hacer Donacion")).click();
+		return this;
+	}
+
+	public void thenDonacion() throws Exception {
 		driver.findElement(By.id("cantidad")).click();
 		driver.findElement(By.id("cantidad")).clear();
 		driver.findElement(By.id("cantidad")).sendKeys("2");
@@ -105,9 +124,6 @@ public class DonacionesUITest {
 	}
 
 	public void thenDonacionSuperiorMonedero() throws Exception {
-		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
-		driver.findElement(By.linkText("Mi mascota")).click();
-		driver.findElement(By.linkText("Hacer Donacion")).click();
 		driver.findElement(By.id("cantidad")).click();
 		driver.findElement(By.id("cantidad")).clear();
 		driver.findElement(By.id("cantidad")).sendKeys("10000");
@@ -116,9 +132,6 @@ public class DonacionesUITest {
 	}
 
 	public void thenDonacionErronea() throws Exception {
-		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
-		driver.findElement(By.linkText("Mi super mascota")).click();
-		driver.findElement(By.linkText("Hacer Donacion")).click();
 		driver.findElement(By.id("cantidad")).click();
 		driver.findElement(By.id("cantidad")).clear();
 		driver.findElement(By.id("cantidad")).sendKeys("0");
@@ -127,11 +140,18 @@ public class DonacionesUITest {
 	}
 	
 	  public void thenDonacionNull() throws Exception {
-	    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
-	    driver.findElement(By.linkText("Mi super mascota")).click();
-	    driver.findElement(By.linkText("Hacer Donacion")).click();
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
 	    assertEquals("no puede ser null", driver.findElement(By.xpath("//form[@id='add-donacion-form']/div/div/div/span[2]")).getText());
 	  }
+	  
+	  @AfterEach
+	  public void tearDown() throws Exception {
+	    driver.quit();
+	    String verificationErrorString = verificationErrors.toString();
+	    if (!"".equals(verificationErrorString)) {
+	      fail(verificationErrorString);
+	    }
+	  }
+
 
 }

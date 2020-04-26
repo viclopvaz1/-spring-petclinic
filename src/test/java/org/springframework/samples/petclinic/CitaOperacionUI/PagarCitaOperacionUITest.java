@@ -45,9 +45,9 @@ public class PagarCitaOperacionUITest {
   }
   
   @Test
-  public void pagarCitaOperacionConDineroInsuficiente() throws Exception {
+  public void pagarCitaOperacionSinDinero() throws Exception {
 	
-	  as("owner2").
+	  as("owner3").
 	  whenIamLoggedIntheSystem().
 	  thenIPayCitaOperacionWithLessMoney();
   }

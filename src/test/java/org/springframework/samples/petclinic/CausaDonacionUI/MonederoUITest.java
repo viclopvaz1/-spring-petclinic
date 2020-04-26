@@ -1,12 +1,16 @@
 package org.springframework.samples.petclinic.CausaDonacionUI;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -36,16 +40,18 @@ public class MonederoUITest {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
-	@Test
-	public void Donacion() throws Exception {
-		as("vet1")
+	@ParameterizedTest
+	@CsvSource({"owner7","vet1","adiestrador2"})
+	public void Donacion(String username) throws Exception {
+		as(username)
 		.whenIamLoggedIntheSystem()
 		.thenAddMoney();
 	}
 	
-	@Test
-	public void DonacionNegativa() throws Exception {
-		as("vet1")
+	@ParameterizedTest
+	@CsvSource({"owner7","vet1","adiestrador2"})
+	public void DonacionNegativa(String username) throws Exception {
+		as(username)
 		.whenIamLoggedIntheSystem()
 		.thenNegativeMoney();
 	}
@@ -63,7 +69,12 @@ public class MonederoUITest {
 	}
 
 	private CharSequence passwordOf(String username) {
-		return "v3t";
+		if(username.contains("owner7")) {
+			return "0wn3r";
+		} else if(username.contains("vet1")) {
+			return "v3t";
+		}
+			return "adiestrador";
 	}
 
 	private MonederoUITest whenIamLoggedIntheSystem() {
@@ -91,5 +102,15 @@ public class MonederoUITest {
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		assertEquals("tiene que ser mayor o igual que 0", driver.findElement(By.xpath("//form[@id='add-person-form']/div[2]/div/div/span[2]")).getText());
 	}
+	
+	  @AfterEach
+	  public void tearDown() throws Exception {
+	    driver.quit();
+	    String verificationErrorString = verificationErrors.toString();
+	    if (!"".equals(verificationErrorString)) {
+	      fail(verificationErrorString);
+	    }
+	  }
+
 
 }
