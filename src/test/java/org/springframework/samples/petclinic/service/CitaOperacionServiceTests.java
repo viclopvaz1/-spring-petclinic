@@ -111,7 +111,7 @@ public class CitaOperacionServiceTests {
 	@Test
 	void shouldFindAllCitasOperaciones() {
 		Collection<CitaOperacion> citasOperaciones = (Collection<CitaOperacion>) this.citaOperacionService.findAll();
-		org.assertj.core.api.Assertions.assertThat(citasOperaciones).hasSize(4);
+		org.assertj.core.api.Assertions.assertThat(citasOperaciones).hasSize(5);
 	}
 	
 	@Test

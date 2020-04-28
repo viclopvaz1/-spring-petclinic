@@ -305,9 +305,9 @@
 						</executions>
 						<configuration>
 							<includes>
-<!-- <include>**/*UITest.java</include> -->			
-								<include>**/PagarCitaAdiestramientoUITest.java</include>
-								<include>**/PagarCitaOperacionUITest.java</include>					
+								<include>**/*UITest.java</include>		
+								<!--<include>**/PagarCitaAdiestramientoUITest.java</include>
+								<include>**/PagarCitaOperacionUITest.java</include>	 -->					
 							</includes>
 						</configuration>
 					</plugin>

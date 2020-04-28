@@ -119,10 +119,4 @@ public class Vet extends Person {
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "Vet [specialties=" + specialties + ", estrellas=" + estrellas + ", citasOperacion=" + citasOperacion
-				+ ", user=" + user + "]";
-	}
-
 }

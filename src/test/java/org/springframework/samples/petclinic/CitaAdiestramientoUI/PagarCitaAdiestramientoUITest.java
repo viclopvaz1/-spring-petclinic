@@ -88,7 +88,7 @@ public class PagarCitaAdiestramientoUITest {
 		driver.findElement(By.name("lastName")).clear();
 		driver.findElement(By.name("lastName")).sendKeys("Franklin");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertEquals("1150", driver.findElement(By.xpath("//tr[5]/td")).getText());
+		assertEquals("1200", driver.findElement(By.xpath("//tr[5]/td")).getText());
 		driver.findElement(By.xpath("//a[contains(text(),'Citas Adiestramiento')]")).click();
 		driver.findElement(By.xpath("//table[@id='citasAdiestramientoOwnersIdTable']/tbody/tr/td[8]")).click();
 		assertEquals("false", driver
@@ -102,7 +102,7 @@ public class PagarCitaAdiestramientoUITest {
 		driver.findElement(By.name("lastName")).clear();
 		driver.findElement(By.name("lastName")).sendKeys("Franklin");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertEquals("1100", driver.findElement(By.xpath("//tr[5]/td")).getText());
+		assertEquals("1150", driver.findElement(By.xpath("//tr[5]/td")).getText());
 		driver.findElement(By.linkText("ADIESTRADORES")).click();
 		assertEquals("1250",
 				driver.findElement(By.xpath("//table[@id='adiestradoresTable']/tbody/tr/td[6]")).getText());
