@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.E2E;
+package org.springframework.samples.petclinic.e2e;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
