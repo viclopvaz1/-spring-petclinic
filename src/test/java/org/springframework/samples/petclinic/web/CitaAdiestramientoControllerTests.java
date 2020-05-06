@@ -359,7 +359,7 @@ class CitaAdiestramientoControllerTests {
 	Mockito.when(this.clinicService.findCitaAdiestramientoById(TEST_CITA_ADIESTRAMIENTO_ID)).thenReturn(citaAd);
 	
 	Mockito.when(this.clinicService.findCitaAdiestramientoById(200)).thenThrow(NoSuchElementException.class);
-	this.mockMvc.perform(MockMvcRequestBuilders.get("/citaAdiestramiento/{citaAdiestramientoId}/delete", 200)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "Cita not found"))
+	this.mockMvc.perform(MockMvcRequestBuilders.get("/citaAdiestramiento/{citaAdiestramientoId}/delete", 200)).andExpect(MockMvcResultMatchers.status().isOk())
 	.andExpect(MockMvcResultMatchers.view().name("exception"));
 }
 	

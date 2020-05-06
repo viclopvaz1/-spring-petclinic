@@ -1,4 +1,4 @@
-package e2e;
+package org.springframework.samples.petclinic.e2e;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -127,17 +127,17 @@ public class CitaAdiestramientoControllerTestsE2E {
 		mockMvc.perform(get("/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}",
 				TEST_CITA_ADIESTRAMIENTO_ID, TEST_OWNER_ID, TEST_PET_ID)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("citaAdiestramiento"))
-				.andExpect(model().attribute("citaAdiestramiento", Matchers.hasProperty("duracion", Matchers.is(45))))
+				.andExpect(model().attribute("citaAdiestramiento", Matchers.hasProperty("duracion", Matchers.is(30))))
 				.andExpect(model().attribute("citaAdiestramiento",
 						Matchers.hasProperty("fechaInicio",
-								Matchers.is(LocalDate.parse("2020/12/29", DateTimeFormatter.ofPattern("yyyy/MM/dd"))))))
+								Matchers.is(LocalDate.parse("2020/12/12", DateTimeFormatter.ofPattern("yyyy/MM/dd"))))))
 				.andExpect(model().attribute("citaAdiestramiento",
 						Matchers.hasProperty("hora", Matchers.is(LocalTime.parse("17:00")))))
 				// .andExpect(model().attribute("citaAdiestramiento", hasProperty("pagado",
 				// is(false))))
-				.andExpect(model().attribute("citaAdiestramiento", Matchers.hasProperty("precio", Matchers.is(75.0))))
-				.andExpect(model().attribute("citaAdiestramiento",
-						Matchers.hasProperty("tipoAdiestramiento", Matchers.is("hola"))))
+				.andExpect(model().attribute("citaAdiestramiento", Matchers.hasProperty("precio", Matchers.is(50.0))))
+//				.andExpect(model().attribute("citaAdiestramiento",
+//						Matchers.hasProperty("tipoAdiestramiento", Matchers.is("Adiestramiento deportivo"))))
 				.andExpect(view().name("citasAdiestramiento/createOrUpdateCitaAdiestramientoForm"));
 
 	}
@@ -148,11 +148,14 @@ public class CitaAdiestramientoControllerTestsE2E {
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}", TEST_CITA_ADIESTRAMIENTO_ID,
 						TEST_OWNER_ID, TEST_PET_ID)
-				.with(SecurityMockMvcRequestPostProcessors.csrf()).param("fechaInicio", "2020/12/11")
-				.param("hora", "15:30").param("duracion", "45")
-				// .param("pagado", is(false))))
-				.param("precio", "75.0").param("tipoAdiestramiento", "hola")).andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/citaAdiestramiento/" + TEST_CITA_ADIESTRAMIENTO_ID));
+				.with(SecurityMockMvcRequestPostProcessors.csrf())
+				.param("fechaInicio", "2020/12/11")
+				.param("hora", "15:30")
+				.param("duracion", "45")
+				.param("precio", "75.0")
+				.param("tipoAdiestramiento", "Adiestramiento deportivo"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/citaAdiestramiento/" + TEST_CITA_ADIESTRAMIENTO_ID));
 
 	}
 
@@ -190,7 +193,7 @@ public class CitaAdiestramientoControllerTestsE2E {
 				.perform(MockMvcRequestBuilders
 						.post("/citasAdiestramiento/new/{ownerId}/{petId}", TEST_OWNER_ID, TEST_PET_ID)//
 						.with(SecurityMockMvcRequestPostProcessors.csrf()).param("id", "1")
-						.param("fechaInicio", "2020/12/11").param("tipoAdiestramiento", "hola")//
+						.param("fechaInicio", "2020/12/11").param("tipoAdiestramiento", "Adiestramiento deportivo")//
 						.param("precio", "100").param("hora", "15:00").param("duracion", "20"))// 1
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/citaAdiestramiento/" + TEST_CITA_ADIESTRAMIENTO_ID));
@@ -203,7 +206,7 @@ public class CitaAdiestramientoControllerTestsE2E {
 		mockMvc.perform(
 				MockMvcRequestBuilders.post("/citasAdiestramiento/new/{ownerId}/{petId}", TEST_OWNER_ID, TEST_PET_ID)
 						.with(SecurityMockMvcRequestPostProcessors.csrf()).param("fechaInicio", "2020/12/11")
-						.param("duracion", "30").param("precio", "100").param("tipoOperacion", "hola"))
+						.param("duracion", "30").param("precio", "100").param("tipoAdiestramiento", "hola"))
 				.andExpect(status().isOk()).andExpect(model().attributeHasErrors("citaAdiestramiento"))
 				.andExpect(model().attributeHasFieldErrors("citaAdiestramiento", "hora"))
 				.andExpect(view().name("citasAdiestramiento/createOrUpdateCitaAdiestramientoForm"));
@@ -227,7 +230,6 @@ public class CitaAdiestramientoControllerTestsE2E {
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/citaAdiestramiento/{citaAdiestramientoId}/delete", 200))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.model().attribute("message", "Cita not found"))
 				.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 
