@@ -120,15 +120,15 @@ INSERT INTO causa VALUES (3, 150, '2020-05-11', '2020-01-11', 1200, 'Mi super ma
 INSERT INTO donacion VALUES (1, 120, 1, 'vet1');
 INSERT INTO donacion VALUES (2, 220, 2, 'owner1');
 
-INSERT INTO tipos_Operaciones VALUES (1, 'Cirugia basica');
-INSERT INTO tipos_Operaciones VALUES (2, 'Cirugia dental');
-INSERT INTO tipos_Operaciones VALUES (3, 'Cirugia de emergencia');
-INSERT INTO tipos_Operaciones VALUES (4, 'Cirugia visual');
+INSERT INTO tipos_operaciones VALUES (1, 'Cirugia basica');
+INSERT INTO tipos_operaciones VALUES (2, 'Cirugia dental');
+INSERT INTO tipos_operaciones VALUES (3, 'Cirugia de emergencia');
+INSERT INTO tipos_operaciones VALUES (4, 'Cirugia visual');
 
-INSERT INTO tipos_Adiestramiento VALUES (1, 'Adiestramiento deportivo');
-INSERT INTO tipos_Adiestramiento VALUES (2, 'Adiestramiento en obediencia basica');
-INSERT INTO tipos_Adiestramiento VALUES (3, 'Adiestramiento asistencia y terapia');
-INSERT INTO tipos_Adiestramiento VALUES (4, 'Adiestramiento ppp');
+INSERT INTO tipos_adiestramiento VALUES (1, 'Adiestramiento deportivo');
+INSERT INTO tipos_adiestramiento VALUES (2, 'Adiestramiento en obediencia basica');
+INSERT INTO tipos_adiestramiento VALUES (3, 'Adiestramiento asistencia y terapia');
+INSERT INTO tipos_adiestramiento VALUES (4, 'Adiestramiento ppp');
 
 INSERT INTO citas_Operaciones VALUES (1,30,'2020-12-29', '17:00',false,50.0,3,3,2,2);
 INSERT INTO citas_Operaciones VALUES (2,30,'2020-12-9', '17:00',false,50.0,3,2,4,1);

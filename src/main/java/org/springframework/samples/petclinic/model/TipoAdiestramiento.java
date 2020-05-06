@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tipos_Adiestramiento")
+@Table(name = "tipos_adiestramiento")
 public class TipoAdiestramiento extends NamedEntity{
 	
 
