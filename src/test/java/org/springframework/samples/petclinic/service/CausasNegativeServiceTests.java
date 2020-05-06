@@ -10,13 +10,15 @@ import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.samples.petclinic.model.Adiestrador;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.samples.petclinic.model.Causa;
 import org.springframework.samples.petclinic.model.CitaAdiestramiento;
 import org.springframework.samples.petclinic.model.Donacion;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.User;
 
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 public class CausasNegativeServiceTests {	
 	
 	Causa			causa;

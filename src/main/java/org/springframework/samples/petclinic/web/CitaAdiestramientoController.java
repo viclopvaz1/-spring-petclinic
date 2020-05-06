@@ -211,15 +211,10 @@ public class CitaAdiestramientoController {
 	public String processDeleteCitaForm(@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,
 			ModelMap modelMap) {
 
-		try {
 			CitaAdiestramiento citaAdiestramiento = this.citaAdiestramientoService
 					.findCitaAdiestramientoById(citaAdiestramientoId);
 			this.citaAdiestramientoService.deleteCitaAdiestramiento(citaAdiestramiento);
 
-		} catch (NoSuchElementException e) {
-			modelMap.addAttribute("message", "Cita not found");
-			return "exception";
-		}
 		return "welcome";
 
 	}

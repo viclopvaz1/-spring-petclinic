@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
@@ -57,6 +59,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 includeFilters = @ComponentScan.Filter(value = TipoAdiestramientoFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 class CitaAdiestramientoControllerTests {
 
 	private static final int TEST_CITA_ADIESTRAMIENTO_ID = 1;
@@ -356,7 +359,7 @@ class CitaAdiestramientoControllerTests {
 	Mockito.when(this.clinicService.findCitaAdiestramientoById(TEST_CITA_ADIESTRAMIENTO_ID)).thenReturn(citaAd);
 	
 	Mockito.when(this.clinicService.findCitaAdiestramientoById(200)).thenThrow(NoSuchElementException.class);
-	this.mockMvc.perform(MockMvcRequestBuilders.get("/citaAdiestramiento/{citaAdiestramientoId}/delete", 200)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "Cita not found"))
+	this.mockMvc.perform(MockMvcRequestBuilders.get("/citaAdiestramiento/{citaAdiestramientoId}/delete", 200)).andExpect(MockMvcResultMatchers.status().isOk())
 	.andExpect(MockMvcResultMatchers.view().name("exception"));
 }
 	

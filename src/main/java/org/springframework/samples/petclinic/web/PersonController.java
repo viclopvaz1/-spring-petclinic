@@ -82,7 +82,8 @@ public class PersonController {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			
 			Collection<Authorities> collection = this.authoritiesService.findAll();
-			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+//			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+			String a = collection.stream().filter(x -> x.getUsername().equals(username)).map(x -> x.getAuthority()).findFirst().orElse(null);
 			if(person.getMonedero() >=0) {
 				if (a.equals("veterinarian")) {
 					Vet vet = this.vetService.findVetByUser(username);

@@ -39,15 +39,15 @@ public class PagarCitaOperacionUITest {
   @Test
   public void pagarCitaOperacion() throws Exception {
 	
-	  as("owner1").
+	  as("owner5").
 	  whenIamLoggedIntheSystem().
 	  thenIPayCitaOperacion();
   }
   
   @Test
-  public void pagarCitaOperacionConDineroInsuficiente() throws Exception {
+  public void pagarCitaOperacionSinDinero() throws Exception {
 	
-	  as("owner2").
+	  as("owner3").
 	  whenIamLoggedIntheSystem().
 	  thenIPayCitaOperacionWithLessMoney();
   }
@@ -71,7 +71,7 @@ public class PagarCitaOperacionUITest {
 	  driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
 	  driver.findElement(By.name("lastName")).click();
 	  driver.findElement(By.name("lastName")).clear();
-	  driver.findElement(By.name("lastName")).sendKeys("Franklin");
+	  driver.findElement(By.name("lastName")).sendKeys("McTavish");
 	  driver.findElement(By.xpath("//button[@type='submit']")).click();
 	  this.monederoOwner = driver.findElement(By.xpath("//tr[5]/td")).getText();
 	  assertEquals("1200", monederoOwner);
@@ -83,7 +83,7 @@ public class PagarCitaOperacionUITest {
 	  driver.findElement(By.linkText("FIND OWNERS")).click();
 	  driver.findElement(By.name("lastName")).click();
 	  driver.findElement(By.name("lastName")).clear();
-	  driver.findElement(By.name("lastName")).sendKeys("Franklin");
+	  driver.findElement(By.name("lastName")).sendKeys("McTavish");
 	  driver.findElement(By.xpath("//button[@type='submit']")).click();
 	  assertEquals(this.pagoOwner(), driver.findElement(By.xpath("//tr[5]/td")).getText());
 	  driver.findElement(By.linkText("VETERINARIANS")).click();

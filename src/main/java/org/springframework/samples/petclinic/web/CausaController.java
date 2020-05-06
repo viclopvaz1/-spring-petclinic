@@ -109,7 +109,18 @@ public class CausaController {
 			} else {
 				Collection<Authorities> collection = this.authoritiesService.findAll();
 				String username = SecurityContextHolder.getContext().getAuthentication().getName();
-				String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+//				String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+				String a = collection.stream().filter(x -> x.getUsername().equals(username)).map(x -> x.getAuthority()).findFirst().orElse(null);
+//				String a = null;
+//				for(Authorities u : collection) {
+//					if(u.getUsername().equals(username)) {
+//						a = u.getAuthority();
+//						System.out.println(u);
+//						System.out.println(u.getUsername());
+//						System.out.println(u.getAuthority());
+//						break;
+//					}
+//				}
 				if (a != null) {
 					if (a.equals("veterinarian")) {
 						causa.setValido(true);
@@ -118,6 +129,10 @@ public class CausaController {
 						causa.setValido(false);
 					}
 				}
+//				System.out.println(collection);
+//				System.out.println(username);
+//				System.out.println(a);
+//				System.out.println(causa);
 				this.causaService.saveCausa(causa);
 
 				return "redirect:/causa/" + causa.getId();
@@ -132,11 +147,14 @@ public class CausaController {
 		ModelAndView mav = new ModelAndView("causas/causaDetails");
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		Collection<Authorities> collection = this.authoritiesService.findAll();
-		String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+//		String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+		String a = collection.stream().filter(x -> x.getUsername().equals(username)).map(x -> x.getAuthority()).findFirst().orElse(null);
 		boolean user = a.equals("owner");
 		model.addAttribute("user", user);
 		model.addAttribute("causa", this.causaService.findCausaById(id));
 		mav.addObject(this.causaService.findCausaById(id));
+//		System.out.println(a);
+//		System.out.println(this.causaService.findCausaById(id));
 		return mav;
 	}
 
@@ -188,7 +206,8 @@ public class CausaController {
 		for (Donacion donacion : donaciones) {
 			Collection<Authorities> collection = this.authoritiesService.findAll();
 			String username = donacion.getUser().getUsername();
-			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+//			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+			String a = collection.stream().filter(x -> x.getUsername().equals(username)).map(x -> x.getAuthority()).findFirst().orElse(null);
 			if (a.equals("veterinarian")) {
 				Vet vet = this.vetService.findVetByUser(username);
 				vet.setMonedero(vet.getMonedero() + donacion.getCantidad());

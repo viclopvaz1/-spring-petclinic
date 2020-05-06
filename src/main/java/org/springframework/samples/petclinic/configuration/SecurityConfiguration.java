@@ -37,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				//	Citas 		Operaciones
 				.antMatchers("/citasOperaciones").permitAll()
 				.antMatchers("/citasOperaciones/**").hasAnyAuthority("veterinarian", "admin")
+				.antMatchers("/citasOperacionesPet/{petId}").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/citaOperacion/{id}").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers("/citaOperacion/{citaOperacionId}/edit/{citaOperacionId}").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers("/citaOperacion/{citaOperacionId}/delete").hasAnyAuthority("veterinarian", "admin")
@@ -66,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner", "admin", "veterinarian","adiestrador")
-				.antMatchers("/owners/find").hasAnyAuthority("owner", "admin","adiestrador")
+				.antMatchers("/owners/find").hasAnyAuthority("owner", "admin","adiestrador", "veterinarian")
 //				.antMatchers("/owners").hasAnyAuthority("owner", "admin", "veterinarian")
 //				.antMatchers("/owners/{ownerId}").hasAnyAuthority("owner", "admin", "veterinarian")
 				.antMatchers("/citasAdiestramiento/**").hasAnyAuthority("owner", "admin")
