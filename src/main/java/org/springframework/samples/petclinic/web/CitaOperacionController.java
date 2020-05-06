@@ -71,6 +71,14 @@ public class CitaOperacionController {
 		return vista;
 	}
 	
+	@GetMapping(value = "/citasOperacionesPet/{petId}")
+	public String listadoCitasOperacionesPorPet(final ModelMap modelMap, @PathVariable("petId") final int petId) {
+		Collection<CitaOperacion> citasOperaciones = this.citaOperacionService.findCitaOperacionByPet(petId);
+		String vista = "citasOperaciones/listadoCitasOperacionesPets";
+		modelMap.addAttribute("citasOperaciones", citasOperaciones);
+		return vista;
+	}
+	
 	@GetMapping(value = "/citasOperaciones/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("citaOperacion", new CitaOperacion());
@@ -231,7 +239,7 @@ public class CitaOperacionController {
 			citaOperacion.setPagado(true);
 			this.citaOperacionService.saveCitaOperacion(citaOperacion);
 			model.put("pagado", citaOperacion.isPagado());
-			model.put("pet", citaOperacion.getPet());
+			model.put("citasOperaciones", this.citaOperacionService.findCitaOperacionByPet(citaOperacion.getPet().getId()));
 			model.put("noPuedePagar", noPuedePagar);
 		return "citasOperaciones/listadoCitasOperacionesPets";
 	}

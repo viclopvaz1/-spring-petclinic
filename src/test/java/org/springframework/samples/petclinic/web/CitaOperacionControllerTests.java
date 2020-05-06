@@ -18,6 +18,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
@@ -45,6 +47,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 includeFilters = @ComponentScan.Filter(value = TipoOperacionFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 public class CitaOperacionControllerTests {
 	
 	private static final int TEST_VET_ID = 1;
@@ -175,6 +178,16 @@ public class CitaOperacionControllerTests {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("citasOperaciones"))
 		.andExpect(MockMvcResultMatchers.view().name("exception"));
+	}
+	
+	//								Find By Pet Id
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitFindFormPetId() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/citasOperacionesPet/{petId}", TEST_PET_ID))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.model().attributeExists("citasOperaciones"))
+		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesPets"));
 	}
 	
 	//								Create Tipo Operacion
@@ -314,7 +327,7 @@ public class CitaOperacionControllerTests {
 		this.citaOperacion1.setVet(vet);
 		
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/citaOperacion/{citaOperacionId}/pay", TEST_CITAOPERACION_ID))
-		.andExpect(MockMvcResultMatchers.model().attributeExists("pet"))
+		.andExpect(MockMvcResultMatchers.model().attributeExists("citasOperaciones"))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("pagado"))
 		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesPets"));
 	}

@@ -37,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				//	Citas 		Operaciones
 				.antMatchers("/citasOperaciones").permitAll()
 				.antMatchers("/citasOperaciones/**").hasAnyAuthority("veterinarian", "admin")
+				.antMatchers("/citasOperacionesPet/{petId}").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/citaOperacion/{id}").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers("/citaOperacion/{citaOperacionId}/edit/{citaOperacionId}").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers("/citaOperacion/{citaOperacionId}/delete").hasAnyAuthority("veterinarian", "admin")

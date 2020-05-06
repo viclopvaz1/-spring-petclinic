@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${pet.citasOperacion}" var="citaOperacionPet">
+        <c:forEach items="${citasOperaciones}" var="citaOperacionPet">
             <tr>
                 <td>
                     <c:out value="${citaOperacionPet.fechaInicio}"/>

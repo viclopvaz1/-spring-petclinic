@@ -16,6 +16,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.xml.HasXPath.hasXPath;
 import static org.mockito.BDDMockito.given;
+
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers=VetController.class,
 		excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 		excludeAutoConfiguration= SecurityConfiguration.class)
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 class VetControllerTests {
 
 	@Autowired

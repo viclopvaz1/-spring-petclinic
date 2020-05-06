@@ -19,6 +19,10 @@ public interface SpringDataCitaOperacionRepository extends CitaOperacionReposito
 	@Query("SELECT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.id = :citaOperacionId")
 	Optional<CitaOperacion> findCitaOperacionById(@Param("citaOperacionId") int citaOperacionId);
 	
+	@Override
+	@Query("SELECT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.pet.id = :petId")
+	Collection<CitaOperacion> findCitaOperacionByPet(@Param("petId") int petId);
+	
 //	@Override
 //	@Query("SELECT tipoOperacion FROM TipoOperacion tipoOperacion WHERE tipoOperacion.name LIKE :name%")
 //	TipoOperacion findTipoOperacionByName(@Param("name") String name);

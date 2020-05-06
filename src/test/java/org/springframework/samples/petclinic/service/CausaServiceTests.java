@@ -1,29 +1,29 @@
 
 package org.springframework.samples.petclinic.service;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.NoSuchElementException;
-
 import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.samples.petclinic.model.Causa;
-import org.springframework.samples.petclinic.model.Donacion;
-import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataAdiestradorRepository;
-import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace=Replace.NONE)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CausaServiceTests {
 
 	@Autowired
@@ -31,6 +31,7 @@ public class CausaServiceTests {
 
 
 	@ParameterizedTest
+	@Order(13)
 	@CsvSource({
 		"1200, 500, ong, 2020-05-06, 2020-05-10, true", "2000, 20, Mi mascota, 2020-04-01, 2020-03-05, false", "2000, 2000, Mi mascota, 2020-04-01, 2020-03-05, false"
 	})
@@ -47,6 +48,7 @@ public class CausaServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(12)
 	@CsvSource({
 		" , 500, ong, 2020-05-06, 2020-05-20, true", " 1200,, ong, 2020-05-06, 2020-05-20, true", "1200, 0,, 2020-05-06, 2020-05-20, true", "1200,0, ong,, 2020-05-20, true", "1200,0, ong, 2020-05-06,, true"
 	})
@@ -65,6 +67,7 @@ public class CausaServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(11)
 	@CsvSource({
 		" 1,, 500, ong, 2020-05-06, 2020-05-20, true", " 2,1200,, ong, 2020-05-06, 2020-05-20, true", "3,1200, 0,, 2020-05-06, 2020-05-20, true", "1,1200,0, ong,, 2020-05-20, true", "2,1200,0, ong, 2020-05-06,, true"
 	})
@@ -83,6 +86,7 @@ public class CausaServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(10)
 	@CsvSource({
 		"1 ,3000, 500, ong, 2020-05-06, 2020-05-10, false", "2 ,2000, 20, Mi mascota 2, 2020-04-01, 2020-03-05, false", "2 ,2000, 20, Mi mascota 2, 2020-09-01, 2020-10-03, true"
 	})
@@ -106,6 +110,7 @@ public class CausaServiceTests {
 	}
 	
 	@Test//Negativo es null la causa
+	@Order(9)
 	public void saveFailCausa() {
 		Causa causa = null;		
 		org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class, () -> {
@@ -114,6 +119,7 @@ public class CausaServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(14)
 	@CsvSource({
 		"1", "2", "3"
 	})
@@ -127,6 +133,7 @@ public class CausaServiceTests {
 
 	}
 	@ParameterizedTest
+	@Order(8)
 	@CsvSource({
 		"6", "5", "4"
 	})
@@ -138,18 +145,21 @@ public class CausaServiceTests {
 	}
 
 	@Test
+	@Order(7)
 	public void testCountWithInitialData() {
 		int count = this.causaService.causaCount();
 		org.assertj.core.api.Assertions.assertThat(count).isEqualTo(3);
 	}
 
 	@Test
+	@Order(6)
 	public void testFindAllValidoWithInitialData() {
 		Collection<Causa> causas = (Collection<Causa>) this.causaService.findAll();
 		org.assertj.core.api.Assertions.assertThat(causas).hasSize(2);
 	}
 
 	@ParameterizedTest
+	@Order(5)
 	@CsvSource({
 		"1", "2", "3"
 	})
@@ -159,6 +169,7 @@ public class CausaServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(4)
 	@CsvSource({
 		"4", "5", "6"
 	})
@@ -170,6 +181,7 @@ public class CausaServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(3)
 	@CsvSource({
 		"owner1", "vet1"
 	})
@@ -179,6 +191,7 @@ public class CausaServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(2)
 	@CsvSource({
 		"0wner1", "v3t1", "v3t2", "v3t3", "v3t4",
 	})
@@ -190,6 +203,7 @@ public class CausaServiceTests {
 	}
 
 	@Test
+	@Order(1)
 	public void testFindCausaByValidoWithInitialData() {
 		Collection<Causa> causas = this.causaService.findCausaByValido();
 		org.assertj.core.api.Assertions.assertThat(causas).hasSize(1);

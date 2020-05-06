@@ -10,32 +10,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-
-import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.hamcrest.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.TipoOperacion;
-import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
-import org.springframework.samples.petclinic.service.CitaOperacionService;
-import org.springframework.samples.petclinic.service.OwnerService;
-import org.springframework.samples.petclinic.service.PetService;
-import org.springframework.samples.petclinic.service.TipoOperacionService;
-import org.springframework.samples.petclinic.service.VetService;
-import org.springframework.samples.petclinic.web.CitaOperacionController;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -47,6 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
   webEnvironment=SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @Transactional
+@AutoConfigureTestDatabase(replace=Replace.NONE)
+@TestPropertySource(
+		  locations = "classpath:application-mysql.properties")
 public class CitaOperacionControllerTestsE2E {
 	
 	private static final int TEST_VET_ID = 1;

@@ -134,6 +134,7 @@ INSERT INTO citas_Operaciones VALUES (1,30,'2020-12-29', '17:00',false,50.0,3,3,
 INSERT INTO citas_Operaciones VALUES (2,30,'2020-12-9', '17:00',false,50.0,3,2,4,1);
 INSERT INTO citas_Operaciones VALUES (3,30,'2020-12-11', '17:00',false,50.0,3,1,2,3);
 INSERT INTO citas_Operaciones VALUES (4,30,'2020-12-12', '17:00',false,50.0,3,4,1,2);
+INSERT INTO citas_Operaciones VALUES (5,30,'2020-12-12', '17:00',false,50.0,3,6,3,3);
 
 INSERT INTO citas_Adiestramiento VALUES (1,30,'2020-12-12', '17:00',false,50.0,1,1,1,1);
 INSERT INTO citas_Adiestramiento VALUES (2,30,'2020-12-12', '17:00',false,50.0,2,2,2,2);

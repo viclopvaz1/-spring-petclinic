@@ -1,5 +1,8 @@
 package org.springframework.samples.petclinic.service;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Assertions;
 
 import java.time.LocalDate;
@@ -13,6 +16,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.CitaOperacion;
@@ -20,6 +25,8 @@ import org.springframework.samples.petclinic.repository.springdatajpa.SpringData
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace=Replace.NONE)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CitaOperacionServiceTests {
 	
 	@Autowired
@@ -34,7 +41,9 @@ public class CitaOperacionServiceTests {
 	@Autowired
 	protected TipoOperacionService tipoOperacionService;
 	
+	
 	@ParameterizedTest
+	@Order(10)
 	@CsvSource({
 		"1, 2020-03-25, 15:00, 30, 100.0, false, 1, Cirugia visual, 2.0"
 	})
@@ -59,6 +68,7 @@ public class CitaOperacionServiceTests {
 	}
 	
 	@ParameterizedTest
+	@Order(11)
 	@CsvSource({
 		"1, , 15:00, 30, 100.0, false, 1, Cirugia visual, 2.0"
 	})
@@ -82,6 +92,7 @@ public class CitaOperacionServiceTests {
 	}
 	
 	@ParameterizedTest
+	@Order(12)
 	@CsvSource({
 		"1, 2020-03-25, 15:00, 50, 100.0, false, Cirugia visual, 5.0"
 	})
@@ -109,12 +120,14 @@ public class CitaOperacionServiceTests {
 	}
 	
 	@Test
+	@Order(1)
 	void shouldFindAllCitasOperaciones() {
 		Collection<CitaOperacion> citasOperaciones = (Collection<CitaOperacion>) this.citaOperacionService.findAll();
 		org.assertj.core.api.Assertions.assertThat(citasOperaciones).hasSize(5);
 	}
 	
 	@Test
+	@Order(2)
 	void shouldNotFindAll() {
 		SpringDataCitaOperacionRepository springDataCitaOperacionRepository = Mockito.mock(SpringDataCitaOperacionRepository.class);
 		this.citaOperacionService = new CitaOperacionService(springDataCitaOperacionRepository);
@@ -125,6 +138,7 @@ public class CitaOperacionServiceTests {
 	}
 	
 	@Test
+	@Order(3)
 	void shouldFindCitaOperacionWithCorrectId() {
 		CitaOperacion citaOperacion2 = this.citaOperacionService.findCitaOperacionById(2).get();
 		org.assertj.core.api.Assertions.assertThat(citaOperacion2.getVet().getFirstName().equals("Helen"));
@@ -132,19 +146,36 @@ public class CitaOperacionServiceTests {
 	}
 	
 	@Test
+	@Order(4)
 	void shouldFindCitaOperacionWithIncorrectId() {
-		Assertions.assertThrows(NoSuchElementException.class, () -> {
-			this.citaOperacionService.findCitaOperacionById(1000).get();
-		});
+		CitaOperacion citaOperacion2 = this.citaOperacionService.findCitaOperacionById(2).get();
+		org.assertj.core.api.Assertions.assertThat(citaOperacion2.getVet().getFirstName().equals("Helen"));
+		org.assertj.core.api.Assertions.assertThat(citaOperacion2.getPrecio().equals(50.0));
 	}
 	
 	@Test
+	@Order(5)
+	void shouldFindCitaOperacionWithCorrectPetId() {
+		Collection<CitaOperacion> citasOperaciones = this.citaOperacionService.findCitaOperacionByPet(1);
+		org.assertj.core.api.Assertions.assertThat(citasOperaciones.size()).isEqualTo(1);
+	}
+	
+	@Test
+	@Order(6)
+	void shouldFindCitaOperacionWithIncorrectPetId() {
+		Collection<CitaOperacion> citasOperaciones = this.citaOperacionService.findCitaOperacionByPet(10);
+		org.assertj.core.api.Assertions.assertThat(citasOperaciones.size()).isEqualTo(0);
+	}
+	
+	@Test
+	@Order(7)
 	void shouldFindCitaOperacionByTipoOperacion() {
 		Collection<CitaOperacion> citasOperaciones = (Collection<CitaOperacion>) this.citaOperacionService.findCitaOperacionByTipoOperacion("Cirugia basica");
 		org.assertj.core.api.Assertions.assertThat(citasOperaciones.size()).isEqualTo(1);
 	}
 	
 	@Test
+	@Order(8)
 	void shouldFindCitaOperacionWithTipoOperacionWithoutCitas() {
 		Assertions.assertThrows(NoSuchElementException.class, () -> {
 			this.citaOperacionService.findCitaOperacionByTipoOperacion("hola");
@@ -152,6 +183,7 @@ public class CitaOperacionServiceTests {
 	}
 	
 	@Test
+	@Order(9)
 	void shouldFindCitaOperacionWithIncorrectTipoOperacion() {
 		Assertions.assertThrows(NoSuchElementException.class, () -> {
 			this.citaOperacionService.findCitaOperacionByTipoOperacion("hola");

@@ -15,39 +15,29 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.CitaAdiestramiento;
-import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.model.Authorities;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Integration test of the Service and the Repository layer.
@@ -81,6 +71,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace=Replace.NONE)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CitaAdiestramientoServiceTests {
 
 	@Autowired
@@ -99,6 +91,7 @@ class CitaAdiestramientoServiceTests {
 	protected TipoAdiestramientoService tipoAdiestramientoService;
 	
 	@ParameterizedTest
+	@Order(1)
 	@CsvSource({
 		"1", "2", "3"
 	})
@@ -110,6 +103,7 @@ class CitaAdiestramientoServiceTests {
 	
 }
 	@Test
+	@Order(2)
 	void shouldFindCitaAdiestramientos() {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = (Collection<CitaAdiestramiento>) this.citaAdiestramientoService
 				.findAll();
@@ -119,6 +113,7 @@ class CitaAdiestramientoServiceTests {
 	}
 
 	@Test
+	@Order(3)
 	void shouldFindCitaAdiestramientos2() {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = (Collection<CitaAdiestramiento>) this.citaAdiestramientoService
 				.findAll();
@@ -128,6 +123,7 @@ class CitaAdiestramientoServiceTests {
 	}
 		
 	@Test
+	@Order(4)
 	void shouldFindCitaAdiestramientoByPet() {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = this.citaAdiestramientoService
 				.findCitaAdiestramientoByPet("cat");
@@ -138,6 +134,7 @@ class CitaAdiestramientoServiceTests {
 	@CsvSource({
 		"snake", "bird", "lizard"
 	})
+	@Order(5)
 	void shouldFindCitaAdiestramientoByPetNegative(final String type) {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = this.citaAdiestramientoService
 				.findCitaAdiestramientoByPet(type);
@@ -150,6 +147,7 @@ class CitaAdiestramientoServiceTests {
 	}
 
 	@Test
+	@Order(6)
 	void shouldFindCitaAdiestramientoByOwnerId() {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = this.citaAdiestramientoService
 				.findCitaAdiestramientoByOwnerId(2);
@@ -157,6 +155,7 @@ class CitaAdiestramientoServiceTests {
 	}
 
 	@Test
+	@Order(7)
 	void shouldFindCitaAdiestramientoByOwnerIdNegative() {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = this.citaAdiestramientoService
 				.findCitaAdiestramientoByOwnerId(4);
@@ -165,6 +164,7 @@ class CitaAdiestramientoServiceTests {
 	}
 
 	@Test
+	@Order(8)
 	void countCitaAdiestramientoByOwnerId() {
 		int CitaAdiestramientos = this.citaAdiestramientoService.citaAdiestramientoCount();
 		assertThat(CitaAdiestramientos).isEqualTo(5);
@@ -173,6 +173,7 @@ class CitaAdiestramientoServiceTests {
 
 
 	@ParameterizedTest
+	@Order(14)
 	@CsvSource({
 		"1", "2", "3"
 	})
@@ -188,6 +189,7 @@ class CitaAdiestramientoServiceTests {
 	@CsvSource({
 		"8", "7", "6"
 	})
+	@Order(9)
 	public void deleteCitaAdiestramientoWithCsvSourceFail(final Integer id) {
 		Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> {
 			CitaAdiestramiento citaAdiestramiento = this.citaAdiestramientoService.findCitaAdiestramientoById(id);
@@ -196,6 +198,7 @@ class CitaAdiestramientoServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(10)
 	@CsvSource({
 		"1,1, 2020-03-25, 15:00, 30, 100.0, false, 1, Adiestramiento ppp, 1"
 	})
@@ -217,6 +220,7 @@ class CitaAdiestramientoServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(11)
 	@CsvSource({
 		"1,1, , 15:00, 30, 100.0, false, 1, Adiestramiento ppp, 1"
 	})
@@ -239,6 +243,7 @@ class CitaAdiestramientoServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(12)
 	@CsvSource({
 		"1,1, , 15:00, 30, 100.0, false, 1, Adiestramiento ppp, 1"
 	})
@@ -261,6 +266,7 @@ class CitaAdiestramientoServiceTests {
 	}
 
 	@ParameterizedTest
+	@Order(13)
 	@CsvSource({
 		"1,1, 2020-03-25, 15:00, 30, 100.0, false, 1, Adiestramiento ppp, 1"
 	})
