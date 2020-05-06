@@ -130,15 +130,15 @@ INSERT INTO tipos_adiestramiento VALUES (2, 'Adiestramiento en obediencia basica
 INSERT INTO tipos_adiestramiento VALUES (3, 'Adiestramiento asistencia y terapia');
 INSERT INTO tipos_adiestramiento VALUES (4, 'Adiestramiento ppp');
 
-INSERT INTO citas_Operaciones VALUES (1,30,'2020-12-29', '17:00',false,50.0,3,3,2,2);
-INSERT INTO citas_Operaciones VALUES (2,30,'2020-12-9', '17:00',false,50.0,3,2,4,1);
-INSERT INTO citas_Operaciones VALUES (3,30,'2020-12-11', '17:00',false,50.0,3,1,2,3);
-INSERT INTO citas_Operaciones VALUES (4,30,'2020-12-12', '17:00',false,50.0,3,4,1,2);
-INSERT INTO citas_Operaciones VALUES (5,30,'2020-12-12', '17:00',false,50.0,3,6,3,3);
+INSERT INTO citas_operaciones VALUES (1,30,'2020-12-29', '17:00',false,50.0,3,3,2,2);
+INSERT INTO citas_operaciones VALUES (2,30,'2020-12-9', '17:00',false,50.0,3,2,4,1);
+INSERT INTO citas_operaciones VALUES (3,30,'2020-12-11', '17:00',false,50.0,3,1,2,3);
+INSERT INTO citas_operaciones VALUES (4,30,'2020-12-12', '17:00',false,50.0,3,4,1,2);
+INSERT INTO citas_operaciones VALUES (5,30,'2020-12-12', '17:00',false,50.0,3,6,3,3);
 
-INSERT INTO citas_Adiestramiento VALUES (1,30,'2020-12-12', '17:00',false,50.0,1,1,1,1);
-INSERT INTO citas_Adiestramiento VALUES (2,30,'2020-12-12', '17:00',false,50.0,2,2,2,2);
-INSERT INTO citas_Adiestramiento VALUES (3,30,'2020-12-12', '17:00',false,50.0,1,1,1,4);
-INSERT INTO citas_Adiestramiento VALUES (4,30,'2020-12-12', '17:00',false,50.0,3,2,3,3);
-INSERT INTO citas_Adiestramiento VALUES (5,30,'2021-12-12', '17:00',false,50.0,4,2,3,4);
+INSERT INTO citas_adiestramiento VALUES (1,30,'2020-12-12', '17:00',false,50.0,1,1,1,1);
+INSERT INTO citas_adiestramiento VALUES (2,30,'2020-12-12', '17:00',false,50.0,2,2,2,2);
+INSERT INTO citas_adiestramiento VALUES (3,30,'2020-12-12', '17:00',false,50.0,1,1,1,4);
+INSERT INTO citas_adiestramiento VALUES (4,30,'2020-12-12', '17:00',false,50.0,3,2,3,3);
+INSERT INTO citas_adiestramiento VALUES (5,30,'2021-12-12', '17:00',false,50.0,4,2,3,4);
 
