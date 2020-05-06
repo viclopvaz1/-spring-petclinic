@@ -33,17 +33,17 @@ public class PagarCitaAdiestramientoUITest {
 	@Test
 	public void pagarCitaAdiestramiento() throws Exception {
 
-		as("owner1").whenIamLoggedIntheSystem().thenIPayCitaAdiestramiento();
-	}
-
-	private PagarCitaAdiestramientoUITest whenIamLoggedIntheSystem() {
-		return this;
+		as("owner1").
+		whenIamLoggedIntheSystem().
+		thenIPayCitaAdiestramiento();
 	}
 
 	@Test
 	public void pagarCitaAdiestramientoSinDinero() throws Exception {
 
-		as("owner2").whenIamLoggedIntheSystem().thenIPayCitaAdiestramientoWithOutMoney();
+		as("owner3").
+		whenIamLoggedIntheSystem().
+		thenIPayCitaAdiestramientoWithOutMoney();
 	}
 
 	private void thenIPayCitaAdiestramientoWithOutMoney() {
@@ -107,6 +107,10 @@ public class PagarCitaAdiestramientoUITest {
 		assertEquals("1250",
 				driver.findElement(By.xpath("//table[@id='adiestradoresTable']/tbody/tr/td[6]")).getText());
 
+	}
+	
+	private PagarCitaAdiestramientoUITest whenIamLoggedIntheSystem() {
+		return this;
 	}
 
 	@AfterEach

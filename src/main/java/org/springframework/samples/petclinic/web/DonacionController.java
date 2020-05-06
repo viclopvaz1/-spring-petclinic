@@ -95,7 +95,8 @@ public class DonacionController {
 
 			Collection<Authorities> collection = this.authoritiesService.findAll();
 			String username = donacion.getUser().getUsername();
-			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+//			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+			String a = collection.stream().filter(x -> x.getUsername().equals(username)).map(x -> x.getAuthority()).findFirst().orElse(null);
 			if (a.equals("veterinarian")) {
 				Vet vet = this.vetService.findVetByUser(username);
 				if (donacion.getCantidad() > vet.getMonedero()) {

@@ -89,7 +89,7 @@ public class CrearCitaOperacionUITest {
 	  driver.findElement(By.linkText("FIND OWNERS")).click();
 	  driver.findElement(By.name("lastName")).click();
 	  driver.findElement(By.name("lastName")).clear();
-	  driver.findElement(By.name("lastName")).sendKeys("McTavish");
+	  driver.findElement(By.name("lastName")).sendKeys("Franklin");
 	  driver.findElement(By.xpath("//button[@type='submit']")).click();
 	  driver.findElement(By.linkText("Pedir Cita Operacion")).click();
 	  return this;
@@ -126,8 +126,8 @@ public class CrearCitaOperacionUITest {
 	  this.newTipoOperacion = driver.findElement(By.xpath("//tr[8]/td")).getText();
 	  this.newCantidadPersonal = driver.findElement(By.xpath("//tr[9]/td")).getText();
 	  this.newPagado = driver.findElement(By.xpath("//tr[10]/td")).getText();
-	  assertEquals("George", this.newNombre);
-	  assertEquals("snake", this.newTipo);
+	  assertEquals("Leo", this.newNombre);
+	  assertEquals("cat", this.newTipo);
 	  assertEquals("2020-12-27", this.newFechaInicio);
 	  assertEquals("15:00", this.newHora);
 	  assertEquals("30", this.newDuracion);

@@ -15,6 +15,9 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
@@ -23,7 +26,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,6 +40,8 @@ import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNam
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 
 /**
  * Integration test of the Service and the Repository layer.
@@ -67,6 +74,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace=Replace.NONE)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PetServiceTests {        
         @Autowired
 	protected PetService petService;
@@ -75,6 +84,7 @@ class PetServiceTests {
 	protected OwnerService ownerService;	
 
 	@Test
+	@Order(1)
 	void shouldFindPetWithCorrectId() {
 		Pet pet7 = this.petService.findPetById(7);
 		assertThat(pet7.getName()).startsWith("Samantha");
@@ -83,6 +93,7 @@ class PetServiceTests {
 	}
 
 	@Test
+	@Order(2)
 	void shouldFindAllPetTypes() {
 		Collection<PetType> petTypes = this.petService.findPetTypes();
 
@@ -93,6 +104,7 @@ class PetServiceTests {
 	}
 
 	@Test
+	@Order(4)
 	@Transactional
 	public void shouldInsertPetIntoDatabaseAndGenerateId() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
@@ -120,6 +132,7 @@ class PetServiceTests {
 	}
 	
 	@Test
+	@Order(5)
 	@Transactional
 	public void shouldThrowExceptionInsertingPetsWithTheSameName() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
@@ -147,6 +160,7 @@ class PetServiceTests {
 	}
 
 	@Test
+	@Order(6)
 	@Transactional
 	public void shouldUpdatePetName() throws Exception {
 		Pet pet7 = this.petService.findPetById(7);
@@ -161,6 +175,7 @@ class PetServiceTests {
 	}
 	
 	@Test
+	@Order(7)
 	@Transactional
 	public void shouldThrowExceptionUpdatingPetsWithTheSameName() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
@@ -192,6 +207,7 @@ class PetServiceTests {
 	}
 
 	@Test
+	@Order(8)
 	@Transactional
 	public void shouldAddNewVisitForPet() {
 		Pet pet7 = this.petService.findPetById(7);
@@ -212,6 +228,7 @@ class PetServiceTests {
 	}
 
 	@Test
+	@Order(3)
 	void shouldFindVisitsByPetId() throws Exception {
 		Collection<Visit> visits = this.petService.findVisitsByPetId(7);
 		assertThat(visits.size()).isEqualTo(2);

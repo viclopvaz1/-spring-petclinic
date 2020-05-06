@@ -61,8 +61,8 @@ public class Pet extends NamedEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
-	private Set<CitaOperacion> citasOperacion;
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+//	private Set<CitaOperacion> citasOperacion;
 	
 
 	public void setBirthDate(LocalDate birthDate) {
@@ -100,16 +100,16 @@ public class Pet extends NamedEntity {
 		this.visits = visits;
 	}
 
-	public Set<CitaOperacion> getCitasOperacionInternal() {
-		if(this.citasOperacion == null) {
-			this.citasOperacion = new HashSet<>();
-		}
-		return this.citasOperacion;
-	}
-
-	public void setCitasOperacionInternal(Set<CitaOperacion> citasOperacion) {
-		this.citasOperacion = citasOperacion;
-	}
+//	public Set<CitaOperacion> getCitasOperacionInternal() {
+//		if(this.citasOperacion == null) {
+//			this.citasOperacion = new HashSet<>();
+//		}
+//		return this.citasOperacion;
+//	}
+//
+//	public void setCitasOperacionInternal(Set<CitaOperacion> citasOperacion) {
+//		this.citasOperacion = citasOperacion;
+//	}
 
 	public List<Visit> getVisits() {
 		List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
@@ -117,20 +117,24 @@ public class Pet extends NamedEntity {
 		return Collections.unmodifiableList(sortedVisits);
 	}
 	
-	public List<CitaOperacion> getCitasOperacion() {
-		List<CitaOperacion> sortedcitasOperacion = new ArrayList<>(getCitasOperacionInternal());
-		PropertyComparator.sort(sortedcitasOperacion, new MutableSortDefinition("date", false, false));
-		return Collections.unmodifiableList(sortedcitasOperacion);
-	}
+//	public List<CitaOperacion> getCitasOperacion() {
+//		List<CitaOperacion> sortedcitasOperacion = new ArrayList<>(getCitasOperacionInternal());
+//		PropertyComparator.sort(sortedcitasOperacion, new MutableSortDefinition("date", false, false));
+//		return Collections.unmodifiableList(sortedcitasOperacion);
+//	}
 
 	public void addVisit(Visit visit) {
 		getVisitsInternal().add(visit);
 		visit.setPet(this);
 	}
 	
-	public void addCitaOperacion(CitaOperacion citaOperacion) {
-		getCitasOperacion().add(citaOperacion);
-		citaOperacion.setPet(this);
-	}
+//	public void addCitaOperacion(CitaOperacion citaOperacion) {
+//		getCitasOperacion().add(citaOperacion);
+//		citaOperacion.setPet(this);
+//	}
+	
+//	public void deleteCitaOperacion(CitaOperacion citaOperacion) {
+//		getCitasOperacion().remove(citaOperacion);
+//	}
 
 }

@@ -40,14 +40,14 @@ public class EditarCitaAdiestramientoUITest {
 	@Test
 	public void editarCitaOperacionConErrores() throws Exception {
 
-		as("adiestrador1").whenIamLoggedIntheSystem().thenIPressLeoEditButton()
+		as("adiestrador2").whenIamLoggedIntheSystem().thenIPressBasilEditButton()
 		.andThenIEditCitaAdiestramientoWithErrors();
 	}
 
 	@Test
 	public void editarCitaOperacionSinErrores() throws Exception {
 
-		as("adiestrador1").whenIamLoggedIntheSystem().thenIPressLeoEditButton().andThenIEditCitaAdiestramiento();
+		as("adiestrador2").whenIamLoggedIntheSystem().thenIPressBasilEditButton().andThenIEditCitaAdiestramiento();
 	}
 
 	private EditarCitaAdiestramientoUITest as(final String adiestrador) {
@@ -66,10 +66,10 @@ public class EditarCitaAdiestramientoUITest {
 		return this;
 	}
 
-	private EditarCitaAdiestramientoUITest thenIPressLeoEditButton() {
+	private EditarCitaAdiestramientoUITest thenIPressBasilEditButton() {
 		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
 	    driver.findElement(By.linkText("CITAS ADIESTRAMIENTO")).click();
-	    driver.findElement(By.xpath("(//a[contains(text(),'Leo')])[2]")).click();
+	    driver.findElement(By.linkText("Basil")).click();
 	    driver.findElement(By.linkText("Edit")).click();
 	  
 
