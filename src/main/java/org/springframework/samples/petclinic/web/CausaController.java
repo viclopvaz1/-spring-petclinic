@@ -135,6 +135,7 @@ public class CausaController {
 		String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
 		boolean user = a.equals("owner");
 		model.addAttribute("user", user);
+		model.addAttribute("causa", this.causaService.findCausaById(id));
 		mav.addObject(this.causaService.findCausaById(id));
 		return mav;
 	}
