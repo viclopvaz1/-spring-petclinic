@@ -109,6 +109,25 @@ public class CausasUITest {
 		  thenSugerirCausaObjetivoIncorrecto();
 	  }
 	  
+	  @Test
+	  public void testBorrarCausasYDevolverDinero() throws Exception {
+		  as("vet4").
+		  whenIamLoggedIntheSystem().
+		  thenCrearCausa().
+		  thenPressDonationButton().
+		  thenDonacion().
+		  logout().
+		  as2("owner6").
+		  whenIamLoggedIntheSystem().
+		  thenPressDonationButton().
+		  thenDonacion().
+		  logout().
+		  as("vet4").
+		  whenIamLoggedIntheSystem().
+		  thenBorroCausa().
+		  thenComprueboDevolucion();
+	  }
+	  
 
 	  private CausasUITest as(final String vet) {
 		  this.username = vet;
@@ -134,6 +153,27 @@ public class CausasUITest {
 		  return this;
 		}
 	  
+	  public CausasUITest thenPressDonationButton() {
+			driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[6]/a/span[2]")).click();
+			driver.findElement(By.linkText("Pirola")).click();
+			driver.findElement(By.linkText("Hacer Donacion")).click();
+			return this;
+		}
+
+		public CausasUITest thenDonacion() throws Exception {
+			driver.findElement(By.id("cantidad")).click();
+			driver.findElement(By.id("cantidad")).clear();
+			driver.findElement(By.id("cantidad")).sendKeys("2");
+			driver.findElement(By.xpath("//button[@type='submit']")).click();
+			return this;
+		}
+		private CausasUITest logout() {
+			  driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/span[2]")).click();
+		      driver.findElement(By.linkText("Logout")).click();
+		      driver.findElement(By.xpath("//button[@type='submit']")).click();
+			  return this;
+			}
+	  
 	  private CharSequence passwordOf(String username) {
 			return "v3t";
 		}
@@ -148,6 +188,42 @@ public class CausasUITest {
 	  
 	  
 	  //------------------------------------------------------
+	  
+	  public CausasUITest thenCrearCausa() throws Exception {
+		    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[8]/a/span[2]")).click();
+		    driver.findElement(By.id("fechaInicio")).click();
+		    driver.findElement(By.id("fechaInicio")).clear();
+		    driver.findElement(By.id("fechaInicio")).sendKeys("2020/05/05");
+		    driver.findElement(By.id("fechaFin")).clear();
+		    driver.findElement(By.id("fechaFin")).sendKeys("2020/05/20");
+		    driver.findElement(By.id("ong")).clear();
+		    driver.findElement(By.id("ong")).sendKeys("Pirola");
+		    driver.findElement(By.id("objetivo")).click();
+		    driver.findElement(By.id("objetivo")).clear();
+		    driver.findElement(By.id("objetivo")).sendKeys("1000");
+		    driver.findElement(By.id("dineroRecaudado")).clear();
+		    driver.findElement(By.id("dineroRecaudado")).sendKeys("0");
+		    driver.findElement(By.xpath("//button[@type='submit']")).click();
+		    return this;
+		  }
+	  
+	  public CausasUITest thenBorroCausa() throws Exception {
+		    driver.findElement(By.linkText("CAUSAS")).click();
+		    driver.findElement(By.linkText("Pirola")).click();
+		    driver.findElement(By.linkText("Delete")).click();
+		    return this;
+		  }
+	  
+	  public void thenComprueboDevolucion() throws Exception {
+		    driver.findElement(By.linkText("VETERINARIANS")).click();
+		    assertEquals("300", driver.findElement(By.xpath("//table[@id='vetsTable']/tbody/tr[3]/td[3]")).getText());
+	  	    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
+		    driver.findElement(By.name("lastName")).click();
+		    driver.findElement(By.name("lastName")).clear();
+		    driver.findElement(By.name("lastName")).sendKeys("Coleman");
+		    driver.findElement(By.xpath("//button[@type='submit']")).click();
+		    assertEquals("1200", driver.findElement(By.xpath("//tr[5]/td")).getText());
+		  }
 	  
 
 	  public void thenISeeCausasEnLasQueHeDonado(){
@@ -266,8 +342,6 @@ public class CausasUITest {
 		    driver.findElement(By.xpath("//button[@type='submit']")).click();
 		    assertEquals("El dinero recaudado debe ser menor al objetivo", driver.findElement(By.xpath("//b")).getText());
 		  }
-	  
-
 	 
 
 	  @AfterEach
