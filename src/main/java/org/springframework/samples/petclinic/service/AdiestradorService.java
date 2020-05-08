@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Adiestrador;
+import org.springframework.samples.petclinic.model.Donacion;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataAdiestradorRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,12 @@ public class AdiestradorService {
 
 	private SpringDataAdiestradorRepository adiestradorRepo;
 
+	@Autowired
+	private UserService					userService;
 
+	@Autowired
+	private AuthoritiesService			authoritiesService;
+	
 	@Autowired
 	public AdiestradorService(final SpringDataAdiestradorRepository stringAdiestradorRepo) {
 		this.adiestradorRepo = stringAdiestradorRepo;
@@ -58,6 +65,10 @@ public class AdiestradorService {
 	@Transactional(readOnly = true)
 	public Adiestrador findAdiestradorById(int id) throws DataAccessException {
 		return adiestradorRepo.findById(id);
-		
-}
+	}
+	
+	@Transactional
+	public void saveAdiestrador(final Adiestrador adiestrador) throws DataAccessException {
+		this.adiestradorRepo.save(adiestrador);
+	}
 }

@@ -9,19 +9,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Range;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-//@Data
 @EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "adiestrador")
-public class Adiestrador extends Person{
+public class Adiestrador extends Person {
 	
 	@Column(name = "telefono")
 	private Integer telefono;

@@ -21,6 +21,10 @@ public class CitaOperacion extends Cita {
 	private Vet vet;
 	
 	@ManyToOne
+	@JoinColumn(name = "pet_id")
+	private Pet pet;
+	
+	@ManyToOne
 	@JoinColumn(name = "tipoOperacion_id")
 	private TipoOperacion tipoOperacion;
 	

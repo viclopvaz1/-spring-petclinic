@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -21,11 +22,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.CitaAdiestramiento;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
@@ -55,6 +59,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 includeFilters = @ComponentScan.Filter(value = TipoAdiestramientoFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 class CitaAdiestramientoControllerTests {
 
 	private static final int TEST_CITA_ADIESTRAMIENTO_ID = 1;
@@ -94,11 +99,12 @@ class CitaAdiestramientoControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 
-	private CitaAdiestramiento cita;
+	private CitaAdiestramiento citaAdiestramiento;
 
 	private Pet pet;
 
 	private Owner george;
+	private Adiestrador adiestrador;
 	
 	
 	public CitaAdiestramiento createDummyCitaAdiestramiento(final Integer id) {
@@ -115,6 +121,12 @@ class CitaAdiestramientoControllerTests {
 		to.setId(TEST_TIPO_ADIESTRAMIENTO_ID);
 		to.setName("hola");
 
+		this.adiestrador = new Adiestrador();
+		adiestrador.setFirstName("Alberto");
+		adiestrador.setLastName("Carter");
+		adiestrador.setId(1);
+		adiestrador.setMonedero(1000);
+		BDDMockito.given(this.adiestradorService.findAdiestradorById(1)).willReturn(adiestrador);
 		
 		
 		PetType cat = new PetType();
@@ -125,15 +137,16 @@ class CitaAdiestramientoControllerTests {
 		this.pet.setType(cat);
 		pet.setId(TEST_PET_ID);
 
-		cita = new CitaAdiestramiento();
-		cita.setDuracion(45);
-		cita.setId(TEST_CITA_ADIESTRAMIENTO_ID);
-		cita.setPrecio(75.0);
+		citaAdiestramiento = new CitaAdiestramiento();
+		citaAdiestramiento.setDuracion(45);
+		citaAdiestramiento.setId(TEST_CITA_ADIESTRAMIENTO_ID);
+		citaAdiestramiento.setPrecio(75.0);
 		LocalDate fechaInicio = LocalDate.parse("2020/12/11", DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-		cita.setFechaInicio(fechaInicio);
+		citaAdiestramiento.setFechaInicio(fechaInicio);
 		LocalTime hora = LocalTime.parse("15:00");
-		cita.setHora(hora);
-		cita.setTipoAdiestramiento(to);
+		citaAdiestramiento.setHora(hora);
+		citaAdiestramiento.setTipoAdiestramiento(to);
+		citaAdiestramiento.setPagado(false);
 
 		CitaAdiestramiento cita2 = new CitaAdiestramiento();
 		cita2.setDuracion(55);
@@ -147,9 +160,12 @@ class CitaAdiestramientoControllerTests {
 		george.setAddress("110 W. Liberty St.");
 		george.setCity("Madison");
 		george.setTelephone("6085551023");
+		george.setMonedero(1000);
+		george.addPet(pet);
+		
 		given(this.ownerService.findOwnerById(TEST_OWNER_ID)).willReturn(george);
 
-		given(this.clinicService.findCitaAdiestramientoById(TEST_CITA_ADIESTRAMIENTO_ID)).willReturn(cita);
+		given(this.clinicService.findCitaAdiestramientoById(TEST_CITA_ADIESTRAMIENTO_ID)).willReturn(citaAdiestramiento);
 
 		given(this.petService.findPetTypes()).willReturn(Lists.newArrayList(cat));
 		
@@ -159,6 +175,10 @@ class CitaAdiestramientoControllerTests {
 		
 		given(this.petService.findPetTypes()).willReturn(Lists.newArrayList(cat));
 
+		
+		given(this.clinicService.findCitaAdiestramientoByOwnerId(TEST_OWNER_ID)).willReturn(Lists.newArrayList(citaAdiestramiento));
+//		Collection<CitaAdiestramiento> citasAdiestramiento = this.citaAdiestramientoService
+//		.findCitaAdiestramientoByOwnerId(owner.getId());
 
 	}
 
@@ -200,7 +220,7 @@ class CitaAdiestramientoControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessFindFormByTipoPet() throws Exception {		
-		given(this.clinicService.findCitaAdiestramientoByPet(pet.getType().getName())).willReturn(Lists.newArrayList(cita));
+		given(this.clinicService.findCitaAdiestramientoByPet(pet.getType().getName())).willReturn(Lists.newArrayList(citaAdiestramiento));
 		mockMvc.perform(get("/citasAdiestramiento").param("pet.type.name", "cat")).
 		andExpect(status().isOk())
 		.andExpect(view().name("citasAdiestramiento/listadoCitasAdiestramientoFiltrado"));
@@ -231,13 +251,13 @@ class CitaAdiestramientoControllerTests {
 				.andExpect(model().attributeExists("citaAdiestramiento"))
 				.andExpect(model().attribute("citaAdiestramiento", hasProperty("duracion", is(45))))
 				.andExpect(
-						model().attribute("citaAdiestramiento", hasProperty("fechaInicio", is(cita.getFechaInicio()))))
-				.andExpect(model().attribute("citaAdiestramiento", hasProperty("hora", is(cita.getHora()))))
+						model().attribute("citaAdiestramiento", hasProperty("fechaInicio", is(citaAdiestramiento.getFechaInicio()))))
+				.andExpect(model().attribute("citaAdiestramiento", hasProperty("hora", is(citaAdiestramiento.getHora()))))
 				// .andExpect(model().attribute("citaAdiestramiento", hasProperty("pagado",
 				// is(false))))
 				.andExpect(model().attribute("citaAdiestramiento", hasProperty("precio", is(75.0))))
 				.andExpect(model().attribute("citaAdiestramiento",
-						hasProperty("tipoAdiestramiento", is(cita.getTipoAdiestramiento()))))
+						hasProperty("tipoAdiestramiento", is(citaAdiestramiento.getTipoAdiestramiento()))))
 				.andExpect(view().name("citasAdiestramiento/createOrUpdateCitaAdiestramientoForm"));
 
 		verify(clinicService).findCitaAdiestramientoById(TEST_CITA_ADIESTRAMIENTO_ID);
@@ -339,16 +359,31 @@ class CitaAdiestramientoControllerTests {
 	Mockito.when(this.clinicService.findCitaAdiestramientoById(TEST_CITA_ADIESTRAMIENTO_ID)).thenReturn(citaAd);
 	
 	Mockito.when(this.clinicService.findCitaAdiestramientoById(200)).thenThrow(NoSuchElementException.class);
-	this.mockMvc.perform(MockMvcRequestBuilders.get("/citaAdiestramiento/{citaAdiestramientoId}/delete", 200)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("message", "Cita not found"))
+	this.mockMvc.perform(MockMvcRequestBuilders.get("/citaAdiestramiento/{citaAdiestramientoId}/delete", 200)).andExpect(MockMvcResultMatchers.status().isOk())
 	.andExpect(MockMvcResultMatchers.view().name("exception"));
 }
 	
 	
+	@WithMockUser(value = "spring")
+	@Test
+	void testPayCitaOperacionSuccess() throws Exception {
+
+given(this.clinicService.findCitaAdiestramientoByOwnerId(TEST_OWNER_ID)).willReturn(Lists.newArrayList(citaAdiestramiento));
 	
+		
+		this.citaAdiestramiento.setAdiestrador(adiestrador);
+		this.citaAdiestramiento.setPet(pet);
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/citaAdiestramiento/{citaAdiestramientoId}/pay", TEST_CITA_ADIESTRAMIENTO_ID))
+		.andExpect(MockMvcResultMatchers.model().attributeExists("citasAdiestramiento"))
+		.andExpect(MockMvcResultMatchers.model().attributeExists("pagado"))
+		.andExpect(MockMvcResultMatchers.view().name("citasAdiestramiento/listadoCitasAdiestramientoOwnersId"));
+	}
+}
 	
 	
 
-}
+
 
 
 	

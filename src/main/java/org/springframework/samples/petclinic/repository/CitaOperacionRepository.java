@@ -12,9 +12,7 @@ public interface CitaOperacionRepository extends CrudRepository<CitaOperacion, I
 	Collection<CitaOperacion> findCitaOperacionByTipoOperacion(String tipoOperacion) throws DataAccessException;
 
 	Optional<CitaOperacion> findCitaOperacionById(int citaOperacionId);
-	
-//	TipoOperacion findTipoOperacionByName(String name);
-	
-//	Collection<TipoOperacion> findTiposOperaciones() throws DataAccessException;
+
+	Collection<CitaOperacion> findCitaOperacionByPet(int petId);
 
 }

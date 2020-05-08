@@ -14,12 +14,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.samples.petclinic.model.TipoAdiestramiento;
 import org.springframework.samples.petclinic.model.TipoAdiestramiento;
 import org.springframework.samples.petclinic.service.TipoAdiestramientoService;
 import org.springframework.samples.petclinic.service.TipoAdiestramientoService;
 
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 public class TipoAdiestramientoFormatterTests {
 
 	@Mock

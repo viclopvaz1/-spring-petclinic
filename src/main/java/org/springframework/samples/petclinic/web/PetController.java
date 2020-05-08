@@ -147,12 +147,4 @@ public class PetController {
 			return "redirect:/owners/{ownerId}";
 		}
 	}
-        
-        @GetMapping("/pets/{petId}")
-    	public ModelAndView showCitasOperacionesPet(@PathVariable("petId") int petId) {
-    		ModelAndView mav = new ModelAndView("citasOperaciones/listadoCitasOperacionesPets");
-    		mav.addObject(this.petService.findPetById(petId));
-    		return mav;
-    	}
-
 }

@@ -34,34 +34,45 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/resources/**", "/webjars/**", "/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/", "/oups").permitAll().antMatchers("/users/new").permitAll()
+				//	Citas 		Operaciones
 				.antMatchers("/citasOperaciones").permitAll()
 				.antMatchers("/citasOperaciones/**").hasAnyAuthority("veterinarian", "admin")
+				.antMatchers("/citasOperacionesPet/{petId}").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/citaOperacion/{id}").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers("/citaOperacion/{citaOperacionId}/edit/{citaOperacionId}").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers("/citaOperacion/{citaOperacionId}/delete").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers(HttpMethod.GET, "/citaOperacion/new").hasAnyAuthority("veterinarian", "admin")
 				.antMatchers(HttpMethod.POST, "/citaOperacion/new/{petId}").hasAnyAuthority("veterinarian", "admin")
+				.antMatchers("/citaOperacion/{citaOperacionId}/pay").hasAnyAuthority("owner", "admin")
+				.antMatchers("/citasOperaciones/error").hasAnyAuthority("owner", "admin")
+				//	Citas 		Adiestramiento
 				.antMatchers(HttpMethod.GET, "/citasAdiestramiento/new/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers(HttpMethod.POST, "/citasAdiestramiento/new/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
+				.antMatchers("/citaAdiestramiento/{citaAdiestramientoId}/pay").permitAll()
+				
+				
 				.antMatchers("/citaAdiestramiento/{id}").hasAnyAuthority("veterinarian", "admin","adiestrador")
 				.antMatchers(HttpMethod.GET,"/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers(HttpMethod.POST,"/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/citaAdiestramiento/{citaAdiestramientoId}/delete").hasAnyAuthority("adiestrador", "admin")			
 				.antMatchers("/citasAdiestramiento").hasAnyAuthority("adiestrador", "admin")
 //				.antMatchers("/citasAdiestramiento/**").hasAnyAuthority("owner", "admin")
-				.antMatchers("/citasAdiestramiento/{ownerId}").hasAnyAuthority("adiestrador", "admin")
+				.antMatchers("/citasAdiestramiento/{ownerId}").hasAnyAuthority("adiestrador", "admin","owner")
 				.antMatchers("/citasAdiestramiento/new").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/citasAdiestramiento/find").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/citasAdiestramiento/all").hasAnyAuthority("adiestrador", "admin")
 				.antMatchers("/adiestradores").permitAll()
 				.antMatchers("/adiestradores/5").permitAll()
+				.antMatchers("/adiestradores/{adiestradorId}").hasAnyAuthority("adiestrador", "admin")
+
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner", "admin", "veterinarian","adiestrador")
-//				.antMatchers("/owners/find").hasAnyAuthority("owner", "admin")
+				.antMatchers("/owners/find").hasAnyAuthority("owner", "admin","adiestrador", "veterinarian")
 //				.antMatchers("/owners").hasAnyAuthority("owner", "admin", "veterinarian")
 //				.antMatchers("/owners/{ownerId}").hasAnyAuthority("owner", "admin", "veterinarian")
 				.antMatchers("/citasAdiestramiento/**").hasAnyAuthority("owner", "admin")
 				.antMatchers("/vets/**").authenticated().antMatchers("/donacion/**").hasAnyAuthority("owner", "admin")
+				//				Causa
 				.antMatchers("/users/addmoney").permitAll()
 				.antMatchers(HttpMethod.GET, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/causa").permitAll()
@@ -71,7 +82,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/causa/{id}").permitAll()
 				.antMatchers(HttpMethod.POST, "/causa/new").hasAnyAuthority("veterinarian", "owner", "admin")
 				.antMatchers("/causa/noValidas").hasAnyAuthority("veterinarian")
+				//				Doancion
 				.antMatchers("/donacion/**").hasAnyAuthority("owner", "admin","veterinarian", "adiestrador")
+				.antMatchers("/monedero/**").hasAnyAuthority("owner", "admin","veterinarian", "adiestrador")
 				.anyRequest().denyAll().and().formLogin()
 				/* .loginPage("/login") */
 				.failureUrl("/login-error").and().logout().logoutSuccessUrl("/");

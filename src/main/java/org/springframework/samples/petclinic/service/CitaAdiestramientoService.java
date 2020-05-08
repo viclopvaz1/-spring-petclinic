@@ -50,7 +50,7 @@ public class CitaAdiestramientoService {
 	}
   
   	@Transactional
-	public int citaAdiestramientoCounnt() {
+	public int citaAdiestramientoCount() {
 		return (int) this.citaAdiestramientoRepo.count();
 	}
 }

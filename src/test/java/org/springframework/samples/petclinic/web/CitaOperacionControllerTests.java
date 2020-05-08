@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.web;
 
-import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -19,17 +18,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.CitaOperacion;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.CitaOperacionService;
+import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.TipoOperacionService;
 import org.springframework.samples.petclinic.service.VetService;
@@ -43,6 +47,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 includeFilters = @ComponentScan.Filter(value = TipoOperacionFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 public class CitaOperacionControllerTests {
 	
 	private static final int TEST_VET_ID = 1;
@@ -70,13 +75,49 @@ public class CitaOperacionControllerTests {
 	@MockBean
 	private TipoOperacionService tipoOperacionService;
 	
+	@MockBean
+	private OwnerService ownerService;
+	
 	@Autowired
 	private MockMvc mockMvc;
 	
 	private CitaOperacion citaOperacion1;
 	
+	private Owner owner;
+	
+	private Vet vet;
+	
+	private Pet pet;
+	
 	@BeforeEach
 	void setup() {
+		PetType perro = new PetType();
+		perro.setId(3);
+		perro.setName("perro");
+		pet = new Pet();
+		pet.setName("Blanco");
+		pet.setId(1);
+		pet.setType(perro);
+		BDDMockito.given(this.petService.findPetById(1)).willReturn(pet);
+		
+		owner = new Owner();
+		owner.setId(1);
+		owner.setFirstName("George");
+		owner.setLastName("Franklin");
+		owner.setAddress("110 W. Liberty St.");
+		owner.setCity("Madison");
+		owner.setTelephone("6085551023");
+		owner.setMonedero(1000);
+		owner.addPet(pet);
+		BDDMockito.given(this.ownerService.findOwnerById(1)).willReturn(owner);
+		
+		vet = new Vet();
+		vet.setFirstName("James");
+		vet.setLastName("Carter");
+		vet.setId(1);
+		vet.setMonedero(1000);
+		BDDMockito.given(this.vetService.findVetById(1)).willReturn(vet);
+		
 		this.citaOperacion1 = new CitaOperacion();
 		this.citaOperacion1.setId(TEST_CITAOPERACION_ID);
 		this.citaOperacion1.setFechaInicio(LocalDate.parse("2020/12/29", DateTimeFormatter.ofPattern("yyyy/MM/dd")));
@@ -106,17 +147,17 @@ public class CitaOperacionControllerTests {
 		.andExpect(MockMvcResultMatchers.view().name("/citasOperaciones/findCitasOperaciones"));
 	}
 	
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testProcessFindFormByTipoOperacionMoreThanOne() throws Exception {
-//		BDDMockito.given(this.citaOperacionService.findCitaOperacionByTipoOperacion("")).willReturn(Lists.newArrayList(this.citaOperacion1, new CitaOperacion()));
-//		
-//		this.mockMvc.perform(MockMvcRequestBuilders.get("/citasOperaciones"))
-////		.param("tipoOperacion", "hola"))
-//		.andExpect(MockMvcResultMatchers.status().isOk())
-//		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesFiltrado"));
-//
-//	}
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessFindFormByTipoOperacionMoreThanOne() throws Exception {
+		BDDMockito.given(this.citaOperacionService.findCitaOperacionByTipoOperacion("hola")).willReturn(Lists.newArrayList(this.citaOperacion1, new CitaOperacion()));
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/citasOperaciones")
+		.param("tipoOperacion", "hola"))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesFiltrado"));
+
+	}
 	
 	@WithMockUser(value = "spring")
 	@Test
@@ -137,6 +178,16 @@ public class CitaOperacionControllerTests {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("citasOperaciones"))
 		.andExpect(MockMvcResultMatchers.view().name("exception"));
+	}
+	
+	//								Find By Pet Id
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitFindFormPetId() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/citasOperacionesPet/{petId}", TEST_PET_ID))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.model().attributeExists("citasOperaciones"))
+		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesPets"));
 	}
 	
 	//								Create Tipo Operacion
@@ -255,7 +306,7 @@ public class CitaOperacionControllerTests {
 	
 	@WithMockUser(value = "spring")
 	@Test
-	void testShowOwner() throws Exception {
+	void testShowCitaOperacion() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/citaOperacion/{id}", TEST_CITAOPERACION_ID))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("citaOperacion"))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("fechaInicio", Matchers.is(LocalDate.parse("2020/12/29", DateTimeFormatter.ofPattern("yyyy/MM/dd"))))))
@@ -265,5 +316,19 @@ public class CitaOperacionControllerTests {
 //		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("tipoOperacion", Matchers.is(hola))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("cantidadPersonal", Matchers.is(2.0))))
 		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/citaOperacionDetails"));
+	}
+	
+	//								Pay Cita Operacion
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testPayCitaOperacionSuccess() throws Exception {
+		this.citaOperacion1.setPet(pet);
+		this.citaOperacion1.setVet(vet);
+		
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/citaOperacion/{citaOperacionId}/pay", TEST_CITAOPERACION_ID))
+		.andExpect(MockMvcResultMatchers.model().attributeExists("citasOperaciones"))
+		.andExpect(MockMvcResultMatchers.model().attributeExists("pagado"))
+		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesPets"));
 	}
 }

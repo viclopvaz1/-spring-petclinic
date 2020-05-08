@@ -87,7 +87,7 @@ public class DonacionController {
 		Causa causa = this.causaService.findCausaById(causaId);
 		if (result.hasErrors() || !causa.isValido()) {
 			model.put("donacion", donacion);
-			return DonacionController.VIEWS_DONACION_CREATE_FORM;
+			return DonacionController.VIEWS_DONACION_NEW_FORM;
 		} else {
 
 			User user = this.userService.findUserById(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -95,7 +95,8 @@ public class DonacionController {
 
 			Collection<Authorities> collection = this.authoritiesService.findAll();
 			String username = donacion.getUser().getUsername();
-			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+//			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+			String a = collection.stream().filter(x -> x.getUsername().equals(username)).map(x -> x.getAuthority()).findFirst().orElse(null);
 			if (a.equals("veterinarian")) {
 				Vet vet = this.vetService.findVetByUser(username);
 				if (donacion.getCantidad() > vet.getMonedero()) {
@@ -103,6 +104,7 @@ public class DonacionController {
 					return DonacionController.VIEWS_DONACION_NEW_FORM;
 				}
 				vet.setMonedero(vet.getMonedero() - donacion.getCantidad());
+//				this.vetService.monedero(vet.getMonedero() - donacion.getCantidad(), vet.getId());
 			} else if (a.equals("owner")) {
 				Owner owner = this.ownerService.findOwnerByUser(username);
 				if (donacion.getCantidad() > owner.getMonedero()) {

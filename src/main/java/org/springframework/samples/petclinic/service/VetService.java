@@ -35,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class VetService {
 
 	private SpringDataVetRepository vetRepository;
+	
 
 
 	@Autowired
@@ -56,4 +57,10 @@ public class VetService {
 	public Vet findVetById(final int id) throws DataAccessException {
 		return this.vetRepository.findById(id);
 	}
+	
+	@Transactional
+	public void saveVet(final Vet vet) throws DataAccessException {
+		this.vetRepository.save(vet);
+	}
+	
 }

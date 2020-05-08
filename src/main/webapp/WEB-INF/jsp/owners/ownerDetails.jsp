@@ -25,14 +25,12 @@
         <tr>
             <th>Telephone</th>
             <td><c:out value="${owner.telephone}"/></td>
+      </tr>
+        <tr>
+            <th>Monedero</th>
+            <td><c:out value="${owner.monedero}"/></td>
         </tr>
-        
-    </table>
-
-
-
-
-
+            </table>
 
 
 	<spring:url value="{ownerId}/edit" var="editUrl">
@@ -100,8 +98,7 @@
                                 <a href="${fn:escapeXml(visitUrl)}">Add Visit</a>
                             </td>
                             <td>
-                                <spring:url value="/owners/{ownerId}/pets/{petId}" var="petUrl">
-                                    <spring:param name="ownerId" value="${owner.id}"/>
+                                <spring:url value="/citasOperacionesPet/{petId}" var="petUrl">
                                     <spring:param name="petId" value="${pet.id}"/>
                                 </spring:url>
                                 <a href="${fn:escapeXml(petUrl)}">Citas Operaciones</a>
