@@ -14,12 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.hamcrest.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -31,96 +28,14 @@ import org.springframework.transaction.annotation.Transactional;
   webEnvironment=SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @Transactional
-//@AutoConfigureTestDatabase(replace=Replace.NONE)
-//@TestPropertySource(
-//		  locations = "classpath:application-mysql.properties")
-public class CitaOperacionControllerTestsE2E {
+public class CitaOperacionControllerIntegrationTests {
 	
-	private static final int TEST_VET_ID = 1;
-
 	private static final int TEST_PET_ID = 1;
 		
 	private static final int TEST_CITAOPERACION_ID = 1;
 	
-//	@Autowired
-//	private CitaOperacionController citaOperacioncontroller;
-//	
-//	@MockBean
-//	private AuthoritiesService	authoritiesService;
-//	
-//	@MockBean
-//	private CitaOperacionService citaOperacionService;
-//	
-//	@MockBean
-//	private PetService petService;
-//	
-//	
-//	@MockBean
-//	private VetService vetService;
-//	
-//	@MockBean
-//	private TipoOperacionService tipoOperacionService;
-//	
-//	@MockBean
-//	private OwnerService ownerService;
-	
 	@Autowired
 	private MockMvc mockMvc;
-	
-//	private CitaOperacion citaOperacion1;
-//	
-//	private Owner owner;
-//	
-//	private Vet vet;
-//	
-//	private Pet pet;
-//	
-//	@BeforeEach
-//	void setup() {
-//		PetType perro = new PetType();
-//		perro.setId(3);
-//		perro.setName("perro");
-//		pet = new Pet();
-//		pet.setName("Blanco");
-//		pet.setId(1);
-//		pet.setType(perro);
-//		BDDMockito.given(this.petService.findPetById(1)).willReturn(pet);
-//		
-//		owner = new Owner();
-//		owner.setId(1);
-//		owner.setFirstName("George");
-//		owner.setLastName("Franklin");
-//		owner.setAddress("110 W. Liberty St.");
-//		owner.setCity("Madison");
-//		owner.setTelephone("6085551023");
-//		owner.setMonedero(1000);
-//		owner.addPet(pet);
-//		BDDMockito.given(this.ownerService.findOwnerById(1)).willReturn(owner);
-//		
-//		vet = new Vet();
-//		vet.setFirstName("James");
-//		vet.setLastName("Carter");
-//		vet.setId(1);
-//		vet.setMonedero(1000);
-//		BDDMockito.given(this.vetService.findVetById(1)).willReturn(vet);
-//		
-//		this.citaOperacion1 = new CitaOperacion();
-//		this.citaOperacion1.setId(TEST_CITAOPERACION_ID);
-//		this.citaOperacion1.setFechaInicio(LocalDate.parse("2020/12/29", DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-//		this.citaOperacion1.setHora(LocalTime.parse("17:00"));
-//		this.citaOperacion1.setDuracion(30);
-//		this.citaOperacion1.setPrecio(100.0);
-//		this.citaOperacion1.setPagado(false);
-//		this.citaOperacion1.setCantidadPersonal(2.0);
-//		TipoOperacion cirugiaVisual = new TipoOperacion();
-//		cirugiaVisual.setId(1);
-//		cirugiaVisual.setName("hola");
-//		this.citaOperacion1.setTipoOperacion(cirugiaVisual);
-//		BDDMockito.given(this.tipoOperacionService.findAll()).willReturn(Lists.newArrayList(cirugiaVisual));
-//		BDDMockito.given(this.petService.findPetById(TEST_PET_ID)).willReturn(new Pet());
-//		BDDMockito.given(this.vetService.findVetById(TEST_VET_ID)).willReturn(new Vet());
-//		BDDMockito.given(this.citaOperacionService.findCitaOperacionById(TEST_CITAOPERACION_ID)).willReturn(Optional.of(this.citaOperacion1));
-//	}
 	
 	//								Find By Tipo Operacion
 		
