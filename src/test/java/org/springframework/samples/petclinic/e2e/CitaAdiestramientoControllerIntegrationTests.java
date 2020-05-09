@@ -1,8 +1,6 @@
 package org.springframework.samples.petclinic.e2e;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -10,33 +8,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-
-import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.hamcrest.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.model.CitaAdiestramiento;
-import org.springframework.samples.petclinic.model.CitaOperacion;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.TipoOperacion;
-import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
-import org.springframework.samples.petclinic.service.CitaOperacionService;
-import org.springframework.samples.petclinic.service.OwnerService;
-import org.springframework.samples.petclinic.service.PetService;
-import org.springframework.samples.petclinic.service.TipoOperacionService;
-import org.springframework.samples.petclinic.service.VetService;
-import org.springframework.samples.petclinic.web.CitaOperacionController;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -49,17 +26,13 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @Transactional
-public class CitaAdiestramientoControllerTestsE2E {
+public class CitaAdiestramientoControllerIntegrationTests {
 
 	private static final int TEST_CITA_ADIESTRAMIENTO_ID = 1;
 
 	private static final int TEST_PET_ID = 1;
 
-	private static final int TEST_ADIESTRADOR_ID = 1;
-
 	private static final int TEST_OWNER_ID = 1;
-
-	private static final int TEST_TIPO_ADIESTRAMIENTO_ID = 1;
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -139,7 +112,6 @@ public class CitaAdiestramientoControllerTestsE2E {
 //				.andExpect(model().attribute("citaAdiestramiento",
 //						Matchers.hasProperty("tipoAdiestramiento", Matchers.is("Adiestramiento deportivo"))))
 				.andExpect(view().name("citasAdiestramiento/createOrUpdateCitaAdiestramientoForm"));
-
 	}
 
 	@WithMockUser(username = "adiestrador1", authorities = { "adiestrador" })
