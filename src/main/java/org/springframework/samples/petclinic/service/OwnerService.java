@@ -67,7 +67,7 @@ public class OwnerService {
 		//creating user
 		this.userService.saveUser(owner.getUser());
 		//creating authorities
-		this.authoritiesService.saveAuthorities(owner.getUser().getUsername(), "user");
+		this.authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
 	}	
 	
 	@Transactional

@@ -208,7 +208,7 @@ public class CitaOperacionControllerTests {
 		mockMvc.perform(post("/citasOperaciones/new/{petId}", TEST_PET_ID)
 				.with(csrf())
 				.param("id", "1")
-				.param("fechaInicio", "2020/05/11")
+				.param("fechaInicio", "2020/12/11")
 				.param("hora", "15:00")
 				.param("duracion", "30")
 				.param("precio", "100")
