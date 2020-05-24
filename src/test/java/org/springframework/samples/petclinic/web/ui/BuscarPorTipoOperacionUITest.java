@@ -82,7 +82,7 @@ private void thenISeeAllCitasOperaciones() {
 }
 
 private void thenISeeOneCitasOperaciones() {
-	this.tipoOperacion = "Cirugia visual";
+	this.tipoOperacion = "Cirugia basica";
 	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[9]/a/span[2]")).click();
 	driver.findElement(By.id("tipoOperacion.name")).click();
 	driver.findElement(By.id("tipoOperacion.name")).clear();

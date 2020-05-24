@@ -90,7 +90,7 @@ private CrearCitaAdiestramientoUITest thenIPressTheCreateButton() {
 	  driver.findElement(By.name("lastName")).clear();
 	  driver.findElement(By.name("lastName")).sendKeys("Franklin");
 	  driver.findElement(By.xpath("//button[@type='submit']")).click();
-	    driver.findElement(By.linkText("Pedir cita Adiestramiento")).click();
+	  driver.findElement(By.linkText("Pedir cita Adiestramiento")).click();
 	  return this;
 }
 private void andThenICreateCitaAdiestramiento() {
