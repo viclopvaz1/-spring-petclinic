@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.ui;
+package org.springframework.samples.petclinic.CitaAdiestramientoUI;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class EliminarCitaAdiestramientoUITest {
+public class ListarPorTipoMascotaUITest {
 
 	@LocalServerPort
 	private int port;
@@ -27,19 +27,29 @@ public class EliminarCitaAdiestramientoUITest {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-//		String pathToGeckoDriver = "C:\\Users\\pepe1\\Documents\\geckodriver-v0.26.0-win64";
-//		System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
+//				String pathToGeckoDriver = "C:\\Users\\pepe1\\Documents\\geckodriver-v0.26.0-win64";
+//				System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
 		driver = new FirefoxDriver();
 		baseUrl = "https://www.google.com/";
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 	@Test
-	public void testUntitledTestCase() throws Exception {
-		as("adiestrador1").whenIamLoggedIntheSystem().thenIDeleteCitaAdiestramiento();
+	public void listarTodasLasCitas() throws Exception {
+		as("adiestrador1").whenIamLoggedIntheSystem().thenISeeAllCitasAdiestramiento();
 	}
 
-	private EliminarCitaAdiestramientoUITest as(final String adiestrador) {
+	@Test
+	public void listarUnaCitaAdiestramiento() throws Exception {
+		as("adiestrador1").whenIamLoggedIntheSystem().thenISeeOneCitasAdiestramiento();
+	}
+
+	@Test
+	public void listarCitasAdiestramientoConUnTipoPetInvalidoOSinRegistros() throws Exception {
+		as("adiestrador1").whenIamLoggedIntheSystem().thenIDontSeeAnyCitasAdiestramiento();
+	}
+
+	private ListarPorTipoMascotaUITest as(final String adiestrador) {
 		this.username = adiestrador;
 		this.driver.get("http://localhost:" + this.port);
 		driver.findElement(By.linkText("LOGIN")).click();
@@ -49,22 +59,46 @@ public class EliminarCitaAdiestramientoUITest {
 		driver.findElement(By.id("password")).clear();
 		driver.findElement(By.id("password")).sendKeys("adiestrador");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
 		return this;
+	}
+
+	private void thenISeeAllCitasAdiestramiento() {
+		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[3]/a/span[2]")).click();
+		driver.findElement(By.id("pet.type.name")).click();
+		driver.findElement(By.id("pet.type.name")).clear();
+		driver.findElement(By.id("pet.type.name")).sendKeys("");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+	}
+
+	private void thenISeeOneCitasAdiestramiento() {
+		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[3]/a/span[2]")).click();
+		driver.findElement(By.id("pet.type.name")).click();
+		driver.findElement(By.id("pet.type.name")).clear();
+		driver.findElement(By.id("pet.type.name")).sendKeys("hamster");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+	    assertEquals("Basil", driver.findElement(By.xpath("//table[@id='citasAdiestramientoTable']/tbody/tr/td")).getText());
+
+
+	}
+
+	private void thenIDontSeeAnyCitasAdiestramiento() {
+		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[3]/a/span[2]")).click();
+		driver.findElement(By.id("pet.type.name")).click();
+		driver.findElement(By.id("pet.type.name")).clear();
+		driver.findElement(By.id("pet.type.name")).sendKeys("lizard");
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		assertEquals("has not been found", driver.findElement(By.id("citaAdiestramiento.errors")).getText());
+
 	}
 
 	private CharSequence passwordOf(String username) {
 		return "adiestrador";
 	}
 
-	private EliminarCitaAdiestramientoUITest whenIamLoggedIntheSystem() {
+	private ListarPorTipoMascotaUITest whenIamLoggedIntheSystem() {
 		return this;
-	}
-
-	private void thenIDeleteCitaAdiestramiento() {
-		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[11]/a/span[2]")).click();
-		driver.findElement(By.linkText("Leo")).click();
-		driver.findElement(By.linkText("Delete")).click();
-		assertEquals("Welcome", driver.findElement(By.xpath("//h2")).getText());
 	}
 
 	@AfterEach

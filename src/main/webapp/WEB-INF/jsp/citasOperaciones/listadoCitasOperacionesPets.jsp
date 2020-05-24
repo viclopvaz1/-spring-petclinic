@@ -54,7 +54,7 @@
                 <td>
                     <c:out value="${citaOperacionPet.pagado}"/>
                 </td>
-                <c:if test="${!pagado || !citaOperacionPet.pagado}">
+                <c:if test="${!citaOperacionPet.pagado}">
 	                <td>
 	                	<spring:url value="/citaOperacion/{citaOperacionId}/pay" var="citaOperacionUrl">
 	                                    <spring:param name="citaOperacionId" value="${citaOperacionPet.id}"/>                                    

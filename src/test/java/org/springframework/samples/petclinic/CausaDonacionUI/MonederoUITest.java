@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.ui;
+package org.springframework.samples.petclinic.CausaDonacionUI;
 
 import static org.junit.Assert.assertEquals;
 

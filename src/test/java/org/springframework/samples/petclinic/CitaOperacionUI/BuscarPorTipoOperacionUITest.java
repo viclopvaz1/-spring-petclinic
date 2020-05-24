@@ -1,9 +1,9 @@
-package org.springframework.samples.petclinic.web.ui;
+package org.springframework.samples.petclinic.CitaOperacionUI;
 
 import java.util.concurrent.TimeUnit;
-
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -13,12 +13,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LoginVetUITest {
+public class BuscarPorTipoOperacionUITest {
 	
 	@LocalServerPort
 	private int port;
 	
   private String username;
+  private String tipoOperacion;
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -30,18 +31,31 @@ public class LoginVetUITest {
 //	System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
 	driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
-    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testUntitledTestCase() throws Exception {
-	  
+  public void listarTodasLasCitasOperaciones() throws Exception {
 	  as("vet1").
 	  whenIamLoggedIntheSystem().
-	  thenISeeMyUsernameInTheMenuBar();
+	  thenISeeAllCitasOperaciones();
   }
   
-  private LoginVetUITest as(final String vet) {
+  @Test
+  public void listarUnaCitaOperacion() throws Exception {
+	  as("vet1").
+	  whenIamLoggedIntheSystem().
+	  thenISeeOneCitasOperaciones();
+  }
+  
+  @Test
+  public void listarCitasOperacionesConUnTipoOperacionInvalidaOSinRegistros() throws Exception {
+	  as("vet1").
+	  whenIamLoggedIntheSystem().
+	  thenIDontSeeAnyCitasOperaciones();
+  }
+  
+  private BuscarPorTipoOperacionUITest as(final String vet) {
 	  this.username = vet;
 	  this.driver.get("http://localhost:" + this.port);
 	  driver.findElement(By.linkText("LOGIN")).click();
@@ -53,18 +67,39 @@ public class LoginVetUITest {
 	  return this;
 	}
   
-  private void thenISeeMyUsernameInTheMenuBar() {
-	  assertEquals(this.username.toUpperCase(), driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
-	
-  }
-  
   private CharSequence passwordOf(String username) {
 		return "v3t";
 	}
-  
-  private LoginVetUITest whenIamLoggedIntheSystem() {	
+
+private BuscarPorTipoOperacionUITest whenIamLoggedIntheSystem() {	
 		return this;
 	}
+
+private void thenISeeAllCitasOperaciones() {
+	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[9]/a/span[2]")).click();
+	driver.findElement(By.xpath("//button[@type='submit']")).click();
+	assertEquals("CitasOperaciones", driver.findElement(By.xpath("//h2")).getText());
+}
+
+private void thenISeeOneCitasOperaciones() {
+	this.tipoOperacion = "Cirugia basica";
+	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[9]/a/span[2]")).click();
+	driver.findElement(By.id("tipoOperacion.name")).click();
+	driver.findElement(By.id("tipoOperacion.name")).clear();
+	driver.findElement(By.id("tipoOperacion.name")).sendKeys(this.tipoOperacion);
+	driver.findElement(By.xpath("//button[@type='submit']")).click();
+	assertEquals("Cita Operacion Information", driver.findElement(By.xpath("//h2")).getText());
+	assertEquals(this.tipoOperacion, driver.findElement(By.xpath("//tr[8]/td")).getText());
+}
+
+private void thenIDontSeeAnyCitasOperaciones() {
+	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[9]/a/span[2]")).click();
+	driver.findElement(By.id("tipoOperacion.name")).click();
+	driver.findElement(By.id("tipoOperacion.name")).clear();
+	driver.findElement(By.id("tipoOperacion.name")).sendKeys("hola");
+	driver.findElement(By.xpath("//button[@type='submit']")).click();
+	assertEquals("No hay ninguna cita de operacion con ese tipo o ha introducido un tipo de operacion inexistente", driver.findElement(By.xpath("//h2[2]")).getText());
+}
 
   @AfterEach
   public void tearDown() throws Exception {

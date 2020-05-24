@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.web.ui;
+package org.springframework.samples.petclinic.CitaOperacionUI;
 
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;

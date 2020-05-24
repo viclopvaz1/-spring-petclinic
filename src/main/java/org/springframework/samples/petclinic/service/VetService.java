@@ -20,7 +20,6 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataVetRepository;
 import org.springframework.stereotype.Service;
@@ -36,28 +35,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class VetService {
 
 	private SpringDataVetRepository vetRepository;
-	
-	@Autowired
-	private UserService					userService;
-
-	@Autowired
-	private AuthoritiesService			authoritiesService;
 
 
 	@Autowired
 	public VetService(final SpringDataVetRepository vetRepository) {
 		this.vetRepository = vetRepository;
 	}
-	
-	@Transactional
-	public void saveVet(final Vet vet) throws DataAccessException {
-		//creating vet
-		this.vetRepository.save(vet);
-		//creating user
-		this.userService.saveUser(vet.getUser());
-		//creating authorities
-		this.authoritiesService.saveAuthorities(vet.getUser().getUsername(), "veterinarian");
-	}	
 
 	@Transactional(readOnly = true)
 	public Collection<Vet> findVets() throws DataAccessException {

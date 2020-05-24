@@ -59,7 +59,7 @@
                         
 
 
-        <c:if test="${!pagado|| !citaAdiestramiento.pagado}">
+        <c:if test="${!citaAdiestramiento.pagado}">
 	                <td>
 	                	<spring:url value="/citaAdiestramiento/{citaAdiestramientoId}/pay" var="citaAdiestramientoUrl">
 	                                    <spring:param name="citaAdiestramientoId" value="${citaAdiestramiento.id}"/>                                    

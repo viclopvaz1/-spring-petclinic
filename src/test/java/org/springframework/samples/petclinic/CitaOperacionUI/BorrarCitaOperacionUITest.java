@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.web.ui;
+package org.springframework.samples.petclinic.CitaOperacionUI;
 
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.*;
@@ -13,13 +13,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BuscarPorTipoOperacionUITest {
+public class BorrarCitaOperacionUITest {
 	
 	@LocalServerPort
 	private int port;
 	
   private String username;
-  private String tipoOperacion;
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -31,31 +30,17 @@ public class BuscarPorTipoOperacionUITest {
 //	System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
 	driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
-    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
   @Test
-  public void listarTodasLasCitasOperaciones() throws Exception {
+  public void testUntitledTestCase() throws Exception {
 	  as("vet1").
 	  whenIamLoggedIntheSystem().
-	  thenISeeAllCitasOperaciones();
+	  thenIDeleteCitaOperacion();
   }
   
-  @Test
-  public void listarUnaCitaOperacion() throws Exception {
-	  as("vet1").
-	  whenIamLoggedIntheSystem().
-	  thenISeeOneCitasOperaciones();
-  }
-  
-  @Test
-  public void listarCitasOperacionesConUnTipoOperacionInvalidaOSinRegistros() throws Exception {
-	  as("vet1").
-	  whenIamLoggedIntheSystem().
-	  thenIDontSeeAnyCitasOperaciones();
-  }
-  
-  private BuscarPorTipoOperacionUITest as(final String vet) {
+  private BorrarCitaOperacionUITest as(final String vet) {
 	  this.username = vet;
 	  this.driver.get("http://localhost:" + this.port);
 	  driver.findElement(By.linkText("LOGIN")).click();
@@ -71,34 +56,16 @@ public class BuscarPorTipoOperacionUITest {
 		return "v3t";
 	}
 
-private BuscarPorTipoOperacionUITest whenIamLoggedIntheSystem() {	
+private BorrarCitaOperacionUITest whenIamLoggedIntheSystem() {	
 		return this;
 	}
 
-private void thenISeeAllCitasOperaciones() {
-	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[9]/a/span[2]")).click();
-	driver.findElement(By.xpath("//button[@type='submit']")).click();
-	assertEquals("CitasOperaciones", driver.findElement(By.xpath("//h2")).getText());
-}
-
-private void thenISeeOneCitasOperaciones() {
-	this.tipoOperacion = "Cirugia basica";
-	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[9]/a/span[2]")).click();
-	driver.findElement(By.id("tipoOperacion.name")).click();
-	driver.findElement(By.id("tipoOperacion.name")).clear();
-	driver.findElement(By.id("tipoOperacion.name")).sendKeys(this.tipoOperacion);
-	driver.findElement(By.xpath("//button[@type='submit']")).click();
-	assertEquals("Cita Operacion Information", driver.findElement(By.xpath("//h2")).getText());
-	assertEquals(this.tipoOperacion, driver.findElement(By.xpath("//tr[8]/td")).getText());
-}
-
-private void thenIDontSeeAnyCitasOperaciones() {
-	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[9]/a/span[2]")).click();
-	driver.findElement(By.id("tipoOperacion.name")).click();
-	driver.findElement(By.id("tipoOperacion.name")).clear();
-	driver.findElement(By.id("tipoOperacion.name")).sendKeys("hola");
-	driver.findElement(By.xpath("//button[@type='submit']")).click();
-	assertEquals("No hay ninguna cita de operacion con ese tipo o ha introducido un tipo de operacion inexistente", driver.findElement(By.xpath("//h2[2]")).getText());
+private void thenIDeleteCitaOperacion() {
+	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
+    driver.findElement(By.linkText("Citas Operaciones")).click();
+    driver.findElement(By.linkText("Basil")).click();
+    driver.findElement(By.linkText("Delete")).click();
+    assertEquals("Welcome", driver.findElement(By.xpath("//h2")).getText());
 }
 
   @AfterEach

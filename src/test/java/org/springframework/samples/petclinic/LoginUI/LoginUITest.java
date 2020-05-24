@@ -1,8 +1,11 @@
-package org.springframework.samples.petclinic.web.ui;
+package org.springframework.samples.petclinic.LoginUI;
 
 import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
@@ -13,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BorrarCitaOperacionUITest {
+public class LoginUITest {
 	
 	@LocalServerPort
 	private int port;
@@ -33,15 +36,17 @@ public class BorrarCitaOperacionUITest {
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
-  @Test
-  public void testUntitledTestCase() throws Exception {
-	  as("vet1").
+  @ParameterizedTest
+  @CsvSource({"owner1","vet1","adiestrador1","admin1"})
+  public void testLogin(String username) throws Exception {
+	  
+	  as(username).
 	  whenIamLoggedIntheSystem().
-	  thenIDeleteCitaOperacion();
+	  thenISeeMyUsernameInTheMenuBar();
   }
   
-  private BorrarCitaOperacionUITest as(final String vet) {
-	  this.username = vet;
+  private LoginUITest as(final String username) {
+	  this.username = username;
 	  this.driver.get("http://localhost:" + this.port);
 	  driver.findElement(By.linkText("LOGIN")).click();
 	  driver.findElement(By.id("username")).clear();
@@ -52,21 +57,24 @@ public class BorrarCitaOperacionUITest {
 	  return this;
 	}
   
+  private void thenISeeMyUsernameInTheMenuBar() {
+	  assertEquals(this.username.toUpperCase(), driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
+	
+  }
+  
   private CharSequence passwordOf(String username) {
+	  if(username.contains("owner1")) {
+		return "0wn3r";
+	} else if(username.contains("vet1")) {
 		return "v3t";
+	} else if(username.contains("adiestrador1")) {
+		return "adiestrador";
 	}
-
-private BorrarCitaOperacionUITest whenIamLoggedIntheSystem() {	
+	  return "4dm1n";
+}
+  private LoginUITest whenIamLoggedIntheSystem() {	
 		return this;
 	}
-
-private void thenIDeleteCitaOperacion() {
-	driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-    driver.findElement(By.linkText("Citas Operaciones")).click();
-    driver.findElement(By.linkText("Basil")).click();
-    driver.findElement(By.linkText("Delete")).click();
-    assertEquals("Welcome", driver.findElement(By.xpath("//h2")).getText());
-}
 
   @AfterEach
   public void tearDown() throws Exception {

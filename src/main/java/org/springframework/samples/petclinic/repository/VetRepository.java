@@ -46,6 +46,4 @@ public interface VetRepository extends CrudRepository<Vet, Integer>{
   
 	Vet findVetByUser(String username) throws DataAccessException;
 	
-	void save(Vet vet) throws DataAccessException;
-
 }

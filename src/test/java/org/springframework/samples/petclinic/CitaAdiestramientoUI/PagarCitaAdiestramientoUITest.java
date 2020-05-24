@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.ui;
+package org.springframework.samples.petclinic.CitaAdiestramientoUI;
 
 import java.util.concurrent.TimeUnit;
 
