@@ -136,7 +136,7 @@ class CitaAdiestramientoServiceTests {
 	}
 	@ParameterizedTest
 	@CsvSource({
-		"dog", "bird", "lizard"
+		"snake", "bird", "lizard"
 	})
 	void shouldFindCitaAdiestramientoByPetNegative(final String type) {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = this.citaAdiestramientoService
@@ -153,21 +153,21 @@ class CitaAdiestramientoServiceTests {
 	void shouldFindCitaAdiestramientoByOwnerId() {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = this.citaAdiestramientoService
 				.findCitaAdiestramientoByOwnerId(2);
-		assertThat(CitaAdiestramientos.size()).isEqualTo(2);
+		assertThat(CitaAdiestramientos.size()).isEqualTo(1);
 	}
 
 	@Test
 	void shouldFindCitaAdiestramientoByOwnerIdNegative() {
 		Collection<CitaAdiestramiento> CitaAdiestramientos = this.citaAdiestramientoService
-				.findCitaAdiestramientoByOwnerId(3);
+				.findCitaAdiestramientoByOwnerId(4);
 		assertThat(CitaAdiestramientos.isEmpty()).isTrue();
 
 	}
 
 	@Test
 	void countCitaAdiestramientoByOwnerId() {
-		int CitaAdiestramientos = this.citaAdiestramientoService.citaAdiestramientoCounnt();
-		assertThat(CitaAdiestramientos).isEqualTo(4);
+		int CitaAdiestramientos = this.citaAdiestramientoService.citaAdiestramientoCount();
+		assertThat(CitaAdiestramientos).isEqualTo(5);
 
 	}
 
@@ -186,7 +186,7 @@ class CitaAdiestramientoServiceTests {
 	}
 	@ParameterizedTest
 	@CsvSource({
-		"7", "6", "5"
+		"8", "7", "6"
 	})
 	public void deleteCitaAdiestramientoWithCsvSourceFail(final Integer id) {
 		Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> {
