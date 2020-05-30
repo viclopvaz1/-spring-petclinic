@@ -53,6 +53,10 @@ public class PetController {
 
 	private final PetService petService;
 	private final OwnerService ownerService;
+	
+	public Boolean error(BindingResult result) {
+		return error(result);
+	}
 
 	@Autowired
 	public PetController(PetService petService, OwnerService ownerService) {
@@ -97,7 +101,7 @@ public class PetController {
 
 	@PostMapping(value = "/pets/new")
 	public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
-		if (result.hasErrors()) {
+		if (error(result)) {
 			model.put("pet", pet);
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -132,7 +136,7 @@ public class PetController {
 	@PostMapping(value = "/pets/{petId}/edit")
 	public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, @PathVariable("petId") int petId,
 			ModelMap model) {
-		if (result.hasErrors()) {
+		if (error(result)) {
 			model.put("pet", pet);
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {

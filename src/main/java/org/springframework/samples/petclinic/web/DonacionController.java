@@ -69,6 +69,10 @@ public class DonacionController {
 	//	public void initDonacionBinder(WebDataBinder dataBinder) {
 	//		dataBinder.setValidator(new DonacionValidator());
 	//	}
+	
+	public Boolean error(BindingResult result) {
+		return error(result);
+	}
 
 	@GetMapping(value = "/{causaId}/new")
 	public String initCreationForm(final Map<String, Object> model, @PathVariable("causaId") final int causaId) {
@@ -85,7 +89,7 @@ public class DonacionController {
 	@PostMapping(value = "/{causaId}/new")
 	public String processCreationForm(@Valid final Donacion donacion, final BindingResult result, @PathVariable("causaId") final int causaId, final Map<String, Object> model, final ModelMap modelMap) {
 		Causa causa = this.causaService.findCausaById(causaId);
-		if (result.hasErrors() || !causa.isValido()) {
+		if (error(result) || !causa.isValido()) {
 			model.put("donacion", donacion);
 			return DonacionController.VIEWS_DONACION_NEW_FORM;
 		} else {

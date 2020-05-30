@@ -48,7 +48,9 @@ public class UserController {
 	
 	private static final String VIEWS_USER_CREATE_FORM = "users/updateUser";
 	
-	
+	public Boolean error(BindingResult result) {
+		return error(result);
+	}
 	
 	//private static final String VIEWS_MONEDERO_CREATE_FORM = "users/updateOrDeleteMonederoForm";
 
@@ -77,7 +79,7 @@ public class UserController {
 
 	@PostMapping(value = "/users/new")
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
-		if (result.hasErrors()) {
+		if (error(result)) {
 			return VIEWS_OWNER_CREATE_FORM;
 		}
 		else {

@@ -40,6 +40,11 @@ public class VisitController {
 
 	private final PetService petService;
 
+	public Boolean error(BindingResult result) {
+		return error(result);
+	}
+	
+	
 	@Autowired
 	public VisitController(PetService petService) {
 		this.petService = petService;
@@ -75,7 +80,7 @@ public class VisitController {
 	// Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/visits/new")
 	public String processNewVisitForm(@Valid Visit visit, BindingResult result) {
-		if (result.hasErrors()) {
+		if (error(result)) {
 			return "pets/createOrUpdateVisitForm";
 		}
 		else {

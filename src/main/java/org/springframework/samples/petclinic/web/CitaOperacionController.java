@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CitaOperacionController {
 	
+	
 	private CitaOperacionValidator		citaOperacionValidator	= new CitaOperacionValidator();
 	
 	private CitaOperacionService citaOperacionService;
@@ -56,6 +57,9 @@ public class CitaOperacionController {
 		this.vetService = vetService;
 		this.tipoOperacionService = tipoOperacionService;
 		this.ownerService = ownerService;
+	}
+	public Boolean error(BindingResult result) {
+		return error(result);
 	}
 	
 	@ModelAttribute("tipoOperacion")
@@ -84,6 +88,8 @@ public class CitaOperacionController {
 		model.put("citaOperacion", new CitaOperacion());
 		return "/citasOperaciones/findCitasOperaciones";
 	}
+	
+
 	
 	@GetMapping(value = "/citasOperaciones")
 	public String processFindForm(CitaOperacion citaOperacion, BindingResult result, Map<String, Object> model) {
@@ -137,7 +143,7 @@ public class CitaOperacionController {
 
 	@PostMapping(value = "/citasOperaciones/new/{petId}")
 	public String processCreationForm(@Valid final CitaOperacion citaOperacion, final BindingResult result, @PathVariable("petId") final int petId, final Map<String, Object> model) {
-		if (result.hasErrors()) {
+		if (error(result)) {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
 			String mensaje = "";
@@ -181,7 +187,7 @@ public class CitaOperacionController {
 	@PostMapping(value = "/citaOperacion/{citaOperacionId}/edit/{petId}")
 	public String processUpdateCitaOperacionForm(@Valid CitaOperacion citaOperacion, final BindingResult result, @PathVariable("citaOperacionId") final int citaOperacionId,
 			@PathVariable("petId") final int petId, Map<String, Object> model) {
-		if (result.hasErrors()) {
+		if (error(result)) {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
 			String mensaje = "";
