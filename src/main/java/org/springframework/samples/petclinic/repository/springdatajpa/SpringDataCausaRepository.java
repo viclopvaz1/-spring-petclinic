@@ -34,9 +34,7 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
 
 public interface SpringDataCausaRepository extends CausaRepository, Repository<Causa, Integer> {
 
-	//SELECT * FROM Causa c WHERE c.id IN(SELECT causa_id FROM Donacion a WHERE a.persona_username=:username)
-	//	SELECT * FROM Causa causa WHERE causa.id IN(SELECT donacion.causa_id FROM Donacion donacion WHERE donacion.persona_username LIKE :username%)
-
+	
 	@Override
 	@Query("SELECT causa FROM Causa causa WHERE causa.id IN(SELECT donacion.causa.id FROM Donacion donacion WHERE donacion.user.username LIKE :username%) AND causa.valido = true")
 	Collection<Causa> findCausaByDonaciones(@Param("username") String username);

@@ -17,6 +17,9 @@ public class PagarCitaAdiestramientoUITest {
 	@LocalServerPort
 	private int port;
 
+	private String monederoAdiestrador;
+	private String monederoOwner;
+	private String precioCitaAdiestramiento;
 	private String username;
 	private WebDriver driver;
 	private String baseUrl;
@@ -33,17 +36,13 @@ public class PagarCitaAdiestramientoUITest {
 	@Test
 	public void pagarCitaAdiestramiento() throws Exception {
 
-		as("owner1").
-		whenIamLoggedIntheSystem().
-		thenIPayCitaAdiestramiento();
+		as("owner1").whenIamLoggedIntheSystem().thenIPayCitaAdiestramiento();
 	}
 
 	@Test
 	public void pagarCitaAdiestramientoSinDinero() throws Exception {
 
-		as("owner3").
-		whenIamLoggedIntheSystem().
-		thenIPayCitaAdiestramientoWithOutMoney();
+		as("owner3").whenIamLoggedIntheSystem().thenIPayCitaAdiestramientoWithOutMoney();
 	}
 
 	private void thenIPayCitaAdiestramientoWithOutMoney() {
@@ -76,7 +75,7 @@ public class PagarCitaAdiestramientoUITest {
 
 	private CharSequence passwordOf(String username) {
 		return "0wn3r";
-		
+
 	}
 
 	private void thenIPayCitaAdiestramiento() {
@@ -102,15 +101,26 @@ public class PagarCitaAdiestramientoUITest {
 		driver.findElement(By.name("lastName")).clear();
 		driver.findElement(By.name("lastName")).sendKeys("Franklin");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertEquals("1150", driver.findElement(By.xpath("//tr[5]/td")).getText());
+		assertEquals(this.pagoOwner(), driver.findElement(By.xpath("//tr[5]/td")).getText());
 		driver.findElement(By.linkText("ADIESTRADORES")).click();
-		assertEquals("1250",
-				driver.findElement(By.xpath("//table[@id='adiestradoresTable']/tbody/tr/td[6]")).getText());
+		assertEquals(this.pagoAdiestrador(),driver.findElement(By.xpath("//table[@id='adiestradoresTable']/tbody/tr/td[6]")).getText());
 
 	}
-	
+
 	private PagarCitaAdiestramientoUITest whenIamLoggedIntheSystem() {
 		return this;
+	}
+
+	private String pagoOwner() {
+		String newPrecio = this.precioCitaAdiestramiento.substring(0, this.precioCitaAdiestramiento.length() - 2);
+		Integer newMonederoOwner = Integer.parseInt(this.monederoOwner) - Integer.parseInt(newPrecio);
+		return newMonederoOwner.toString();
+	}
+
+	private String pagoAdiestrador() {
+		String newPrecio = this.precioCitaAdiestramiento.substring(0, this.precioCitaAdiestramiento.length() - 2);
+		Integer newMonederoVet = Integer.parseInt(this.monederoAdiestrador) + Integer.parseInt(newPrecio);
+		return newMonederoVet.toString();
 	}
 
 	@AfterEach

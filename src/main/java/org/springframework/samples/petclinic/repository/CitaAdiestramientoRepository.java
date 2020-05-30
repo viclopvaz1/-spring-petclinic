@@ -7,7 +7,7 @@ import org.springframework.samples.petclinic.model.CitaAdiestramiento;
 
 public interface CitaAdiestramientoRepository extends CrudRepository<CitaAdiestramiento, Integer> {
 	
-	//void save(CitaAdiestramiento citaAdiestramiento) throws DataAccessException;
+
 
 	Collection<CitaAdiestramiento> findCitaAdiestramientoByPet(String tipo) throws DataAccessException;
   

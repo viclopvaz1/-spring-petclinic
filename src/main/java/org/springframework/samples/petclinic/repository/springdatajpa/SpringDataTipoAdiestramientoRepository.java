@@ -17,6 +17,6 @@ public interface SpringDataTipoAdiestramientoRepository
 
 
         
-	//SELECT DISTICT v FROM Vet v LEFT JOIN FETCH v.specialities sp
+	
 
 }
