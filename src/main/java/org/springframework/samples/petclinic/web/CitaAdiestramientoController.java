@@ -88,7 +88,9 @@ public class CitaAdiestramientoController {
 	public String listadoCitasAdiestramiento(ModelMap modelMap) {
 
 		String vista = "citasAdiestramiento/listadoCitasAdiestramiento";
-		Iterable<CitaAdiestramiento> citasAdiestramiento = citaAdiestramientoService.findAll();
+		Iterable<CitaAdiestramiento> citasAdiestramiento = citaAdiestramientoService.findCitaAdiestramientoAll();
+		//	Iterable<CitaAdiestramiento> citasAdiestramiento = citaAdiestramientoService.findAll();
+
 		modelMap.addAttribute("citasAdiestramiento", citasAdiestramiento);
 		return vista;
 	}

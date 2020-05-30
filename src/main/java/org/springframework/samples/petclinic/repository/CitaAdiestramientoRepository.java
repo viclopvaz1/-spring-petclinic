@@ -14,5 +14,7 @@ public interface CitaAdiestramientoRepository extends CrudRepository<CitaAdiestr
 	Collection<CitaAdiestramiento> findCitasAdiestramientoByOwnerId(int ownerId) throws DataAccessException;
 
 	CitaAdiestramiento findCitaAdiestramientoById(int citaAdiestramientoId) throws DataAccessException;
+
 	
+
 }
