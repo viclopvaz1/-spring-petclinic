@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Causa;
 import org.springframework.samples.petclinic.model.Donacion;
@@ -29,6 +31,7 @@ public class CausaService {
 	}
 
 	@Transactional
+	@CacheEvict(cacheNames = "causaList", allEntries = true)
 	public void saveCausa(final Causa causa) {
 		if(causa == null) {
 			throw new NullPointerException();
@@ -42,6 +45,7 @@ public class CausaService {
 	}
 
 	@Transactional
+
 	public Collection<Causa> findAll() {
 		return this.causaRepo.findCausaByValidoTrue();
 	}
@@ -59,6 +63,7 @@ public class CausaService {
 	}
 
 	@Transactional
+	@Cacheable("causaList")
 	public Collection<Causa> findCausaByValido() throws DataAccessException {
 		return this.causaRepo.findCausaByValidoFalse();
 	}
