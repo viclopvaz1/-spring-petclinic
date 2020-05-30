@@ -69,14 +69,9 @@ public class CausasNegativeServiceTests {
 
 	}
 	
-	//** NumberFormatException && IllegalArgumentException
-	//++ NullPointerException
-	//.. IndexOutOfBoundsException
-	//,, ArithmeticException
-	
-	//------------------------------fechaInicio--------------------------
+
 	@Test
-	  void testExpectedExceptionFechaInicioNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  void testExpectedExceptionFechaInicioNull() {
 	 
 	    Assertions.assertThrows(NullPointerException.class, () -> {
 	    	causa.setFechaInicio(null);
@@ -85,16 +80,15 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionFechaInicioIndex() {//.................................................................
+	  void testExpectedExceptionFechaInicioIndex() {
 	 
 	    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
 	    	causa.getFechaInicio().toString().charAt(234);
 	    });
 	  }
 	
-	//------------------------------fechaFin--------------------------
 	@Test
-	  void testExpectedExceptionFechaFinNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  void testExpectedExceptionFechaFinNull() {
 	 
 	    Assertions.assertThrows(NullPointerException.class, () -> {
 	    	causa.setFechaFin(null);
@@ -103,17 +97,16 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionFechaFinIndex() {//.................................................................
+	  void testExpectedExceptionFechaFinIndex() {
 	 
 	    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
 	    	causa.getFechaFin().toString().charAt(234);
 	    });
 	  }
 	
-	//------------------------------ong--------------------------
 	
 	@Test
-	  void testExpectedExceptionOngNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  void testExpectedExceptionOngNull() {
 	 
 	    Assertions.assertThrows(NullPointerException.class, () -> {
 	    	causa.setOng(null);
@@ -122,16 +115,15 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionOngIndex() {//.................................................................
+	  void testExpectedExceptionOngIndex() {
 	 
 	    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
 	    	causa.getOng().charAt(234);
 	    });
 	  }
 	
-	//------------------------------objetivo--------------------------
 	@Test
-	  void testExpectedExceptionObjetivo() { //**************************************************************
+	  void testExpectedExceptionObjetivo() { 
 	 
 	    Assertions.assertThrows(NumberFormatException.class, () -> {
 	    	Integer numeroMalo = Integer.parseInt("Uno");
@@ -140,7 +132,7 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionObjetivoNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  void testExpectedExceptionObjetivoNull() {
 	 
 	    Assertions.assertThrows(NullPointerException.class, () -> {
 	    	causa.setObjetivo(null);
@@ -149,7 +141,7 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionObjetivoIndex() {//.................................................................
+	  void testExpectedExceptionObjetivoIndex() {
 	 
 	    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
 	    	causa.getObjetivo().toString().charAt(15454);
@@ -157,16 +149,15 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionObjetivoArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	  void testExpectedExceptionObjetivoArithmetic() {
 	 
 	    Assertions.assertThrows(ArithmeticException.class, () -> {
 	    	Integer a = causa.getObjetivo() / 0;
 	    });
 	  }
 	
-	//------------------------------dineroRecaudado--------------------------
 	@Test
-	  void testExpectedExceptionDineroRecaudado() { //**************************************************************
+	  void testExpectedExceptionDineroRecaudado() { 
 	 
 	    Assertions.assertThrows(NumberFormatException.class, () -> {
 	    	Integer numeroMalo = Integer.parseInt("Uno");
@@ -175,7 +166,7 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionDineroRecaudadoNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  void testExpectedExceptionDineroRecaudadoNull() {
 	 
 	    Assertions.assertThrows(NullPointerException.class, () -> {
 	    	causa.setDineroRecaudado(null);
@@ -184,7 +175,7 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionDineroRecaudadoIndex() {//.................................................................
+	  void testExpectedExceptionDineroRecaudadoIndex() {
 	 
 	    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
 	    	causa.getDineroRecaudado().toString().charAt(15454);
@@ -192,16 +183,15 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionDineroRecaudadoArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+	  void testExpectedExceptionDineroRecaudadoArithmetic() {
 	 
 	    Assertions.assertThrows(ArithmeticException.class, () -> {
 	    	Integer a = causa.getDineroRecaudado() / 0;
 	    });
 	  }
 	
-	//------------------------------valido--------------------------
 	@Test
-	  void testExpectedExceptionValidoNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  void testExpectedExceptionValidoNull() {
 	 
 	    Assertions.assertThrows(NullPointerException.class, () -> {
 	    	Boolean a = null;
@@ -210,19 +200,16 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	
-	
-	//------------------------------donaciones--------------------------
-	
 	@Test
-	void testExpectedExceptionIndex() {//.................................................................
-	 
+	void testExpectedExceptionIndex() {
+		
 	    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
 	    	causa.getDonaciones().get(544);
 	    });
 	  }
 	
 	@Test
-	  void testExpectedExceptionDonacionesNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  void testExpectedExceptionDonacionesNull() {
 	 
 	    Assertions.assertThrows(NullPointerException.class, () -> {
 	    	causa.setDonaciones(null);
@@ -230,10 +217,9 @@ public class CausasNegativeServiceTests {
 	    });
 	  }
 	
-	//------------------------------id--------------------------
 	
 	@Test
-	  void testExpectedExceptionId() { //**************************************************************
+	  void testExpectedExceptionId() { 
 	 
 	    Assertions.assertThrows(NumberFormatException.class, () -> {
 	    	Integer numeroMalo = Integer.parseInt("Uno");
@@ -242,7 +228,7 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionIdNull() {//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	  void testExpectedExceptionIdNull() {
 	 
 	    Assertions.assertThrows(NullPointerException.class, () -> {
 	    	causa.setId(null);
@@ -251,22 +237,21 @@ public class CausasNegativeServiceTests {
 	  }
 	
 	@Test
-	  void testExpectedExceptionIdIndex() {//.................................................................
-	 
+	  void testExpectedExceptionIdIndex() {
+		
 	    Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
 	    	causa.getId().toString().charAt(15454);
 	    });
 	  }
 	
 	@Test
-	  void testExpectedExceptionIdArithmetic() {//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-	 
+	  void testExpectedExceptionIdArithmetic() {
+		
 	    Assertions.assertThrows(ArithmeticException.class, () -> {
 	    	Integer a = causa.getId() / 0;
 	    });
 	  }
 	
-	//----------------------------------------------------------------------------------------------------------
 	
 	
 

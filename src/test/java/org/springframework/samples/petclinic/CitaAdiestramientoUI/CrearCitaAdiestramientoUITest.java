@@ -34,8 +34,6 @@ public class CrearCitaAdiestramientoUITest {
 
   @BeforeEach
   public void setUp() throws Exception {
-//		String pathToGeckoDriver = "C:\\Users\\pepe1\\Documents\\geckodriver-v0.26.0-win64";
-//		System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
 		driver = new FirefoxDriver();
 		baseUrl = "https://www.google.com/";
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -158,7 +156,7 @@ private CharSequence passwordOf(String username) {
 
 
 private CrearCitaAdiestramientoUITest whenIamLoggedIntheSystem() {
-	// TODO Auto-generated method stub
+	
 	return this;
 }
 

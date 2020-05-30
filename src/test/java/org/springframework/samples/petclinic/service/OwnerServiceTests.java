@@ -124,13 +124,12 @@ class OwnerServiceTests {
 		owner.setLastName(newLastName);
 		this.ownerService.saveOwner(owner);
 
-		// retrieving new name from database
 		owner = this.ownerService.findOwnerById(1);
 		Assertions.assertThat(owner.getLastName()).isEqualTo(newLastName);
 	}
 	
 	@ParameterizedTest
-	@CsvSource({//NEGATIVO 
+	@CsvSource({
 		"owner2", "owner3"
 	})
 	public void testFindOwnerByUsernamesvSource(final String username) {
@@ -139,7 +138,7 @@ class OwnerServiceTests {
 	}
 	
 	@ParameterizedTest
-	@CsvSource({//NEGATIVO 
+	@CsvSource({
 		"owner124", "owner444"
 	})
 	public void testNotFindOwnerByUsermeCsvSource(final String username) {

@@ -77,7 +77,6 @@ public class CitaAdiestramientoControllerIntegrationTests {
 
 	@Test
 	void testProcessFindFormByTipoPet() throws Exception {
-		// given(this.clinicService.findCitaAdiestramientoByPet(pet.getType().getName())).willReturn(Lists.newArrayList(citaAdiestramiento));
 		mockMvc.perform(get("/citasAdiestramiento").param("pet.type.name", "cat")).andExpect(status().isOk())
 				.andExpect(view().name("citasAdiestramiento/listadoCitasAdiestramientoFiltrado"));
 
@@ -86,7 +85,6 @@ public class CitaAdiestramientoControllerIntegrationTests {
 	@WithMockUser(username = "adiestrador1", authorities = { "adiestrador" })
 	@Test
 	void processFindFormByTipoPetNotFound() throws Exception {
-		// given(this.clinicService.findCitaAdiestramientoByPet(pet.getType().getName())).willReturn(Lists.newArrayList(cita));
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/citasAdiestramiento").param("pet.type.name", "Unknown Tipo"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
@@ -106,11 +104,7 @@ public class CitaAdiestramientoControllerIntegrationTests {
 								Matchers.is(LocalDate.parse("2020/12/12", DateTimeFormatter.ofPattern("yyyy/MM/dd"))))))
 				.andExpect(model().attribute("citaAdiestramiento",
 						Matchers.hasProperty("hora", Matchers.is(LocalTime.parse("17:00")))))
-				// .andExpect(model().attribute("citaAdiestramiento", hasProperty("pagado",
-				// is(false))))
 				.andExpect(model().attribute("citaAdiestramiento", Matchers.hasProperty("precio", Matchers.is(50.0))))
-//				.andExpect(model().attribute("citaAdiestramiento",
-//						Matchers.hasProperty("tipoAdiestramiento", Matchers.is("Adiestramiento deportivo"))))
 				.andExpect(view().name("citasAdiestramiento/createOrUpdateCitaAdiestramientoForm"));
 	}
 
@@ -163,10 +157,10 @@ public class CitaAdiestramientoControllerIntegrationTests {
 	void testProcessCreationCitaFormSuccess() throws Exception {
 		this.mockMvc
 				.perform(MockMvcRequestBuilders
-						.post("/citasAdiestramiento/new/{ownerId}/{petId}", TEST_OWNER_ID, TEST_PET_ID)//
+						.post("/citasAdiestramiento/new/{ownerId}/{petId}", TEST_OWNER_ID, TEST_PET_ID)
 						.with(SecurityMockMvcRequestPostProcessors.csrf()).param("id", "1")
-						.param("fechaInicio", "2020/12/11").param("tipoAdiestramiento", "Adiestramiento deportivo")//
-						.param("precio", "100").param("hora", "15:00").param("duracion", "20"))// 1
+						.param("fechaInicio", "2020/12/11").param("tipoAdiestramiento", "Adiestramiento deportivo")
+						.param("precio", "100").param("hora", "15:00").param("duracion", "20"))
 				.andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/citaAdiestramiento/" + TEST_CITA_ADIESTRAMIENTO_ID));
 
