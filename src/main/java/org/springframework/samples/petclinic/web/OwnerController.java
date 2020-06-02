@@ -46,7 +46,7 @@ public class OwnerController {
 	private final OwnerService ownerService;
 	
 	public Boolean error(BindingResult result) {
-		return error(result);
+		return result.hasErrors();
 	}
 	
 	@Autowired
@@ -68,7 +68,7 @@ public class OwnerController {
 
 	@PostMapping(value = "/owners/new")
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
-		if (error(result)) {
+		if (this.error(result)) {
 //			modelMap.addAttribute("owner", owner);	, ModelMap modelMap
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -120,7 +120,7 @@ public class OwnerController {
 	@PostMapping(value = "/owners/{ownerId}/edit")
 	public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result,
 			@PathVariable("ownerId") int ownerId) {
-		if (error(result)) {
+		if (this.error(result)) {
 			return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 		} else {
 			owner.setId(ownerId);

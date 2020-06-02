@@ -71,7 +71,7 @@ public class DonacionController {
 	//	}
 	
 	public Boolean error(BindingResult result) {
-		return error(result);
+		return result.hasErrors();
 	}
 
 	@GetMapping(value = "/{causaId}/new")
@@ -89,7 +89,7 @@ public class DonacionController {
 	@PostMapping(value = "/{causaId}/new")
 	public String processCreationForm(@Valid final Donacion donacion, final BindingResult result, @PathVariable("causaId") final int causaId, final Map<String, Object> model, final ModelMap modelMap) {
 		Causa causa = this.causaService.findCausaById(causaId);
-		if (error(result) || !causa.isValido()) {
+		if (this.error(result) || !causa.isValido()) {
 			model.put("donacion", donacion);
 			return DonacionController.VIEWS_DONACION_NEW_FORM;
 		} else {

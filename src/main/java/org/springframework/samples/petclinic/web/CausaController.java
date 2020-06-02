@@ -61,7 +61,7 @@ public class CausaController {
 	}
 	
 	public Boolean error(BindingResult result) {
-		return error(result);
+		return result.hasErrors();
 	}
 
 	@GetMapping
@@ -89,7 +89,7 @@ public class CausaController {
 
 	@PostMapping(value = "/new")
 	public String processCreationForm(@Valid final Causa causa, final BindingResult result, final Map<String, Object> model) {
-		if (error(result)) {
+		if (this.error(result)) {
 			return "causas/createOrUpdateCausaForm";
 		} else {
 			String mensaje = "";
@@ -172,7 +172,7 @@ public class CausaController {
 
 	@PostMapping(value = "/{causaId}/edit")
 	public String processUpdateCausaForm(@Valid final Causa causa, final BindingResult result, @PathVariable("causaId") final int causaId, final Model model) {
-		if (error(result)) {
+		if (this.error(result)) {
 			return "causas/createOrUpdateCausaForm";
 		} else {
 			String mensaje = "";

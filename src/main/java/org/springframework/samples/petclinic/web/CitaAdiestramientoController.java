@@ -65,7 +65,7 @@ public class CitaAdiestramientoController {
 	}
 	
 	public Boolean error(BindingResult result) {
-		return error(result);
+		return result.hasErrors();
 	}
 
 	@ModelAttribute("tipoAdiestramiento")
@@ -146,7 +146,7 @@ public class CitaAdiestramientoController {
 	public String processCreationForm(@Valid final CitaAdiestramiento citaAdiestramiento, final BindingResult result,
 			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId,
 			final Map<String, Object> model) {
-		if (error(result)) {
+		if (this.error(result)) {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {
 			String mensaje = "";
@@ -197,7 +197,7 @@ public class CitaAdiestramientoController {
 	public String processUpdateCitaForm(@Valid CitaAdiestramiento citaAdiestramiento, final BindingResult result,
 			@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,
 			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId) {
-		if (error(result)) {
+		if (this.error(result)) {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {
 			citaAdiestramiento.setId(citaAdiestramientoId);
