@@ -43,7 +43,7 @@ public class CitaAdiestramientoController {
 	private AdiestradorService adiestradorService;
 
 	private CitaAdiestramientoValidator citaAdiestramientoValidator = new CitaAdiestramientoValidator();
-
+	
 	@Autowired
 	public CitaAdiestramientoController(final CitaAdiestramientoService citaAdiestramientoService,
 			OwnerService ownerService, TipoAdiestramientoService tipoAdiestramientoService,
@@ -55,6 +55,10 @@ public class CitaAdiestramientoController {
 		this.petService = petService;
 		this.authoritiesService = authoritiesService;
 
+	}
+	
+	public Boolean error(BindingResult result) {
+		return result.hasErrors();
 	}
 
 	@ModelAttribute("tipoAdiestramiento")
@@ -131,7 +135,7 @@ public class CitaAdiestramientoController {
 	public String processCreationForm(@Valid final CitaAdiestramiento citaAdiestramiento, final BindingResult result,
 			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId,
 			final Map<String, Object> model) {
-		if (result.hasErrors()) {
+		if (this.error(result)) {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {
 			String mensaje = "";
@@ -177,8 +181,8 @@ public class CitaAdiestramientoController {
 	@PostMapping(value = "/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}")
 	public String processUpdateCitaForm(@Valid CitaAdiestramiento citaAdiestramiento, final BindingResult result,
 			@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,
-			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId, Map<String, Object> model) {
-		if (result.hasErrors()) {
+			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId) {
+		if (this.error(result)) {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {
 			String mensaje = "";

@@ -57,6 +57,10 @@ public class CitaOperacionController {
 		this.tipoOperacionService = tipoOperacionService;
 		this.ownerService = ownerService;
 	}
+  
+  public Boolean error(BindingResult result) {
+		return result.hasErrors();
+	}
 	
 	@ModelAttribute("tipoOperacion")
 	public Collection<TipoOperacion> populateTiposOperaciones() {
@@ -132,7 +136,7 @@ public class CitaOperacionController {
 
 	@PostMapping(value = "/citasOperaciones/new/{petId}")
 	public String processCreationForm(@Valid final CitaOperacion citaOperacion, final BindingResult result, @PathVariable("petId") final int petId, final Map<String, Object> model) {
-		if (result.hasErrors()) {
+		if (this.error(result)) {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
 			String mensaje = "";
@@ -175,7 +179,7 @@ public class CitaOperacionController {
 	@PostMapping(value = "/citaOperacion/{citaOperacionId}/edit/{petId}")
 	public String processUpdateCitaOperacionForm(@Valid CitaOperacion citaOperacion, final BindingResult result, @PathVariable("citaOperacionId") final int citaOperacionId,
 			@PathVariable("petId") final int petId, Map<String, Object> model) {
-		if (result.hasErrors()) {
+		if (this.error(result)) {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
 			String mensaje = "";
