@@ -80,16 +80,19 @@ public class PagarCitaAdiestramientoUITest {
 
 	private void thenIPayCitaAdiestramiento() {
 		driver.findElement(By.linkText("ADIESTRADORES")).click();
+		this.monederoAdiestrador = driver.findElement(By.xpath("//table[@id='adiestradoresTable']/tbody/tr/td[6]")).getText();
 		assertEquals("1200",
-				driver.findElement(By.xpath("//table[@id='adiestradoresTable']/tbody/tr/td[6]")).getText());
+				monederoAdiestrador);
 		driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
 		driver.findElement(By.name("lastName")).click();
 		driver.findElement(By.name("lastName")).clear();
 		driver.findElement(By.name("lastName")).sendKeys("Franklin");
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertEquals("1200", driver.findElement(By.xpath("//tr[5]/td")).getText());
+		this.monederoOwner = driver.findElement(By.xpath("//tr[5]/td")).getText();
+		assertEquals("1200", monederoOwner);
 		driver.findElement(By.xpath("//a[contains(text(),'Citas Adiestramiento')]")).click();
 		driver.findElement(By.xpath("//table[@id='citasAdiestramientoOwnersIdTable']/tbody/tr/td[8]")).click();
+		this.precioCitaAdiestramiento = driver.findElement(By.xpath("//table[@id='citasAdiestramientoOwnersIdTable']/tbody/tr/td[5]")).getText();
 		assertEquals("false", driver
 				.findElement(By.xpath("//table[@id='citasAdiestramientoOwnersIdTable']/tbody/tr/td[8]")).getText());
 		driver.findElement(By.linkText("Pagar")).click();

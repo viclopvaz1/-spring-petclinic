@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.web;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 import javax.validation.Valid;
@@ -181,7 +180,7 @@ public class CitaAdiestramientoController {
 	@PostMapping(value = "/citaAdiestramiento/{citaAdiestramientoId}/edit/{ownerId}/{petId}")
 	public String processUpdateCitaForm(@Valid CitaAdiestramiento citaAdiestramiento, final BindingResult result,
 			@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,
-			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId) {
+			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId, Map<String, Object> model) {
 		if (this.error(result)) {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {

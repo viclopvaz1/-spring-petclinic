@@ -147,7 +147,7 @@ private void andThenICreateCitaAdiestramientoWithErrorInFechaInicio() {
     driver.findElement(By.xpath("//option[@value='Adiestramiento deportivo']")).click();
     driver.findElement(By.xpath("//button[@type='submit']")).click();
     driver.findElement(By.xpath("//body/div")).click();
-    assertEquals("La fecha de inicio debe ser igual.", driver.findElement(By.xpath("//b")).getText());
+    assertEquals("La fecha de inicio debe ser mayor a la fecha actual.", driver.findElement(By.xpath("//b")).getText());
   }
 
 private CharSequence passwordOf(String username) {

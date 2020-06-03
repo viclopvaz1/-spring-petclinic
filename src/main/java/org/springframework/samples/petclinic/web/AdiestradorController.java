@@ -1,8 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.service.AdiestradorService;

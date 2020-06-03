@@ -11,7 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -101,7 +104,7 @@ public class MonederoUITest {
 		assertEquals("tiene que ser mayor o igual que 0", driver.findElement(By.xpath("//form[@id='add-person-form']/div[2]/div/div/span[2]")).getText());
 	}
 	
-	  @AfterEach
+	@AfterEach
 	  public void tearDown() throws Exception {
 	    driver.quit();
 	    String verificationErrorString = verificationErrors.toString();
@@ -110,5 +113,36 @@ public class MonederoUITest {
 	    }
 	  }
 
+	  private boolean isElementPresent(By by) {
+	    try {
+	      driver.findElement(by);
+	      return true;
+	    } catch (NoSuchElementException e) {
+	      return false;
+	    }
+	  }
 
+	  private boolean isAlertPresent() {
+	    try {
+	      driver.switchTo().alert();
+	      return true;
+	    } catch (NoAlertPresentException e) {
+	      return false;
+	    }
+	  }
+
+	  private String closeAlertAndGetItsText() {
+	    try {
+	      Alert alert = driver.switchTo().alert();
+	      String alertText = alert.getText();
+	      if (acceptNextAlert) {
+	        alert.accept();
+	      } else {
+	        alert.dismiss();
+	      }
+	      return alertText;
+	    } finally {
+	      acceptNextAlert = true;
+	    }
+	  }
 }

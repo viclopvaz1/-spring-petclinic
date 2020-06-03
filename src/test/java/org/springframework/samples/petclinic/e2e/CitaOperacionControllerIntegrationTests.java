@@ -199,7 +199,6 @@ public class CitaOperacionControllerIntegrationTests {
 	@Test
 	void testPayCitaOperacionSuccess() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/citaOperacion/{citaOperacionId}/pay", TEST_CITAOPERACION_ID))
-		.andExpect(MockMvcResultMatchers.model().attributeExists("pet"))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("pagado"))
 		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesPets"));
 	}

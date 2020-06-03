@@ -64,10 +64,6 @@ public class PersonController {
 		this.personService = personService;
 	}
 	
-	public Boolean error(BindingResult result) {
-		return error(result);
-	}
-	
 	@GetMapping(value = "/edit")
 	public String initUpdateMonederoForm(final Model model) {
 		Person person = new Person();
@@ -80,7 +76,7 @@ public class PersonController {
 
 	@PostMapping(value = "/edit")
 	public String processUpdateMonederoForm(@Valid final Person person, final BindingResult result, final Model model) {
-		if (error(result)) {
+		if (result.hasErrors()) {
 			return "users/editUser";
 		} else {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();

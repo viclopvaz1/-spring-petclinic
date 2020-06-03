@@ -222,7 +222,7 @@ public class CitaOperacionController {
 			noPuedePagar = true;
 			model.put("noPuedePagar", noPuedePagar);
 			model.put("pagado", citaOperacion.isPagado());
-			model.put("pet", citaOperacion.getPet());
+			model.put("citasOperaciones", this.citaOperacionService.findCitaOperacionByPet(citaOperacion.getPet().getId()));
 			return "citasOperaciones/listadoCitasOperacionesPets";
 		}
 			Owner owner = citaOperacion.getPet().getOwner();

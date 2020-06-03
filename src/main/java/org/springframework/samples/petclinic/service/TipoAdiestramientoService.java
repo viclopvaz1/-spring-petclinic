@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.CitaAdiestramiento;
 import org.springframework.samples.petclinic.model.TipoAdiestramiento;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataTipoAdiestramientoRepository;
 import org.springframework.stereotype.Service;

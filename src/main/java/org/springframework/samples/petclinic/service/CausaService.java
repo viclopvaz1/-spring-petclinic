@@ -2,14 +2,11 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
-import java.util.NoSuchElementException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Causa;
-import org.springframework.samples.petclinic.model.Donacion;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCausaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
