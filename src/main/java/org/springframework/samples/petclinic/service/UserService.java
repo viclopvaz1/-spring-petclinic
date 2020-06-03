@@ -51,10 +51,5 @@ public class UserService {
 		return this.userRepository.findById(id);
 	}
 
-	//	@Transactional
-	//	public void saveMoney(User user, Integer dinero) throws DataAccessException {
-	//		user.setMonedero(dinero);
-	//		userRepository.save(user);
-	//	}
 
 }

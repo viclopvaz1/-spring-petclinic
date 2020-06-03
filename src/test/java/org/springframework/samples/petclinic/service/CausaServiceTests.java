@@ -53,7 +53,6 @@ public class CausaServiceTests {
 		" , 500, ong, 2020-05-06, 2020-05-20, true", " 1200,, ong, 2020-05-06, 2020-05-20, true", "1200, 0,, 2020-05-06, 2020-05-20, true", "1200,0, ong,, 2020-05-20, true", "1200,0, ong, 2020-05-06,, true"
 	})
 	public void addNewCausaWithCsvSourceNoExitoso(final Integer objetivo, final Integer dineroRecaudado, final String ong, final LocalDate fechaInicio, final LocalDate fechaFin, final boolean valido) {
-		//Prueba introducir un valor null distinto en cada causa, se prueban todos menos el atributo valido, porque al ser boolean no puede ser null
 		Assertions.assertThrows(ConstraintViolationException.class, () -> {
 			Causa causa = new Causa();
 			causa.setObjetivo(objetivo);
@@ -109,7 +108,7 @@ public class CausaServiceTests {
 		org.assertj.core.api.Assertions.assertThat(causa.isValido()).isEqualTo(nuevoValido);
 	}
 	
-	@Test//Negativo es null la causa
+	@Test
 	@Order(9)
 	public void saveFailCausa() {
 		Causa causa = null;		

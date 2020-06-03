@@ -26,7 +26,7 @@ public class CitaAdiestramientoValidator implements Validator {
 	public void validateFechas(final Object target) throws FechasException {
 
 		CitaAdiestramiento citaAdiestramiento = (CitaAdiestramiento) target;
-		// Fecha de Inicio validation
+	
 		if (citaAdiestramiento.getFechaInicio().isBefore(LocalDate.now())
 				|| citaAdiestramiento.getFechaInicio().isEqual(LocalDate.now())) {
 			throw new FechasException();
@@ -34,11 +34,11 @@ public class CitaAdiestramientoValidator implements Validator {
 
 	}
 
-	public void validateTipoOperacion(final Object target) throws TipoAdiestramientoException {
+	public void validateTipoAdiestramiento(final Object target) throws TipoAdiestramientoException {
 
 		CitaAdiestramiento citaOperacion = (CitaAdiestramiento) target;
 		Collection<TipoAdiestramiento> tiposAdiestramientos = (Collection<TipoAdiestramiento>) this.tipoAdiestramientoService.findAll();
-		// Tipo Operacion validation
+		
 		if (!tiposAdiestramientos.contains(citaOperacion.getTipoAdiestramiento())) {
 			throw new TipoAdiestramientoException();
 		}
@@ -47,7 +47,7 @@ public class CitaAdiestramientoValidator implements Validator {
 	
 	public void validateDineroMonedero(final Object target) throws PagoException {
 		CitaAdiestramiento citaAdiestramiento = (CitaAdiestramiento) target;
-		// Pago validation
+	
 		if(citaAdiestramiento.getPrecio() > citaAdiestramiento.getPet().getOwner().getMonedero()) {
 			throw new PagoException();
 		}
