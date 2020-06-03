@@ -69,7 +69,7 @@ public class CausaController {
 	}
 	@GetMapping(value = "/propias")
 	public String listadoCausasPorDonacion(final ModelMap modelMap) {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String username = this.findUsername();
 		Iterable<Causa> causas = this.causaService.findCausaByUsername(username);
 		String vista = "causas/listadoCausas";
 		modelMap.addAttribute("causas", causas);
@@ -131,7 +131,7 @@ public class CausaController {
 	@GetMapping("/{id}")
 	public ModelAndView showCausa(@PathVariable("id") final int id, final Model model) {
 		ModelAndView mav = new ModelAndView("causas/causaDetails");
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String username = this.findUsername();
 		Collection<Authorities> collection = this.authoritiesService.findAll();
 		String a = collection.stream().filter(x -> x.getUsername().equals(username)).map(x -> x.getAuthority()).findFirst().orElse(null);
 		boolean user = a.equals("owner");
@@ -213,6 +213,10 @@ public class CausaController {
 		Iterable<Causa> causas = this.causaService.findCausaByValido();
 		modelMap.addAttribute("causas", causas);
 		return vista;
+	}
+	
+	public String findUsername() {
+		return SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 }
