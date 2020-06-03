@@ -129,7 +129,7 @@ public class CitaOperacionController {
 	public String initCreationForm(final Map<String, Object> model, @PathVariable("petId") final int petId) {
 		CitaOperacion citaOperacion = new CitaOperacion();
 		citaOperacion.setPet(this.petService.findPetById(petId));
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String username = this.findUsername();
 		citaOperacion.setVet(this.vetService.findVetByUser(username));
 		model.put("citaOperacion", citaOperacion);
 		return "citasOperaciones/createOrUpdateCitaOperacionForm";
@@ -153,7 +153,7 @@ public class CitaOperacionController {
 				return "citasOperaciones/createOrUpdateCitaOperacionForm";
 			} else {
 				//creating Cita Operacion
-				String username = SecurityContextHolder.getContext().getAuthentication().getName();
+				String username = this.findUsername();
 				citaOperacion.setVet(this.vetService.findVetByUser(username));
 				citaOperacion.setPet(this.petService.findPetById(petId));
 				citaOperacion.setPagado(false);
@@ -197,7 +197,7 @@ public class CitaOperacionController {
 				return "citasOperaciones/createOrUpdateCitaOperacionForm";
 			} else {
 				citaOperacion.setId(citaOperacionId);
-				String username = SecurityContextHolder.getContext().getAuthentication().getName();
+				String username = this.findUsername();
 				citaOperacion.setVet(this.vetService.findVetByUser(username));
 				citaOperacion.setPet(this.petService.findPetById(petId));
 				this.citaOperacionService.saveCitaOperacion(citaOperacion);
@@ -242,6 +242,10 @@ public class CitaOperacionController {
 			model.put("citasOperaciones", this.citaOperacionService.findCitaOperacionByPet(citaOperacion.getPet().getId()));
 			model.put("noPuedePagar", noPuedePagar);
 		return "citasOperaciones/listadoCitasOperacionesPets";
+	}
+	
+	public String findUsername() {
+		return SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 	
 }
