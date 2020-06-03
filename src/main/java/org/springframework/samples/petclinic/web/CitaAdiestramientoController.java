@@ -3,14 +3,10 @@ package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
-import java.util.NoSuchElementException;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adiestrador;
 import org.springframework.samples.petclinic.model.CitaAdiestramiento;
-import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.TipoAdiestramiento;
 import org.springframework.samples.petclinic.service.AdiestradorService;
@@ -19,7 +15,6 @@ import org.springframework.samples.petclinic.service.CitaAdiestramientoService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.TipoAdiestramientoService;
-import org.springframework.samples.petclinic.service.TipoOperacionService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,11 +25,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-//@RequestMapping("/citasAdiestramiento")
 public class CitaAdiestramientoController {
 
 	final AuthoritiesService authoritiesService;
@@ -92,7 +85,7 @@ public class CitaAdiestramientoController {
 	public String listadoCitasAdiestramiento(ModelMap modelMap) {
 
 		String vista = "citasAdiestramiento/listadoCitasAdiestramiento";
-		Iterable<CitaAdiestramiento> citasAdiestramiento = citaAdiestramientoService.findAll();
+		Iterable<CitaAdiestramiento> citasAdiestramiento = citaAdiestramientoService.findCitaAdiestramientoAll();
 		modelMap.addAttribute("citasAdiestramiento", citasAdiestramiento);
 		return vista;
 	}
@@ -107,36 +100,32 @@ public class CitaAdiestramientoController {
 	public String processFindForm(CitaAdiestramiento citaAdiestramiento, BindingResult result,
 			Map<String, Object> model) {
 
-		// allow parameterless GET request for /owners to return all records
 		if (citaAdiestramiento.getPet().getType().getName() == null) {
-			citaAdiestramiento.getPet().getType().setName(""); // empty string signifies broadest possible search
+			citaAdiestramiento.getPet().getType().setName("");
 		}
 
-		// find owners by last name
 		String tipo = citaAdiestramiento.getPet().getType().getName();
 
 		Collection<CitaAdiestramiento> results = this.citaAdiestramientoService.findCitaAdiestramientoByPet(tipo);
 		if (results.isEmpty()) {
-			// no owners found
+
 			result.rejectValue("pet.type.name", "notFound", "not found");
 			return "citasAdiestramiento/findCitasAdiestramiento";
 		} else {
-			// multiple owners found
+
 			model.put("citasAdiestramiento", results);
 			return "citasAdiestramiento/listadoCitasAdiestramientoFiltrado";
 		}
 	}
 
-	// -------------------------------------------------------------
+
 	@GetMapping(value = "/citasAdiestramiento/new/{ownerId}/{petId}")
 	public String initCreationForm(final Map<String, Object> model, @PathVariable("ownerId") final int ownerId,
 			@PathVariable("petId") final int petId) {
 		CitaAdiestramiento citaAdiestramiento = new CitaAdiestramiento();
 		citaAdiestramiento.setOwner(this.ownerService.findOwnerById(ownerId));
 		citaAdiestramiento.setPet(this.petService.findPetById(petId));
-//		Collection<Authorities> collection = this.authoritiesService.findAll();
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//		String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
+		String username = this.findUsername();
 		citaAdiestramiento.setAdiestrador(this.adiestradorService.findAdiestradorByUser(username));
 		model.put("citaAdiestramiento", citaAdiestramiento);
 		return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
@@ -150,22 +139,18 @@ public class CitaAdiestramientoController {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {
 			String mensaje = "";
-			if (citaAdiestramiento.getFechaInicio().isBefore(LocalDate.now())
-					|| citaAdiestramiento.getFechaInicio().isEqual(LocalDate.now())) {
-				mensaje = "La fecha de inicio debe ser igual.";
-				ObjectError errorFechaInicio = new ObjectError("ErrorFechaInicio",
-						"La fecha de inicio debe ser igual.");
-				result.addError(errorFechaInicio);
+			try {
+				this.citaAdiestramientoValidator.validateFechas(citaAdiestramiento);
+			} catch (FechasException e) {
+				mensaje = "La fecha de inicio debe ser mayor a la fecha actual.";
+				ObjectError errorFecha = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser mayor a la fecha actual.");
+				result.addError(errorFecha);
 			}
 			if (mensaje != "") {
 				model.put("mensaje", mensaje);
 				return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 			} else {
-				// creating Cita Adiestramiento
-				// Collection<Authorities> collection = this.authoritiesService.findAll();
-				String username = SecurityContextHolder.getContext().getAuthentication().getName();
-				// String a = collection.stream().filter(x -> x.getUsername() == username).map(x
-				// -> x.getAuthority()).findFirst().orElse(null);
+				String username = this.findUsername();
 				citaAdiestramiento.setAdiestrador(this.adiestradorService.findAdiestradorByUser(username));
 				citaAdiestramiento.setOwner(this.ownerService.findOwnerById(ownerId));
 				citaAdiestramiento.setPet(this.petService.findPetById(petId));
@@ -188,7 +173,7 @@ public class CitaAdiestramientoController {
 	public String initUpdateCitaForm(@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,
 			@PathVariable("ownerId") final int ownerId, @PathVariable("petId") final int petId, final Model model) {
 		CitaAdiestramiento citaAdiestramiento = this.citaAdiestramientoService
-				.findCitaAdiestramientoById(citaAdiestramientoId); // .get()
+				.findCitaAdiestramientoById(citaAdiestramientoId);
 		model.addAttribute(citaAdiestramiento);
 		return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 	}
@@ -200,13 +185,25 @@ public class CitaAdiestramientoController {
 		if (this.error(result)) {
 			return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
 		} else {
-			citaAdiestramiento.setId(citaAdiestramientoId);
-//            citaOperacion = this.citaOperacionService.findCitaOperacionById(citaOperacionId);
-			String username = SecurityContextHolder.getContext().getAuthentication().getName();
-			citaAdiestramiento.setAdiestrador(this.adiestradorService.findAdiestradorByUser(username));
-			citaAdiestramiento.setPet(this.petService.findPetById(petId));
-			citaAdiestramiento.setOwner(this.ownerService.findOwnerById(ownerId));
-			this.citaAdiestramientoService.saveCitaAdiestramiento(citaAdiestramiento);
+			String mensaje = "";
+			try {
+				this.citaAdiestramientoValidator.validateFechas(citaAdiestramiento);
+			} catch (FechasException e) {
+				mensaje = "La fecha de inicio debe ser mayor a la fecha actual.";
+				ObjectError errorFecha = new ObjectError("ErrorFechaInicio", "La fecha de inicio debe ser mayor a la fecha actual.");
+				result.addError(errorFecha);
+			}
+			if (mensaje != "") {
+				model.put("mensaje", mensaje);
+				return "citasAdiestramiento/createOrUpdateCitaAdiestramientoForm";
+			} else {
+				citaAdiestramiento.setId(citaAdiestramientoId);
+				String username = this.findUsername();
+				citaAdiestramiento.setAdiestrador(this.adiestradorService.findAdiestradorByUser(username));
+				citaAdiestramiento.setPet(this.petService.findPetById(petId));
+				citaAdiestramiento.setOwner(this.ownerService.findOwnerById(ownerId));
+				this.citaAdiestramientoService.saveCitaAdiestramiento(citaAdiestramiento);
+			}
 			return "redirect:/citaAdiestramiento/" + citaAdiestramiento.getId();
 		}
 	}
@@ -215,9 +212,9 @@ public class CitaAdiestramientoController {
 	public String processDeleteCitaForm(@PathVariable("citaAdiestramientoId") final int citaAdiestramientoId,
 			ModelMap modelMap) {
 
-			CitaAdiestramiento citaAdiestramiento = this.citaAdiestramientoService
-					.findCitaAdiestramientoById(citaAdiestramientoId);
-			this.citaAdiestramientoService.deleteCitaAdiestramiento(citaAdiestramiento);
+		CitaAdiestramiento citaAdiestramiento = this.citaAdiestramientoService
+				.findCitaAdiestramientoById(citaAdiestramientoId);
+		this.citaAdiestramientoService.deleteCitaAdiestramiento(citaAdiestramiento);
 
 		return "welcome";
 
@@ -262,6 +259,10 @@ public class CitaAdiestramientoController {
 		model.put("citasAdiestramiento", citasAdiestramiento);
 
 		return "citasAdiestramiento/listadoCitasAdiestramientoOwnersId";
+	}
+	
+	public String findUsername() {
+		return SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
 }

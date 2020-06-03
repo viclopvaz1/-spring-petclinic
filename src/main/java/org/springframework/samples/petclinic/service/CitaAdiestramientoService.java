@@ -25,6 +25,12 @@ public class CitaAdiestramientoService {
 	}
 
 	@Transactional
+	public Iterable<CitaAdiestramiento> findCitaAdiestramientoAll() {
+		return this.citaAdiestramientoRepo.findCitaAdiestramientoAll();
+	}
+	
+	
+	@Transactional
 	public Collection<CitaAdiestramiento> findCitaAdiestramientoByOwnerId(final int ownerId) {
 		return this.citaAdiestramientoRepo.findCitasAdiestramientoByOwnerId(ownerId);
 	}

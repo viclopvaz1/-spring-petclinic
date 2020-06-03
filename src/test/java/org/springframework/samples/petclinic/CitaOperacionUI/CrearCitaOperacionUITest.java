@@ -30,7 +30,6 @@ public class CrearCitaOperacionUITest {
   private String newTipoOperacion;
   private String newCantidadPersonal;
   private String newPagado;
-//  private int mascotasAlInicio;
   private String username;
   private WebDriver driver;
   private String baseUrl;
@@ -39,8 +38,6 @@ public class CrearCitaOperacionUITest {
 
   @BeforeEach
   public void setUp() throws Exception {
-//	String pathToGeckoDriver="C:\\Users\\vlope\\Downloads";
-//	System.setProperty("webdriver.gecko.driver", pathToGeckoDriver + "\\geckodriver.exe");
 	driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -96,7 +93,6 @@ public class CrearCitaOperacionUITest {
   }
   
   private void andThenICreateCitaOperacion() {
-//	  this.mascotasAlInicio = this.contarCitasOperaciones();
 	  driver.findElement(By.id("fechaInicio")).click();
 	  driver.findElement(By.id("fechaInicio")).clear();
 	  driver.findElement(By.id("fechaInicio")).sendKeys("2020/12/27");
@@ -136,7 +132,6 @@ public class CrearCitaOperacionUITest {
 	  assertEquals("Cirugia dental", this.newTipoOperacion);
 	  assertEquals("2.0", this.newCantidadPersonal);
 	  assertEquals("false", this.newPagado);
-//	  assertTrue(this.contarCitasOperaciones() > mascotasAlInicio );
   }
   
   private void andThenICreateCitaOperacionWithErrors() {
@@ -196,17 +191,6 @@ public class CrearCitaOperacionUITest {
 		return this;
 	}
   
-//  private int contarCitasOperaciones() {
-//	  driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
-//	  driver.findElement(By.name("lastName")).click();
-//	  driver.findElement(By.name("lastName")).clear();
-//	  driver.findElement(By.name("lastName")).sendKeys("Franklin");
-//	  driver.findElement(By.xpath("//button[@type='submit']")).click();
-//	  driver.findElement(By.linkText("Citas Operaciones")).click();
-//	  WebElement tablaCitasOperciones= driver.findElement(By.xpath("//table"));
-//	  List<WebElement> filasDeTablaCitasOperaciones = tablaCitasOperciones.findElements(By.tagName("tr"));
-//	  return filasDeTablaCitasOperaciones.size() - 1;
-//  }
 
   @AfterEach
   public void tearDown() throws Exception {

@@ -20,7 +20,6 @@ public class DonacionValidator implements Validator{
 		Causa causa = (Causa) target;
 		Integer dineroRecaudado = causa.getDineroRecaudado();
 		Integer dineroObjetivo = causa.getObjetivo();
-		// name validation
 		if (dineroRecaudado > dineroObjetivo) {
 			errors.rejectValue("cantidad", REQUIRED+" es superior al dinero objetivo");
 		}

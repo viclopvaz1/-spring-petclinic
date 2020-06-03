@@ -23,12 +23,6 @@ public interface SpringDataCitaOperacionRepository extends CitaOperacionReposito
 	@Query("SELECT citaOperacion FROM CitaOperacion citaOperacion WHERE citaOperacion.pet.id = :petId")
 	Collection<CitaOperacion> findCitaOperacionByPet(@Param("petId") int petId);
 	
-//	@Override
-//	@Query("SELECT tipoOperacion FROM TipoOperacion tipoOperacion WHERE tipoOperacion.name LIKE :name%")
-//	TipoOperacion findTipoOperacionByName(@Param("name") String name);
-	
-//	@Override
-//	@Query("SELECT tipoOperacion FROM TipoOperacion tipoOperacion ORDER BY tipoOperacion.name")
-//	Collection<TipoOperacion> findTiposOperaciones() throws DataAccessException;
+
 
 }

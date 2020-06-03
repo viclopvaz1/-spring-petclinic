@@ -27,7 +27,7 @@ public class CitaOperacionService {
 	@Transactional
 	public Iterable<CitaOperacion> findAll() {
 		Iterable<CitaOperacion> res = this.citaOperacionRepo.findAll();
-		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+		if (this.hayCitas(res)) {
 			throw new NoSuchElementException();
 		}
 		return res;
@@ -38,7 +38,7 @@ public class CitaOperacionService {
 	public Iterable<CitaOperacion> findCitaOperacionByTipoOperacion(final String tipoOperacion) throws NoSuchElementException {
 		Iterable<CitaOperacion> res = this.citaOperacionRepo.findCitaOperacionByTipoOperacion(tipoOperacion);
 
-		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+		if (this.hayCitas(res)) {
 			throw new NoSuchElementException();
 		}
 		return res;
@@ -63,5 +63,9 @@ public class CitaOperacionService {
 	@Transactional
 	public void deleteCitaOperacion(final CitaOperacion citaOperacion) {
 		this.citaOperacionRepo.delete(citaOperacion);
+	}
+	
+	public Boolean hayCitas(Iterable<CitaOperacion> res) {
+		return StreamSupport.stream(res.spliterator(), false).count() == 0;
 	}
 }
