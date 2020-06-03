@@ -14,9 +14,6 @@ public interface SpringDataTipoOperacionRepository  extends TipoOperacionReposit
 	@Override
 	@Query("SELECT tipoOperacion FROM TipoOperacion tipoOperacion WHERE tipoOperacion.name LIKE :name%")
 	TipoOperacion findTipoOperacionByName(@Param("name") String name);
-	
-//	@Override
-//	@Query("SELECT tipoOperacion FROM TipoOperacion tipoOperacion ORDER BY tipoOperacion.name")
-//	Collection<TipoOperacion> findTiposOperaciones() throws DataAccessException;
+
 
 }

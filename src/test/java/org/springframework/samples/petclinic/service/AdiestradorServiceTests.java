@@ -29,55 +29,16 @@ public class AdiestradorServiceTests {
 	@Autowired
 	protected AdiestradorService		adiestradorService;
 	
-	Adiestrador			adiestrador;//peta----------------------------------
-//	
-//    private static final int ESTRELLAS = 5;
-//    
-//    private static final int ID = 1;
-// 
-//    private static final String NOMBRE = "Aureliano";
-// 
-//    private static final String APELLIDO = "Buendía";
-// 
-//    private static final int TELEFONO = 625871852;
-//    
-//    private static final int MONEDERO = 100;
-
-//
-//	@Before
-//	private void setUp() {
-//		this.adiestrador = new Adiestrador();
-//		adiestrador.setEstrellas(ESTRELLAS);
-//		adiestrador.setFirstName(NOMBRE);
-//		adiestrador.setId(ID);
-//		adiestrador.setLastName(APELLIDO);
-//		adiestrador.setMonedero(MONEDERO);
-//		adiestrador.setTelefono(TELEFONO);
-//	}
-//	
-//    @Test
-//    public void testFromAdiestrador() {
-//        List<Adiestrador> adiestrador = (List<Adiestrador>) adiestradorService.findAll();
-//        Adiestrador adiestrador2 = adiestrador.get(1);
-//        
-//        Assert.assertNotNull(adiestrador2);
-//        Assert.assertTrue(adiestrador2.getEstrellas() == ESTRELLAS);
-//        Assert.assertEquals(adiestrador2.getFirstName(), NOMBRE);
-//        Assert.assertEquals(adiestrador2.getLastName(), APELLIDO);
-//        Assert.assertTrue(adiestrador2.getId() == ID);
-//        Assert.assertTrue(adiestrador2.getMonedero() == MONEDERO);
-//        Assert.assertTrue(adiestrador2.getTelefono() ==  TELEFONO);
-//      
-//    }
+	Adiestrador			adiestrador;
 	
-	@Test//POSITIVO
+	@Test
 	void PositiveFindAdiestrador() {
 		Iterable<Adiestrador> adiestrador = this.adiestradorService.findAll();
 		Assertions.assertThat(adiestrador).isNotNull();
 	}
 	
 
-	@Test//NEGATIVO
+	@Test
 	void shouldNotFindAdiestrador() {
 		SpringDataAdiestradorRepository SpringAdiestradorRepository = Mockito.mock(SpringDataAdiestradorRepository.class);
 		this.adiestradorService = new AdiestradorService(SpringAdiestradorRepository);
@@ -87,7 +48,7 @@ public class AdiestradorServiceTests {
 		});
 	}
 	
-	@Test//NEGATIVO
+	@Test
 	void shouldNotFindAdiestradorEstrellas() {
 		SpringDataAdiestradorRepository SpringAdiestradorRepository = Mockito.mock(SpringDataAdiestradorRepository.class);
 		this.adiestradorService = new AdiestradorService(SpringAdiestradorRepository);
@@ -96,16 +57,6 @@ public class AdiestradorServiceTests {
 			this.adiestradorService.findAdiestradorByEstrellas(5);
 		});
 	}
-	
-//	@ParameterizedTest // POSITIVO
-//	@CsvSource({
-//		"1", "2"
-//	})
-//	public void shouldFindAdiestradorEstrellas(final Integer estrellas) {
-//		Collection<Adiestrador> adiestrador = this.adiestradorService.findAdiestradorByEstrellas(estrellas);
-//		Assertions.assertThat(adiestrador).isNotNull();
-//	}
-//	
 	
 	@Test
 	public void checkFindByStar(){
@@ -119,7 +70,6 @@ public class AdiestradorServiceTests {
 		Assertions.assertThat(adiestrador != null);
 	}
 
-	
 	@Test
 	public void checkCount(){
 		Integer adiestrador = this.adiestradorService.adiestradorCount();
@@ -127,7 +77,7 @@ public class AdiestradorServiceTests {
 	}
 	
 	@ParameterizedTest
-	@CsvSource({//NEGATIVO 
+	@CsvSource({
 		"adiestrador1", "adiestrador2"
 	})
 	public void testFindAdiestradorByUsernamesvSource(final String username) {
@@ -136,7 +86,7 @@ public class AdiestradorServiceTests {
 	}
 	
 	@ParameterizedTest
-	@CsvSource({//NEGATIVO 
+	@CsvSource({ 
 		"adiestrador1444", "adiestrador144"
 	})
 	public void testNotFindAdiestradorByUsermeCsvSource(final String username) {

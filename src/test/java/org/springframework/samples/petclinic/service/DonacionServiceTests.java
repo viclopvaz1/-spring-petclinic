@@ -29,7 +29,7 @@ public class DonacionServiceTests {
 	private DonacionService donacionService;
 	
 
-	@ParameterizedTest //Positivo
+	@ParameterizedTest
 	@Order(6)
 	@CsvSource({"100", "1200"})
 	public void saveDonacion(final Integer cantidad) {
@@ -40,7 +40,7 @@ public class DonacionServiceTests {
 
 	}
 	
-	@ParameterizedTest//Negativo
+	@ParameterizedTest
 	@Order(7)
 	@CsvSource({"-100"})
 	public void saveFailDonacionNegativa(final Integer cantidad) {
@@ -53,10 +53,9 @@ public class DonacionServiceTests {
 	
 	
 
-//no pase el objetivo
 	
 	
-	@Test//Negativo es null la donacion
+	@Test
 	@Order(8)
 	public void saveFailDonacionNull() {
 		Donacion donacion = new Donacion();	
@@ -66,7 +65,7 @@ public class DonacionServiceTests {
 		});
 	}
 	
-	@ParameterizedTest // POSITIVO
+	@ParameterizedTest 
 	@Order(1)
 	@CsvSource({
 		"3", "4"
@@ -80,7 +79,7 @@ public class DonacionServiceTests {
 		Assertions.assertThat(donacion).isNotNull();
 	}
 	
-	@ParameterizedTest // NEGATIVO no encuentra ID
+	@ParameterizedTest 
 	@Order(2)
 	@CsvSource({
 		"10", "40"

@@ -28,17 +28,6 @@ public class CausaControllerIntegrationTests {
 	@Autowired
 	private MockMvc				mockMvc;
 	
-	//-------------------------------
-	
-//	mockMvc.perform(post("/owners/{ownerId}/pets/new", TEST_OWNER_ID)
-//			.with(csrf())
-//			.param("name", "Betty")
-//			.param("type", "hamster")
-//			.param("birthDate", "2015/02/12"))
-//			.andExpect(status().is3xxRedirection())
-//			.andExpect(view().name("redirect:/owners/{ownerId}"));
-//	
-	//-------------------------------
 	
 	@WithMockUser(username="owner1",authorities= {"owner"})
 	@Test
@@ -155,14 +144,6 @@ public class CausaControllerIntegrationTests {
 			.andExpect(MockMvcResultMatchers.view().name("causas/listadoCausas"));
 	}
 	
-//	@WithMockUser(username="owner1",authorities= {"owner"})
-//	@Test
-//	void testShowCausa() throws Exception {
-//		mockMvc.perform(MockMvcRequestBuilders.get("/causa/{id}", CausaControllerIntegrationTests.TEST_CAUSA_ID))
-//			.andExpect(MockMvcResultMatchers.status().isOk())
-//			.andExpect(MockMvcResultMatchers.view().name("causas/causaDetails"));
-//	}
-//	
 	@WithMockUser(username="vet1",authorities= {"veterinarian"})
 	@Test
 	void testInitDeleteCausa() throws Exception {

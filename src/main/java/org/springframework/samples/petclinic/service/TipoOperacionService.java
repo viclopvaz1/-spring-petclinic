@@ -21,10 +21,7 @@ private SpringDataTipoOperacionRepository tipoOperacionRepo;
 		return this.tipoOperacionRepo.findTipoOperacionByName(name);
 	}
 	
-//	@Transactional(readOnly = true)
-//	public Collection<TipoOperacion> findTiposOperaciones() throws DataAccessException {
-//		return this.tipoOperacionRepo.findTiposOperaciones();
-//	}
+
 	
 	@Transactional
 	public Iterable<TipoOperacion> findAll() {

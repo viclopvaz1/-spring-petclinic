@@ -16,6 +16,7 @@ public interface SpringDataTipoAdiestramientoRepository
 	TipoAdiestramiento findTipoAdiestramientoByName(@Param("name") String name);
 
 
-
+        
+	
 
 }
