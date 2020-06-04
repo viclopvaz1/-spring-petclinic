@@ -65,10 +65,9 @@ public class DonacionController {
 		this.ownerService = ownerService;
 	}
 
-	//	@InitBinder("donacion")
-	//	public void initDonacionBinder(WebDataBinder dataBinder) {
-	//		dataBinder.setValidator(new DonacionValidator());
-	//	}
+	public Boolean error(BindingResult result) {
+		return result.hasErrors();
+	}
 
 	@GetMapping(value = "/{causaId}/new")
 	public String initCreationForm(final Map<String, Object> model, @PathVariable("causaId") final int causaId) {
@@ -85,7 +84,7 @@ public class DonacionController {
 	@PostMapping(value = "/{causaId}/new")
 	public String processCreationForm(@Valid final Donacion donacion, final BindingResult result, @PathVariable("causaId") final int causaId, final Map<String, Object> model, final ModelMap modelMap) {
 		Causa causa = this.causaService.findCausaById(causaId);
-		if (result.hasErrors() || !causa.isValido()) {
+		if (this.error(result) || !causa.isValido()) {
 			model.put("donacion", donacion);
 			return DonacionController.VIEWS_DONACION_NEW_FORM;
 		} else {
@@ -95,7 +94,6 @@ public class DonacionController {
 
 			Collection<Authorities> collection = this.authoritiesService.findAll();
 			String username = donacion.getUser().getUsername();
-//			String a = collection.stream().filter(x -> x.getUsername() == username).map(x -> x.getAuthority()).findFirst().orElse(null);
 			String a = collection.stream().filter(x -> x.getUsername().equals(username)).map(x -> x.getAuthority()).findFirst().orElse(null);
 			if (a.equals("veterinarian")) {
 				Vet vet = this.vetService.findVetByUser(username);
@@ -104,7 +102,6 @@ public class DonacionController {
 					return DonacionController.VIEWS_DONACION_NEW_FORM;
 				}
 				vet.setMonedero(vet.getMonedero() - donacion.getCantidad());
-//				this.vetService.monedero(vet.getMonedero() - donacion.getCantidad(), vet.getId());
 			} else if (a.equals("owner")) {
 				Owner owner = this.ownerService.findOwnerByUser(username);
 				if (donacion.getCantidad() > owner.getMonedero()) {

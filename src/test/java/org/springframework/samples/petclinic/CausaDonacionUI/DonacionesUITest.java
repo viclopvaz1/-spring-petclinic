@@ -39,8 +39,6 @@ public class DonacionesUITest {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-//		String lugar = "C:\\Users\\House\\webdrivers";
-//		System.setProperty("webdriver.chrome.driver", lugar + "\\chromedriver.exe");
 		driver = new FirefoxDriver();
 		baseUrl = "https://www.google.com/";
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

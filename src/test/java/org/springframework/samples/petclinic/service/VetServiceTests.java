@@ -81,7 +81,7 @@ class VetServiceTests {
 	}
 	
 	@ParameterizedTest
-	@CsvSource({//NEGATIVO 
+	@CsvSource({
 		"vet1", "vet2"
 	})
 	public void testFindCausaByUsernamesvSource(final String username) {
@@ -90,7 +90,7 @@ class VetServiceTests {
 	}
 	
 	@ParameterizedTest
-	@CsvSource({//NEGATIVO 
+	@CsvSource({ 
 		"vet222", "vet2524"
 	})
 	public void testNotFindCausaByUsermeCsvSource(final String username) {

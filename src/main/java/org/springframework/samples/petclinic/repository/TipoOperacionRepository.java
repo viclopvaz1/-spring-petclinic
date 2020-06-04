@@ -10,6 +10,6 @@ public interface TipoOperacionRepository extends CrudRepository<TipoOperacion, I
 	
 	TipoOperacion findTipoOperacionByName(String name);
 	
-//	Collection<TipoOperacion> findTiposOperaciones() throws DataAccessException;
+
 
 }

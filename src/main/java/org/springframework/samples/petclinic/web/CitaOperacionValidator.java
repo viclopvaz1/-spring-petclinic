@@ -27,7 +27,7 @@ public class CitaOperacionValidator implements Validator {
 	public void validateFechas(final Object target) throws FechasException {
 
 		CitaOperacion citaOperacion = (CitaOperacion) target;
-		// Fecha de Inicio validation
+		
 		if (citaOperacion.getFechaInicio().isBefore(LocalDate.now())
 				|| citaOperacion.getFechaInicio().isEqual(LocalDate.now())) {
 			throw new FechasException();
@@ -39,7 +39,7 @@ public class CitaOperacionValidator implements Validator {
 
 		CitaOperacion citaOperacion = (CitaOperacion) target;
 		Collection<TipoOperacion> tiposOperacion = (Collection<TipoOperacion>) this.tipoOperacionService.findAll();
-		// Tipo Operacion validation
+	
 		if (!tiposOperacion.contains(citaOperacion.getTipoOperacion())) {
 			throw new TipoOperacionException();
 		}
@@ -48,7 +48,7 @@ public class CitaOperacionValidator implements Validator {
 	
 	public void validateDineroMonedero(final Object target) throws PagoException {
 		CitaOperacion citaOperacion = (CitaOperacion) target;
-		// Pago validation
+
 		if(citaOperacion.getPrecio() > citaOperacion.getPet().getOwner().getMonedero()) {
 			throw new PagoException();
 		}

@@ -48,9 +48,9 @@ public class UserController {
 	
 	private static final String VIEWS_USER_CREATE_FORM = "users/updateUser";
 	
-	
-	
-	//private static final String VIEWS_MONEDERO_CREATE_FORM = "users/updateOrDeleteMonederoForm";
+	public Boolean error(BindingResult result) {
+		return error(result);
+	}
 
 	
 	private final OwnerService ownerService;
@@ -77,81 +77,15 @@ public class UserController {
 
 	@PostMapping(value = "/users/new")
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
-		if (result.hasErrors()) {
+		if (error(result)) {
 			return VIEWS_OWNER_CREATE_FORM;
 		}
 		else {
-			//creating owner, user, and authority
+		
 			this.ownerService.saveOwner(owner);
 			return "redirect:/";
 		}
 	}
-	//------------------------------
-	
-//	@GetMapping(value = "/users/{userId}/edit")
-//	public String initUpdateUserForm(@PathVariable("userId") int userId, Model model) {
-//		User user = this.userService.findUserById(userId);
-//		model.addAttribute(user);
-//		return VIEWS_USER_CREATE_FORM;
-//	}
-//
-//	@PostMapping(value = "/users/{userId}/edit")
-//	public String processUpdateUserForm(@Valid User user, BindingResult result,
-//			@PathVariable("userId") int userId) {
-//		if (result.hasErrors()) {
-//			return VIEWS_USER_CREATE_FORM;
-//		}
-//		else {
-//			user.setId(userId);
-//			this.userService.saveUser(user);
-//			return "redirect:/users/{userId}";
-//		}
-//	}
 
-
-	
-//	@GetMapping(path="/new")
-//	public String crearUsuario(ModelMap modelMap) {
-//		String vista = "users/editUser";
-//		modelMap.addAttribute("user", new User());
-//		return vista;
-//	}
-//	
-//	@PostMapping(path="/save")
-//	public String salvarUsuario(@Valid User user, BindingResult result,ModelMap modelMap) {
-//		String vista ="users/listUsers";
-//		if(result.hasErrors()) {
-//			modelMap.addAttribute("user", user);
-//			return "users/editUser";
-//		}else {
-//			userService.saveUser(user);
-//			modelMap.addAttribute("message","User successfully saved!");
-//		}
-//		return vista;
-//			
-//	}
-//	
-	//----------------------------------------------
-	
-	
-	
-	
-//	@GetMapping(value = "/users/addmoney")
-//	public String initAddMoney(Map<String, Object> model) {
-//		User user = new User();
-//		model.put("user", user);
-//		return VIEWS_MONEDERO_CREATE_FORM;
-//	}
-//
-//	@PostMapping(value = "/users/addmoney")
-//	public String processAddMoney(@Valid User user, BindingResult result) {
-//		if (result.hasErrors()) {
-//			return VIEWS_MONEDERO_CREATE_FORM;
-//		}
-//		else {
-//			this.userService.saveUser(user);
-//			return "redirect:/";
-//		}
-//	}
 
 }

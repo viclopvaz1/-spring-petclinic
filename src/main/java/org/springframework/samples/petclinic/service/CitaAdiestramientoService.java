@@ -4,7 +4,6 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.CitaAdiestramiento;
-import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCitaAdiestramientoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +23,12 @@ public class CitaAdiestramientoService {
 		return this.citaAdiestramientoRepo.findAll();
 	}
 
+	@Transactional
+	public Iterable<CitaAdiestramiento> findCitaAdiestramientoAll() {
+		return this.citaAdiestramientoRepo.findCitaAdiestramientoAll();
+	}
+	
+	
 	@Transactional
 	public Collection<CitaAdiestramiento> findCitaAdiestramientoByOwnerId(final int ownerId) {
 		return this.citaAdiestramientoRepo.findCitasAdiestramientoByOwnerId(ownerId);

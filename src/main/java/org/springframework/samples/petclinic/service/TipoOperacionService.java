@@ -1,9 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.TipoOperacion;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataTipoOperacionRepository;
 import org.springframework.stereotype.Service;
@@ -24,10 +21,7 @@ private SpringDataTipoOperacionRepository tipoOperacionRepo;
 		return this.tipoOperacionRepo.findTipoOperacionByName(name);
 	}
 	
-//	@Transactional(readOnly = true)
-//	public Collection<TipoOperacion> findTiposOperaciones() throws DataAccessException {
-//		return this.tipoOperacionRepo.findTiposOperaciones();
-//	}
+
 	
 	@Transactional
 	public Iterable<TipoOperacion> findAll() {

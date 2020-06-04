@@ -37,7 +37,6 @@ public class CitaOperacionControllerIntegrationTests {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	//								Find By Tipo Operacion
 		
 	@WithMockUser(username="vet1",authorities= {"veterinarian"})
 	@Test
@@ -79,7 +78,6 @@ public class CitaOperacionControllerIntegrationTests {
 		.andExpect(MockMvcResultMatchers.view().name("exception"));
 	}
 	
-	//								Create Tipo Operacion
 
 	
 	@WithMockUser(username="vet1",authorities= {"veterinarian"})
@@ -127,7 +125,6 @@ public class CitaOperacionControllerIntegrationTests {
     void testProcessCreationFormHasErrorsInFechaInicio() throws Exception {
 		mockMvc.perform(post("/citasOperaciones/new/{petId}", TEST_PET_ID)
 				.with(csrf())
-//				.param("id", "")
 				.param("fechaInicio", "2019/05/11")
 				.param("hora", "15:00")
 				.param("duracion", "30")
@@ -139,7 +136,6 @@ public class CitaOperacionControllerIntegrationTests {
 			.andExpect(model().attributeExists("mensaje"));
 	}
 	
-	//								Update Tipo Operacion
 
 	
 	@WithMockUser(username="vet1",authorities= {"veterinarian"})
@@ -153,7 +149,6 @@ public class CitaOperacionControllerIntegrationTests {
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("hora", Matchers.is(LocalTime.parse("17:00")))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("duracion", Matchers.is(30))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("precio", Matchers.is(50.0))))
-//		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("tipoOperacion", Matchers.is(hola))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("cantidadPersonal", Matchers.is(3.0))))
 		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/createOrUpdateCitaOperacionForm"));
 	}
@@ -163,7 +158,6 @@ public class CitaOperacionControllerIntegrationTests {
 	void testProcessUpdateFormSuccess() throws Exception {
 		mockMvc.perform(post("/citaOperacion/{citaOperacionId}/edit/{petId}",TEST_CITAOPERACION_ID, TEST_PET_ID)
 							.with(csrf())
-//							.param("id", "1")
 							.param("fechaInicio", "2020/12/27")
 							.param("hora", "15:00")
 							.param("duracion", "30")
@@ -188,8 +182,6 @@ public class CitaOperacionControllerIntegrationTests {
 		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/createOrUpdateCitaOperacionForm"));
 	}
 	
-	//			Show Cita Operacion
-	
 	@WithMockUser(username="vet1",authorities= {"veterinarian"})
 	@Test
 	void testShowCitaOperacion() throws Exception {
@@ -199,18 +191,14 @@ public class CitaOperacionControllerIntegrationTests {
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("hora", Matchers.is(LocalTime.parse("17:00")))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("duracion", Matchers.is(30))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("precio", Matchers.is(50.0))))
-//		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("tipoOperacion", Matchers.is(hola))))
 		.andExpect(MockMvcResultMatchers.model().attribute("citaOperacion", Matchers.hasProperty("cantidadPersonal", Matchers.is(3.0))))
 		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/citaOperacionDetails"));
 	}
-	
-	//								Pay Cita Operacion
 	
 	@WithMockUser(username="owner1",authorities= {"owner"})
 	@Test
 	void testPayCitaOperacionSuccess() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/citaOperacion/{citaOperacionId}/pay", TEST_CITAOPERACION_ID))
-		.andExpect(MockMvcResultMatchers.model().attributeExists("pet"))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("pagado"))
 		.andExpect(MockMvcResultMatchers.view().name("citasOperaciones/listadoCitasOperacionesPets"));
 	}

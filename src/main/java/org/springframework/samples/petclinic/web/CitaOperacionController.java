@@ -57,6 +57,10 @@ public class CitaOperacionController {
 		this.tipoOperacionService = tipoOperacionService;
 		this.ownerService = ownerService;
 	}
+  
+  public Boolean error(BindingResult result) {
+		return result.hasErrors();
+	}
 	
 	@ModelAttribute("tipoOperacion")
 	public Collection<TipoOperacion> populateTiposOperaciones() {
@@ -89,14 +93,9 @@ public class CitaOperacionController {
 	public String processFindForm(CitaOperacion citaOperacion, BindingResult result, Map<String, Object> model) {
 		boolean conjuntoVacio = false;
 		
-//		String a = citaOperacion.getTipoOperacion().getName();
-//		if(a.contains("+")) {
-//				a.replace("+", " ");
-//		}
-//		citaOperacion.getTipoOperacion().setName(a);
-		// allow parameterless GET request for /citasOperaciones to return all records
+
 		if (citaOperacion.getTipoOperacion().getName() == null) {
-			citaOperacion.getTipoOperacion().setName(""); // empty string signifies broadest possible search
+			citaOperacion.getTipoOperacion().setName(""); 
 		} else {
 			String a = citaOperacion.getTipoOperacion().getName();
 			if(a.contains("+")) {
@@ -106,15 +105,15 @@ public class CitaOperacionController {
 		}
 		try {
 			model.put("conjuntoVacio", conjuntoVacio);
-			// find Citas Operaciones by Tipo Operacon
+		
 			Collection<CitaOperacion> results = (Collection<CitaOperacion>) this.citaOperacionService.findCitaOperacionByTipoOperacion(citaOperacion.getTipoOperacion().getName());
 				if (results.size() == 1) {
-				// 1 owner found
+	
 				citaOperacion = results.iterator().next();
 				return "redirect:/citaOperacion/" + citaOperacion.getId();
 			}
 			else {
-				// multiple Citas Operaciones found
+			
 				model.put("citasOperaciones", results);
 				return "citasOperaciones/listadoCitasOperacionesFiltrado";
 			}
@@ -129,7 +128,7 @@ public class CitaOperacionController {
 	public String initCreationForm(final Map<String, Object> model, @PathVariable("petId") final int petId) {
 		CitaOperacion citaOperacion = new CitaOperacion();
 		citaOperacion.setPet(this.petService.findPetById(petId));
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		String username = this.findUsername();
 		citaOperacion.setVet(this.vetService.findVetByUser(username));
 		model.put("citaOperacion", citaOperacion);
 		return "citasOperaciones/createOrUpdateCitaOperacionForm";
@@ -137,7 +136,7 @@ public class CitaOperacionController {
 
 	@PostMapping(value = "/citasOperaciones/new/{petId}")
 	public String processCreationForm(@Valid final CitaOperacion citaOperacion, final BindingResult result, @PathVariable("petId") final int petId, final Map<String, Object> model) {
-		if (result.hasErrors()) {
+		if (this.error(result)) {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
 			String mensaje = "";
@@ -152,8 +151,7 @@ public class CitaOperacionController {
 				model.put("mensaje", mensaje);
 				return "citasOperaciones/createOrUpdateCitaOperacionForm";
 			} else {
-				//creating Cita Operacion
-				String username = SecurityContextHolder.getContext().getAuthentication().getName();
+				String username = this.findUsername();
 				citaOperacion.setVet(this.vetService.findVetByUser(username));
 				citaOperacion.setPet(this.petService.findPetById(petId));
 				citaOperacion.setPagado(false);
@@ -181,7 +179,7 @@ public class CitaOperacionController {
 	@PostMapping(value = "/citaOperacion/{citaOperacionId}/edit/{petId}")
 	public String processUpdateCitaOperacionForm(@Valid CitaOperacion citaOperacion, final BindingResult result, @PathVariable("citaOperacionId") final int citaOperacionId,
 			@PathVariable("petId") final int petId, Map<String, Object> model) {
-		if (result.hasErrors()) {
+		if (this.error(result)) {
 			return "citasOperaciones/createOrUpdateCitaOperacionForm";
 		} else {
 			String mensaje = "";
@@ -197,7 +195,7 @@ public class CitaOperacionController {
 				return "citasOperaciones/createOrUpdateCitaOperacionForm";
 			} else {
 				citaOperacion.setId(citaOperacionId);
-				String username = SecurityContextHolder.getContext().getAuthentication().getName();
+				String username = this.findUsername();
 				citaOperacion.setVet(this.vetService.findVetByUser(username));
 				citaOperacion.setPet(this.petService.findPetById(petId));
 				this.citaOperacionService.saveCitaOperacion(citaOperacion);
@@ -224,7 +222,7 @@ public class CitaOperacionController {
 			noPuedePagar = true;
 			model.put("noPuedePagar", noPuedePagar);
 			model.put("pagado", citaOperacion.isPagado());
-			model.put("pet", citaOperacion.getPet());
+			model.put("citasOperaciones", this.citaOperacionService.findCitaOperacionByPet(citaOperacion.getPet().getId()));
 			return "citasOperaciones/listadoCitasOperacionesPets";
 		}
 			Owner owner = citaOperacion.getPet().getOwner();
@@ -242,6 +240,10 @@ public class CitaOperacionController {
 			model.put("citasOperaciones", this.citaOperacionService.findCitaOperacionByPet(citaOperacion.getPet().getId()));
 			model.put("noPuedePagar", noPuedePagar);
 		return "citasOperaciones/listadoCitasOperacionesPets";
+	}
+	
+	public String findUsername() {
+		return SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 	
 }

@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.samples.petclinic.model.CitaOperacion;
 import org.springframework.samples.petclinic.repository.springdatajpa.SpringDataCitaOperacionRepository;
 import org.springframework.stereotype.Service;
@@ -25,17 +27,18 @@ public class CitaOperacionService {
 	@Transactional
 	public Iterable<CitaOperacion> findAll() {
 		Iterable<CitaOperacion> res = this.citaOperacionRepo.findAll();
-		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+		if (this.hayCitas(res)) {
 			throw new NoSuchElementException();
 		}
 		return res;
 	}
 
 	@Transactional
+	@Cacheable("citaOperacionByTipoOperacion")
 	public Iterable<CitaOperacion> findCitaOperacionByTipoOperacion(final String tipoOperacion) throws NoSuchElementException {
 		Iterable<CitaOperacion> res = this.citaOperacionRepo.findCitaOperacionByTipoOperacion(tipoOperacion);
 
-		if (StreamSupport.stream(res.spliterator(), false).count() == 0) {
+		if (this.hayCitas(res)) {
 			throw new NoSuchElementException();
 		}
 		return res;
@@ -52,6 +55,7 @@ public class CitaOperacionService {
 	}
 	
 	@Transactional
+	@CacheEvict(cacheNames = "citaOperacionByTipoOperacion", allEntries = true)
 	public void saveCitaOperacion(final CitaOperacion citaOperacion) {
 		this.citaOperacionRepo.save(citaOperacion);
 	}
@@ -59,5 +63,9 @@ public class CitaOperacionService {
 	@Transactional
 	public void deleteCitaOperacion(final CitaOperacion citaOperacion) {
 		this.citaOperacionRepo.delete(citaOperacion);
+	}
+	
+	public Boolean hayCitas(Iterable<CitaOperacion> res) {
+		return StreamSupport.stream(res.spliterator(), false).count() == 0;
 	}
 }

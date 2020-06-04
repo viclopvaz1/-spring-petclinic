@@ -140,10 +140,6 @@ class CitaAdiestramientoServiceTests {
 				.findCitaAdiestramientoByPet(type);
 		assertThat(CitaAdiestramientos.isEmpty()).isTrue();
 
-		// CitaAdiestramientos =
-		// this.CitaAdiestramientoService.findCitaAdiestramientoByPet("dog");
-//		CitaAdiestramiento CitaAdiestramiento = EntityUtils.getById(CitaAdiestramientos, CitaAdiestramiento.class, 1);
-//		assertThat(CitaAdiestramiento.getPet().getType().getName()).isEqualTo("dog");
 	}
 
 	@Test
@@ -226,8 +222,7 @@ class CitaAdiestramientoServiceTests {
 	})
 	public void addNewCitaAdiestramientoWithCsvSourceFail(final int id, final int petId, final LocalDate fechaInicio, final LocalTime hora, final Integer duracion,
 			final Double precio, final boolean pagado, final int adiestradorId, final String tipoAdiestramientoName, final int ownerId) {
-		//Prueba introducir un valor null distinto en cada citaAdiestramiento, se prueban todos menos el atributo valido, porque al ser boolean no puede ser null
-		Assertions.assertThrows(ConstraintViolationException.class, () -> {
+			Assertions.assertThrows(ConstraintViolationException.class, () -> {
 			CitaAdiestramiento citaAdiestramiento = new CitaAdiestramiento();
 			citaAdiestramiento.setPet(this.petService.findPetById(petId));
 			citaAdiestramiento.setFechaInicio(fechaInicio);

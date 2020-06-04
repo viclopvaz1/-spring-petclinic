@@ -23,7 +23,7 @@ public class CausaValidator implements Validator {
 		Causa causa = (Causa) target;
 		LocalDate fechaInicio = causa.getFechaInicio();
 		LocalDate fechaFin = causa.getFechaFin();
-		// name validation
+
 		if (!fechaInicio.isBefore(fechaFin)) {
 			throw new FechasException();
 		}
@@ -35,7 +35,7 @@ public class CausaValidator implements Validator {
 		Causa causa = (Causa) target;
 		Integer objetivo = causa.getObjetivo();
 		Integer dineroRecaudado = causa.getDineroRecaudado();
-		// name validation
+	
 		if (objetivo <= dineroRecaudado) {
 			throw new RecaudadoYObjetivoException();
 		}
